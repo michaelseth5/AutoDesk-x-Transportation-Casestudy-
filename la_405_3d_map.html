@@ -163,6 +163,11 @@
     border: 2px solid white;
     box-shadow: 0 0 0 1px #999;
   }
+  .swatch.legacy-line {
+    width: 20px; height: 4px;
+    background: #1F9D6B;
+    border-radius: 2px;
+  }
 
   #trip-card {
     position: absolute;
@@ -231,6 +236,10 @@
       <input type="checkbox" id="toggle-bus-lanes" />
       Show peak-hour bus lanes
     </label>
+    <label class="row">
+      <input type="checkbox" id="toggle-legacy-network" />
+      Show post-Games legacy network
+    </label>
 
     <div class="trip-controls">
       <label for="trip-destination">Simulate trip to:</label>
@@ -245,8 +254,10 @@
     </div>
 
     <div class="legend">
-      <div class="legend-row"><span class="swatch rail-line"></span> Rail trunk / station</div>
-      <div class="legend-row"><span class="swatch bus-line"></span> Bus feeder route</div>
+      <div class="legend-row" style="font-size:11px; color:#777; font-style:italic;">Solid + thick = rail &nbsp;|&nbsp; Dashed + thin = bus</div>
+      <div class="legend-row"><span class="swatch rail-line"></span> Games-era rail trunk / station</div>
+      <div class="legend-row"><span class="swatch bus-line"></span> Games-era bus feeder route</div>
+      <div class="legend-row"><span class="swatch legacy-line"></span> Legacy rail extension (post-Games)</div>
       <div class="legend-row"><span class="swatch bus-lane-fill"></span> Active peak-hour bus lane</div>
       <div class="legend-row"><span class="swatch train-dot"></span> Train</div>
       <div class="legend-row"><span class="swatch police-dot"></span> Police escort</div>
@@ -327,6 +338,7 @@ const busDestinationsGeoJSON = {
 
 const RAIL_COLOR = "#0B3C6B";
 const BUS_COLOR = "#E8720C";
+const LEGACY_COLOR = "#1F9D6B"; // deep green — Post-Games legacy extension (Phase 2), distinct from rail/bus
 
 const DEFAULT_VIEW = { center: [-118.42, 34.02], zoom: 11, pitch: 60, bearing: -20 };
 
@@ -335,6 +347,69 @@ const DEFAULT_VIEW = { center: [-118.42, 34.02], zoom: 11, pitch: 60, bearing: -
 const RAIL_SPEED_MPH = 40; // 35-45 mph range — standard urban/commuter rail (metro/heavy-rail), not bullet rail
 const BUS_SPEED_MPH = 17; // 15-20 mph range, accounting for stops/signals
 const TRANSFER_MINUTES = 1.5; // walk-to-platform transfer at the station
+
+// Post-Games Legacy Network — Phase 2 rail extension opening after the 2028 Olympics.
+// Own speed/fare logic, separate from the Olympics-era feeder buses.
+const LEGACY_SPEED_MPH = 40; // same standard urban rail assumption as the Games-era trunk
+const LEGACY_FARE = 4.25; // flat fare, USD — higher than feeder-bus fare, reflects longer distances
+
+const legacyStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { type: "Feature", properties: { name: "Downtown LA / Union Station", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.2365, 34.0561] } },
+    { type: "Feature", properties: { name: "Downtown LA / LA Live & Convention Center", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.2673, 34.0430] } },
+    { type: "Feature", properties: { name: "Compton Station", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.2201, 33.8958] } },
+    { type: "Feature", properties: { name: "Inglewood / SoFi Stadium", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } },
+    { type: "Feature", properties: { name: "Watts / 103rd Street", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.2412, 33.9425] } },
+    { type: "Feature", properties: { name: "Long Beach (North Long Beach Hub)", type: "legacy_station" },
+      geometry: { type: "Point", coordinates: [-118.1937, 33.8853] } }
+  ]
+};
+
+const CULVER_CITY_COORD = [-118.3965, 34.0211]; // matches railStationsGeoJSON.features[1]
+
+// North corridor: Culver City / Palms -> Downtown LA / LA Live -> Downtown LA / Union Station
+const legacyNorthCorridorCoords = [
+  CULVER_CITY_COORD,
+  [-118.2673, 34.0430],
+  [-118.2365, 34.0561]
+];
+
+// South corridor: Culver City / Palms -> Inglewood/SoFi -> Watts -> Compton -> Long Beach
+const legacySouthCorridorCoords = [
+  CULVER_CITY_COORD,
+  [-118.3392, 33.9535],
+  [-118.2412, 33.9425],
+  [-118.2201, 33.8958],
+  [-118.1937, 33.8853]
+];
+
+const legacyRoutesGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { type: "Feature", properties: { name: "North Corridor" }, geometry: { type: "LineString", coordinates: legacyNorthCorridorCoords } },
+    { type: "Feature", properties: { name: "South Corridor" }, geometry: { type: "LineString", coordinates: legacySouthCorridorCoords } }
+  ]
+};
+
+// Maps a legacy station name to which corridor it's on and how many stops in.
+const LEGACY_BRANCHES = {
+  "Downtown LA / LA Live & Convention Center": { corridor: legacyNorthCorridorCoords, stopIndex: 1 },
+  "Downtown LA / Union Station": { corridor: legacyNorthCorridorCoords, stopIndex: 2 },
+  "Inglewood / SoFi Stadium": { corridor: legacySouthCorridorCoords, stopIndex: 1 },
+  "Watts / 103rd Street": { corridor: legacySouthCorridorCoords, stopIndex: 2 },
+  "Compton Station": { corridor: legacySouthCorridorCoords, stopIndex: 3 },
+  "Long Beach (North Long Beach Hub)": { corridor: legacySouthCorridorCoords, stopIndex: 4 }
+};
+
+const LEGACY_STATION_POPUP =
+  "Post-Games Legacy Extension — opens after 2028. " +
+  "Permanent rail service beyond the Olympics window. Flat fare: $" + LEGACY_FARE.toFixed(2) + ".";
 
 const RAIL_STATION_POPUP =
   "Underground Rail Station — 2 through tracks, one in each direction. " +
@@ -364,6 +439,7 @@ map.on("load", () => {
   addThreeDBuildings();
   addRailLayers();
   addBusLayers();
+  addLegacyLayers();
   wireInteractions();
 });
 
@@ -541,6 +617,62 @@ function addBusLayers() {
 }
 
 // ---------------------------------------------------------------------------
+// Post-Games Legacy Network — separate toggleable layer, distinct green color
+// ---------------------------------------------------------------------------
+
+function addLegacyLayers() {
+  map.addSource("legacy-routes", { type: "geojson", data: legacyRoutesGeoJSON });
+  map.addSource("legacy-stations", { type: "geojson", data: legacyStationsGeoJSON });
+
+  // Solid + thick, matching the Games-era rail trunk layer's weight — these are rail
+  // extensions, not bus feeders, so they should read as rail on the map.
+  map.addLayer({
+    id: "legacy-route-lines",
+    type: "line",
+    source: "legacy-routes",
+    layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
+    paint: {
+      "line-color": LEGACY_COLOR,
+      "line-width": 5
+    }
+  });
+
+  map.addLayer({
+    id: "legacy-stations-circle",
+    type: "circle",
+    source: "legacy-stations",
+    layout: { visibility: "none" },
+    paint: {
+      "circle-radius": 8,
+      "circle-color": LEGACY_COLOR,
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#ffffff"
+    }
+  });
+
+  map.addLayer({
+    id: "legacy-stations-label",
+    type: "symbol",
+    source: "legacy-stations",
+    layout: {
+      visibility: "none",
+      "text-field": ["get", "name"],
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, 1.3],
+      "text-anchor": "top",
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    },
+    paint: {
+      "text-color": LEGACY_COLOR,
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 1.6
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Popups, hover cursor, checkbox toggle
 // ---------------------------------------------------------------------------
 
@@ -562,7 +694,15 @@ function wireInteractions() {
       .addTo(map);
   });
 
-  ["rail-stations-circle", "bus-destinations-circle"].forEach((layerId) => {
+  map.on("click", "legacy-stations-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>${f.properties.name}</strong><br>${LEGACY_STATION_POPUP}`)
+      .addTo(map);
+  });
+
+  ["rail-stations-circle", "bus-destinations-circle", "legacy-stations-circle"].forEach((layerId) => {
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
     map.on("mouseleave", layerId, () => (map.getCanvas().style.cursor = ""));
   });
@@ -571,6 +711,13 @@ function wireInteractions() {
     const visibility = e.target.checked ? "visible" : "none";
     map.setLayoutProperty("peak-bus-lane-fill", "visibility", visibility);
     map.setLayoutProperty("peak-bus-lane-label", "visibility", visibility);
+  });
+
+  document.getElementById("toggle-legacy-network").addEventListener("change", (e) => {
+    const visibility = e.target.checked ? "visible" : "none";
+    map.setLayoutProperty("legacy-route-lines", "visibility", visibility);
+    map.setLayoutProperty("legacy-stations-circle", "visibility", visibility);
+    map.setLayoutProperty("legacy-stations-label", "visibility", visibility);
   });
 }
 
@@ -597,12 +744,25 @@ const tripDestinationSelect = document.getElementById("trip-destination");
 const tripRouteSelect = document.getElementById("trip-route");
 const tripRouteLabel = document.getElementById("trip-route-label");
 
+const gamesGroup = document.createElement("optgroup");
+gamesGroup.label = "Games-Era Network";
 railStationsGeoJSON.features.slice(1).forEach((f) => {
   const opt = document.createElement("option");
   opt.value = f.properties.name;
   opt.textContent = f.properties.name;
-  tripDestinationSelect.appendChild(opt);
+  gamesGroup.appendChild(opt);
 });
+tripDestinationSelect.appendChild(gamesGroup);
+
+const legacyGroup = document.createElement("optgroup");
+legacyGroup.label = "Post-Games Legacy Network";
+legacyStationsGeoJSON.features.forEach((f) => {
+  const opt = document.createElement("option");
+  opt.value = f.properties.name;
+  opt.textContent = f.properties.name;
+  legacyGroup.appendChild(opt);
+});
+tripDestinationSelect.appendChild(legacyGroup);
 
 // Bus route options are pulled live from busFeedersGeoJSON for whichever station is selected.
 function populateRouteOptions(stationName) {
@@ -672,6 +832,30 @@ function haversineMiles(a, b) {
     Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+}
+
+// Sums haversine distance across every leg of a multi-point path (more accurate
+// than a single origin-to-destination haversine once a route bends, as the legacy
+// corridors do).
+function pathMiles(coords) {
+  let total = 0;
+  for (let i = 1; i < coords.length; i++) total += haversineMiles(coords[i - 1], coords[i]);
+  return total;
+}
+
+// Builds the train-leg path for a chosen destination: a straight slice of the
+// Games-era trunk, or — for a legacy station — the trunk out to Culver City / Palms
+// followed by the relevant legacy corridor segment.
+function getTripPath(destName) {
+  const gamesIdx = railStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
+  if (gamesIdx !== -1) {
+    return { coords: railTrunkGeoJSON.geometry.coordinates.slice(0, gamesIdx + 1), isLegacy: false };
+  }
+
+  const branch = LEGACY_BRANCHES[destName];
+  const trunkToCulverCity = railTrunkGeoJSON.geometry.coordinates.slice(0, 2); // LAX/Westchester -> Culver City
+  const branchSegment = branch.corridor.slice(1, branch.stopIndex + 1); // excludes Culver City (already included)
+  return { coords: trunkToCulverCity.concat(branchSegment), isLegacy: true };
 }
 
 function animateValue(duration, onFrame) {
@@ -777,28 +961,35 @@ async function simulateTrip() {
   tripRouteSelect.disabled = true;
 
   const destName = tripDestinationSelect.value;
-  const destIndex = railStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
-  const destStation = railStationsGeoJSON.features[destIndex];
+  const pathInfo = getTripPath(destName); // { coords, isLegacy } — trunk slice, or trunk + legacy corridor
+  const destStation =
+    railStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+    legacyStationsGeoJSON.features.find((f) => f.properties.name === destName);
 
-  const routeName = tripRouteSelect.value;
-  const feeder = busFeedersGeoJSON.features.find(
-    (f) => f.properties.from_station === destStation.properties.name && f.properties.name === routeName
-  );
-  const busStart = feeder.geometry.coordinates[0];
-  const busEnd = feeder.geometry.coordinates[1];
-
-  // Realistic door-to-door trip time — haversine distance / assumed real-world speed per leg.
-  // This is independent of the animation's on-screen duration, which stays fast for the demo.
-  const railMiles = haversineMiles(originStation.geometry.coordinates, destStation.geometry.coordinates);
-  const railMinutes = (railMiles / RAIL_SPEED_MPH) * 60;
-  const busMiles = haversineMiles(busStart, busEnd);
-  const busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
-  const transferMinutes = TRANSFER_MINUTES;
-  const totalMinutes = railMinutes + transferMinutes + busMinutes;
-
+  // Realistic door-to-door trip time — haversine distance summed along the actual path,
+  // divided by the assumed real-world speed per leg. Independent of the sped-up animation.
+  const railMiles = pathMiles(pathInfo.coords);
+  const railSpeed = pathInfo.isLegacy ? LEGACY_SPEED_MPH : RAIL_SPEED_MPH;
+  const railMinutes = (railMiles / railSpeed) * 60;
   const railSimSeconds = railMinutes * 60;
+
+  let routeName, busStart, busEnd, busMiles, busMinutes, busSimSeconds;
+  const transferMinutes = TRANSFER_MINUTES;
   const transferSimSeconds = transferMinutes * 60;
-  const busSimSeconds = busMinutes * 60;
+
+  if (!pathInfo.isLegacy) {
+    routeName = tripRouteSelect.value;
+    const feeder = busFeedersGeoJSON.features.find(
+      (f) => f.properties.from_station === destStation.properties.name && f.properties.name === routeName
+    );
+    busStart = feeder.geometry.coordinates[0];
+    busEnd = feeder.geometry.coordinates[1];
+    busMiles = haversineMiles(busStart, busEnd);
+    busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
+    busSimSeconds = busMinutes * 60;
+  }
+
+  const totalMinutes = pathInfo.isLegacy ? railMinutes : railMinutes + transferMinutes + busMinutes;
 
   updateTimer(0);
 
@@ -811,9 +1002,9 @@ async function simulateTrip() {
     duration: 1800
   });
 
-  // 2. Train leg — follow the trunk line through any intermediate stations to the destination.
-  // Animation runs in ~5s on screen; the timer counts up through the realistic rail minutes.
-  const trunkCoords = railTrunkGeoJSON.geometry.coordinates.slice(0, destIndex + 1);
+  // 2. Train leg — follows the trunk (and, for legacy destinations, the branch corridor
+  // out of Culver City / Palms). Animation runs in ~5s on screen; the timer counts up
+  // through the realistic rail minutes.
   const trainEl = document.createElement("div");
   trainEl.className = "train-marker";
   const trainMarker = new maplibregl.Marker({ element: trainEl })
@@ -821,7 +1012,7 @@ async function simulateTrip() {
     .addTo(map);
 
   await animateValue(5000, (t) => {
-    const pos = pointAlongPath(trunkCoords, t);
+    const pos = pointAlongPath(pathInfo.coords, t);
     trainMarker.setLngLat(pos);
     map.jumpTo({ center: pos });
     updateTimer(t * railSimSeconds);
@@ -829,28 +1020,44 @@ async function simulateTrip() {
   trainMarker.remove();
   updateTimer(railSimSeconds);
 
-  // 3. Transfer pause — brief on screen, but the timer counts through the realistic transfer window.
-  showCard(`Arrived at ${destStation.properties.name}. Transferring to express bus.`);
-  await animateValue(1200, (t) => {
-    updateTimer(railSimSeconds + t * transferSimSeconds);
-  });
+  if (pathInfo.isLegacy) {
+    // Legacy stations are a direct rail extension — no bus feeder leg, flat fare instead.
+    showCard(
+      `Arrived at ${destStation.properties.name}. Post-Games Legacy Extension — flat fare $${LEGACY_FARE.toFixed(2)}.`
+    );
+    await wait(2200);
 
-  // 4. Bus leg — the selected feeder route, ~9s on screen, timer counts through realistic bus minutes.
-  showCard(`Peak convoy to ${routeName}: 5 buses, ~500 riders, police-escorted through signal priority.`);
-  await animateBusConvoy(busStart, busEnd, 9000, (t) => {
-    updateTimer(railSimSeconds + transferSimSeconds + t * busSimSeconds);
-  });
-  updateTimer(totalMinutes * 60);
+    showCard(
+      `Trip complete: ~${railMiles.toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(totalMinutes)} min. Legacy fare: $${LEGACY_FARE.toFixed(2)}.`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
+  } else {
+    // 3. Transfer pause — brief on screen, but the timer counts through the realistic transfer window.
+    showCard(`Arrived at ${destStation.properties.name}. Transferring to express bus.`);
+    await animateValue(1200, (t) => {
+      updateTimer(railSimSeconds + t * transferSimSeconds);
+    });
 
-  // 5. Final info card with the realistic total.
-  showCard(
-    `Trip complete: ~${(railMiles + busMiles).toFixed(1)} mi &mdash; ` +
-      `Total trip time: ${Math.round(totalMinutes)} min ` +
-      `(rail: ${Math.round(railMinutes)} min, transfer: ${Math.round(transferMinutes)} min, bus: ${Math.round(busMinutes)} min).`
-  );
-  await wait(3500);
-  hideCard();
-  resetTimer();
+    // 4. Bus leg — the selected feeder route, ~9s on screen, timer counts through realistic bus minutes.
+    showCard(`Peak convoy to ${routeName}: 5 buses, ~500 riders, police-escorted through signal priority.`);
+    await animateBusConvoy(busStart, busEnd, 9000, (t) => {
+      updateTimer(railSimSeconds + transferSimSeconds + t * busSimSeconds);
+    });
+    updateTimer(totalMinutes * 60);
+
+    // 5. Final info card with the realistic total.
+    showCard(
+      `Trip complete: ~${(railMiles + busMiles).toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(totalMinutes)} min ` +
+        `(rail: ${Math.round(railMinutes)} min, transfer: ${Math.round(transferMinutes)} min, bus: ${Math.round(busMinutes)} min).`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
+  }
 
   // 6. Reset camera to the default overview.
   await flyToPromise({

@@ -19,6 +19,7 @@ from matplotlib.lines import Line2D
 
 RAIL_COLOR = "#0B3C6B"
 BUS_COLOR = "#E8720C"
+LEGACY_COLOR = "#1F9D6B"  # deep green — Post-Games legacy extension (Phase 2)
 GRAY = "#6E6E6E"
 LIGHT_GRAY = "#D9D9D9"
 BG = "#FFFFFF"
@@ -27,24 +28,24 @@ BG = "#FFFFFF"
 # Figure setup
 # ---------------------------------------------------------------------------
 
-fig, ax = plt.subplots(figsize=(11, 16.5), dpi=200)
+fig, ax = plt.subplots(figsize=(11, 23), dpi=200)
 ax.set_xlim(0, 100)
-ax.set_ylim(0, 166)
+ax.set_ylim(-58, 174)
 ax.axis("off")
 fig.patch.set_facecolor(BG)
 
 # Title
-ax.text(50, 162, "LA 405 Integrated Rail + Bus Feeder Concept", ha="center",
+ax.text(50, 170, "LA 405 Integrated Rail + Bus Feeder Concept", ha="center",
         fontsize=20, fontweight="bold", color=RAIL_COLOR, family="sans-serif")
-ax.text(50, 158, "Rail for speed  \u2022  Buses for last-mile access", ha="center",
+ax.text(50, 166, "Rail for speed  \u2022  Buses for last-mile access", ha="center",
         fontsize=12.5, color=GRAY, style="italic")
 
-# Manual legend row (data coordinates, avoids overlap with title text)
-legend_y = 154
+# Manual legend rows (data coordinates, avoids overlap with title text and the trunk diagram below)
+legend_y = 162
 ax.plot([6, 12], [legend_y, legend_y], color=RAIL_COLOR, linewidth=4, solid_capstyle="round")
-ax.text(14, legend_y, "Underground rail trunk (2 tracks)", va="center", fontsize=8.7, color="#333333")
+ax.text(14, legend_y, "Games-era rail trunk (2 tracks)", va="center", fontsize=8.7, color="#333333")
 ax.plot([48, 54], [legend_y, legend_y], color=BUS_COLOR, linewidth=2, linestyle=(0, (5, 3)))
-ax.text(56, legend_y, "Express bus feeder route", va="center", fontsize=8.7, color="#333333")
+ax.text(56, legend_y, "Games-era bus feeder route", va="center", fontsize=8.7, color="#333333")
 ax.scatter([6], [legend_y - 4], s=110, color=RAIL_COLOR, zorder=6, edgecolors="white", linewidths=1.2)
 ax.text(9.5, legend_y - 4, "Rail station", va="center", fontsize=8.7, color="#333333")
 ax.add_patch(patches.FancyBboxPatch((46, legend_y - 5.6), 4, 3.2,
@@ -52,6 +53,10 @@ ax.add_patch(patches.FancyBboxPatch((46, legend_y - 5.6), 4, 3.2,
                                      facecolor="#FDEBD8", edgecolor=BUS_COLOR, linewidth=1))
 ax.text(52, legend_y - 4, "Bus feeder stop / local business district",
         va="center", fontsize=8.7, color="#333333")
+ax.plot([6, 12], [legend_y - 8, legend_y - 8], color=LEGACY_COLOR, linewidth=4, solid_capstyle="round")
+ax.text(14, legend_y - 8, "Legacy rail extension (post-Games)", va="center", fontsize=8.7, color="#333333")
+ax.text(56, legend_y - 8, "Solid + thick = rail  |  Dashed + thin = bus", va="center",
+        fontsize=8, color="#666666", style="italic")
 
 # ---------------------------------------------------------------------------
 # Main schematic: vertical rail trunk with 4 stations
@@ -204,6 +209,61 @@ ax.text(50, cs_bottom - 0.5,
         "Major future hubs could expand to four tracks for express and local service.",
         ha="center", va="top", fontsize=9, color="#333333", style="italic",
         family="sans-serif")
+
+# ---------------------------------------------------------------------------
+# Phase 2: Post-Games Legacy Network — separated section, distinct green layer
+# ---------------------------------------------------------------------------
+
+ax.plot([2, 98], [-2, -2], color=GRAY, linewidth=0.8)
+ax.text(50, -7, "Phase 2: Post-Games Legacy Network", ha="center", va="center",
+        fontsize=15, fontweight="bold", color=LEGACY_COLOR, family="sans-serif")
+ax.text(50, -11.5,
+        "Opens after 2028 — permanent service extending to Downtown LA, South LA, and Long Beach",
+        ha="center", va="center", fontsize=8.8, color="#333333", style="italic")
+
+# Shared origin: the existing Culver City / Palms hub (drawn in rail navy — it is not a new station)
+origin_x, origin_y = 50, -18
+ax.scatter([origin_x], [origin_y], s=170, color=RAIL_COLOR, zorder=6, edgecolors="white", linewidths=1.5)
+ax.text(origin_x, origin_y + 3.4, "Culver City / Palms Station (existing hub)", ha="center", va="bottom",
+        fontsize=8.3, fontweight="bold", color="#1A1A1A", zorder=6,
+        path_effects=[pe.withStroke(linewidth=3, foreground="white")])
+
+north_x = 28
+south_x = 72
+
+# North corridor branch line (rail — solid + thick, matching the Games-era trunk weight): origin -> Downtown LA
+ax.plot([origin_x, north_x, north_x], [origin_y, -25, -33],
+        color=LEGACY_COLOR, linewidth=4, solid_capstyle="round", zorder=3)
+ax.text(north_x, -21.5, "North Corridor (rail)", ha="center", va="center",
+        fontsize=9.5, fontweight="bold", color=LEGACY_COLOR)
+
+# South corridor branch line (rail — solid + thick, matching the Games-era trunk weight): origin -> Long Beach
+ax.plot([origin_x, south_x, south_x, south_x, south_x], [origin_y, -25, -33, -41, -49],
+        color=LEGACY_COLOR, linewidth=4, solid_capstyle="round", zorder=3)
+ax.text(south_x, -21.5, "South Corridor (rail)", ha="center", va="center",
+        fontsize=9.5, fontweight="bold", color=LEGACY_COLOR)
+
+legacy_stops = [
+    (north_x, -25, "Downtown LA / LA Live &\nConvention Center", "right"),
+    (north_x, -33, "Downtown LA /\nUnion Station", "right"),
+    (south_x, -25, "Inglewood / SoFi Stadium", "left"),
+    (south_x, -33, "Watts / 103rd Street", "left"),
+    (south_x, -41, "Compton Station", "left"),
+    (south_x, -49, "Long Beach\n(North Long Beach Hub)", "left"),
+]
+
+for x, y, label, side in legacy_stops:
+    ax.scatter([x], [y], s=180, color=LEGACY_COLOR, zorder=6, edgecolors="white", linewidths=1.5)
+    label_x = x - 3 if side == "right" else x + 3
+    ha = "right" if side == "right" else "left"
+    ax.text(label_x, y, label, ha=ha, va="center", fontsize=8, fontweight="bold",
+            color="#0F5C40", zorder=5,
+            path_effects=[pe.withStroke(linewidth=2.5, foreground="white")])
+
+ax.text(50, -55,
+        "Legacy rail extension assumed at 35-45 mph (same standard urban rail speed as Phase 1).\n"
+        "Flat legacy fare: $4.25 — reflects longer trip distances beyond the Games-era network.",
+        ha="center", va="top", fontsize=8.6, color="#333333", style="italic", family="sans-serif")
 
 # ---------------------------------------------------------------------------
 # Save
