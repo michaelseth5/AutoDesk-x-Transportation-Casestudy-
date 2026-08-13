@@ -1,82 +1,105 @@
 """
-LA 405 Rail + Bus Feeder Network - Interactive Map
+LA Connect — 110 Gateway Network - Interactive Map
 Generates an interactive Folium map showing a conceptual underground/grade-separated
-rail trunk along the I-405 corridor with express bus feeder routes branching into
-nearby neighborhoods.
+rail trunk along the I-110 corridor (Downtown LA -> South LA -> Long Beach) with
+Games-era express bus feeders, plus a Post-Games Legacy rail expansion.
 
 Run: python3 generate_map.py
 Output: output/la_405_transit_concept.html
 """
 
+import os
+
 import folium
-from folium import DivIcon
 
 # ---------------------------------------------------------------------------
-# Data
+# Palette + shared line-style dicts
+# ---------------------------------------------------------------------------
+# Rule enforced everywhere: solid + thick = rail (regardless of phase),
+# dashed + thin = bus (regardless of phase). Only the color changes by phase.
+
+RAIL_COLOR = "#0B3C6B"    # dark blue — Games-era
+BUS_COLOR = "#E8720C"     # orange — Games-era
+LEGACY_COLOR = "#1F9D6B"  # deep green — Post-Games legacy phase
+
+RAIL_WEIGHT = 6
+BUS_WEIGHT = 3.5
+BUS_DASH = "8,6"
+
+GAMES_RAIL_STYLE = dict(color=RAIL_COLOR, weight=RAIL_WEIGHT, opacity=0.9)
+GAMES_BUS_STYLE = dict(color=BUS_COLOR, weight=BUS_WEIGHT, opacity=0.85, dash_array=BUS_DASH)
+LEGACY_RAIL_STYLE = dict(color=LEGACY_COLOR, weight=RAIL_WEIGHT, opacity=0.9)
+LEGACY_BUS_STYLE = dict(color=LEGACY_COLOR, weight=BUS_WEIGHT, opacity=0.85, dash_array=BUS_DASH)  # unused: no legacy bus routes in this data set
+
+# ---------------------------------------------------------------------------
+# Data — Games-era I-110 trunk
 # ---------------------------------------------------------------------------
 
-RAIL_STATIONS = [
-    {"name": "LAX / Westchester Station", "coords": (33.9416, -118.4085)},
-    {"name": "Culver City / Palms Station", "coords": (34.0211, -118.3965)},
-    {"name": "Sepulveda Pass / UCLA Station", "coords": (34.0736, -118.4390)},
-    {"name": "Sherman Oaks / Van Nuys Station", "coords": (34.1510, -118.4480)},
-]
-
-BUS_FEEDERS = [
-    {"from": "LAX / Westchester Station", "to": "Westchester", "coords": (33.9597, -118.3965)},
-    {"from": "LAX / Westchester Station", "to": "Playa Vista", "coords": (33.9760, -118.4180)},
-    {"from": "Culver City / Palms Station", "to": "Palms", "coords": (34.0203, -118.4140)},
-    {"from": "Culver City / Palms Station", "to": "Mar Vista", "coords": (34.0037, -118.4300)},
-    {"from": "Sepulveda Pass / UCLA Station", "to": "UCLA / Westwood", "coords": (34.0689, -118.4452)},
-    {"from": "Sepulveda Pass / UCLA Station", "to": "Brentwood", "coords": (34.0522, -118.4695)},
-    {"from": "Sherman Oaks / Van Nuys Station", "to": "Sherman Oaks", "coords": (34.1511, -118.4490)},
-    {"from": "Sherman Oaks / Van Nuys Station", "to": "Van Nuys", "coords": (34.1867, -118.4489)},
-]
-
-# Post-Games Legacy Network — Phase 2 rail extension opening after the 2028 Olympics,
-# branching from the existing Culver City / Palms hub into two corridors.
-LEGACY_STATIONS = [
+TRUNK_STATIONS = [
     {"name": "Downtown LA / Union Station", "coords": (34.0561, -118.2365)},
-    {"name": "Downtown LA / LA Live & Convention Center", "coords": (34.0430, -118.2673)},
-    {"name": "Compton Station", "coords": (33.8958, -118.2201)},
-    {"name": "Inglewood / SoFi Stadium", "coords": (33.9535, -118.3392)},
+    {"name": "Downtown LA / LA Live & Crypto.com Arena", "coords": (34.0430, -118.2673)},
+    {"name": "USC / Exposition Park", "coords": (34.0224, -118.2851)},
     {"name": "Watts / 103rd Street", "coords": (33.9425, -118.2412)},
+    {"name": "Compton Station", "coords": (33.8958, -118.2201)},
     {"name": "Long Beach (North Long Beach Hub)", "coords": (33.8853, -118.1937)},
 ]
 
-CULVER_CITY_COORDS = (34.0211, -118.3965)
+# Culver City / Palms is a Games-era bus hub (not on the rail trunk) that becomes
+# a Legacy rail station in Phase 2 — a "bus stop upgraded to permanent rail" story.
+CULVER_CITY_PALMS_COORDS = (34.0211, -118.3965)
 
-# North corridor: Culver City -> Downtown LA / LA Live -> Downtown LA / Union Station
-LEGACY_NORTH_CORRIDOR = [
-    CULVER_CITY_COORDS,
-    (34.0430, -118.2673),
-    (34.0561, -118.2365),
+# Bus feeders branch off the nearest trunk station; Culver City / Palms is itself a
+# second-hop hub with its own onward feeders (USC -> Culver City/Palms -> {...}).
+BUS_FEEDERS = [
+    {"from": "USC / Exposition Park", "to": "Culver City / Palms", "coords": CULVER_CITY_PALMS_COORDS},
+    {"from": "USC / Exposition Park", "to": "Hollywood / Highland", "coords": (34.1016, -118.3269)},
+    {"from": "Culver City / Palms", "to": "Santa Monica", "coords": (34.0195, -118.4912)},
+    {"from": "Culver City / Palms", "to": "LAX / Inglewood", "coords": (33.9535, -118.3392)},
+    {"from": "Culver City / Palms", "to": "SoFi Stadium", "coords": (33.9535, -118.3392)},
 ]
-
-# South corridor: Culver City -> Inglewood/SoFi -> Watts -> Compton -> Long Beach
-LEGACY_SOUTH_CORRIDOR = [
-    CULVER_CITY_COORDS,
-    (33.9535, -118.3392),
-    (33.9425, -118.2412),
-    (33.8958, -118.2201),
-    (33.8853, -118.1937),
-]
-
-LEGACY_FARE = 4.25  # flat fare, USD — higher than feeder-bus fare, reflecting longer distances
-LEGACY_SPEED_MPH = 40  # same standard urban/commuter rail assumption as the Games-era trunk
-
-RAIL_COLOR = "#0B3C6B"    # dark blue — Games-era rail (unchanged)
-BUS_COLOR = "#E8720C"     # orange — Games-era bus feeders (unchanged)
-LEGACY_COLOR = "#1F9D6B"  # deep green — Post-Games legacy extension (new, distinct layer)
 
 STATION_POPUP = (
     "Underground Rail Station — 2 through tracks, one in each direction. "
     "Timed transfers connect to express bus feeders."
 )
 
+# ---------------------------------------------------------------------------
+# Data — Post-Games Legacy rail expansion (Phase 2)
+# ---------------------------------------------------------------------------
+# Two true rail extensions, both anchored at the former Culver City / Palms bus hub.
+# LAX / Inglewood is likewise upgraded from a bus stop to a full rail station.
+
+LAX_INGLEWOOD_COORDS = (33.9535, -118.3392)
+
+LEGACY_STATIONS = [
+    {"name": "Culver City / Palms Station", "coords": CULVER_CITY_PALMS_COORDS,
+     "note": "Upgraded from a Games-era bus hub to a permanent rail station."},
+    {"name": "LAX / Inglewood Station", "coords": LAX_INGLEWOOD_COORDS,
+     "note": "Upgraded from a Games-era bus stop to a permanent rail station."},
+]
+
+# Downtown connector: Culver City/Palms -> LA Live -> Union Station (shared trunk endpoints)
+LEGACY_DOWNTOWN_CONNECTOR = [
+    CULVER_CITY_PALMS_COORDS,
+    (34.0430, -118.2673),  # Downtown LA / LA Live & Crypto.com Arena
+    (34.0561, -118.2365),  # Downtown LA / Union Station
+]
+
+# West Side spine: Culver City/Palms -> LAX/Inglewood -> Watts -> Compton -> Long Beach
+LEGACY_WEST_SPINE = [
+    CULVER_CITY_PALMS_COORDS,
+    LAX_INGLEWOOD_COORDS,
+    (33.9425, -118.2412),  # Watts / 103rd Street
+    (33.8958, -118.2201),  # Compton Station
+    (33.8853, -118.1937),  # Long Beach (North Long Beach Hub)
+]
+
+LEGACY_FARE = 4.25  # flat fare, USD — higher than feeder-bus fare, reflecting longer distances
+LEGACY_SPEED_MPH = 40  # same standard urban/commuter rail assumption as the Games-era trunk
+
 LEGACY_POPUP_TEMPLATE = (
     "Post-Games Legacy Extension — opens after 2028.<br>"
-    "Permanent rail service beyond the Olympics window.<br>"
+    "{note}<br>"
     "Flat fare: ${fare:.2f}"
 )
 
@@ -84,8 +107,8 @@ LEGACY_POPUP_TEMPLATE = (
 # Map setup
 # ---------------------------------------------------------------------------
 
-center_lat = sum(s["coords"][0] for s in RAIL_STATIONS) / len(RAIL_STATIONS)
-center_lon = sum(s["coords"][1] for s in RAIL_STATIONS) / len(RAIL_STATIONS)
+center_lat = sum(s["coords"][0] for s in TRUNK_STATIONS) / len(TRUNK_STATIONS)
+center_lon = sum(s["coords"][1] for s in TRUNK_STATIONS) / len(TRUNK_STATIONS)
 
 m = folium.Map(
     location=[center_lat, center_lon],
@@ -110,29 +133,23 @@ title_html = """
     color: #0B3C6B;
     text-align: center;
 ">
-LA 405 Integrated Rail + Bus Feeder Concept
+LA Connect — 110 Gateway Network
 </div>
 """
 m.get_root().html.add_child(folium.Element(title_html))
 
 # ---------------------------------------------------------------------------
-# Rail trunk line
+# Games-era rail trunk + stations
 # ---------------------------------------------------------------------------
 
-rail_coords = [s["coords"] for s in RAIL_STATIONS]
+trunk_coords = [s["coords"] for s in TRUNK_STATIONS]
 folium.PolyLine(
-    rail_coords,
-    color=RAIL_COLOR,
-    weight=6,
-    opacity=0.9,
-    tooltip="405 Rail Trunk (underground / grade-separated, double track)",
+    trunk_coords,
+    tooltip="I-110 Rail Trunk (underground / grade-separated, double track)",
+    **GAMES_RAIL_STYLE,
 ).add_to(m)
 
-# ---------------------------------------------------------------------------
-# Rail stations
-# ---------------------------------------------------------------------------
-
-for station in RAIL_STATIONS:
+for station in TRUNK_STATIONS:
     lat, lon = station["coords"]
     folium.Marker(
         location=[lat, lon],
@@ -142,10 +159,11 @@ for station in RAIL_STATIONS:
     ).add_to(m)
 
 # ---------------------------------------------------------------------------
-# Bus feeder routes + destination markers
+# Games-era bus feeders (two-hop: trunk -> Culver City/Palms -> onward stops)
 # ---------------------------------------------------------------------------
 
-station_lookup = {s["name"]: s["coords"] for s in RAIL_STATIONS}
+station_lookup = {s["name"]: s["coords"] for s in TRUNK_STATIONS}
+station_lookup["Culver City / Palms"] = CULVER_CITY_PALMS_COORDS
 
 for feeder in BUS_FEEDERS:
     start = station_lookup[feeder["from"]]
@@ -153,11 +171,8 @@ for feeder in BUS_FEEDERS:
 
     folium.PolyLine(
         [start, end],
-        color=BUS_COLOR,
-        weight=3.5,
-        opacity=0.85,
-        dash_array="8,6",
         tooltip=f"Express bus feeder: {feeder['from']} to {feeder['to']}",
+        **GAMES_BUS_STYLE,
     ).add_to(m)
 
     folium.CircleMarker(
@@ -176,44 +191,36 @@ for feeder in BUS_FEEDERS:
     ).add_to(m)
 
 # ---------------------------------------------------------------------------
-# Post-Games Legacy Network (Phase 2) — distinct green layer
+# Post-Games Legacy rail expansion (Phase 2) — solid + thick, matching trunk weight
 # ---------------------------------------------------------------------------
 
 folium.PolyLine(
-    LEGACY_NORTH_CORRIDOR,
-    color=LEGACY_COLOR,
-    weight=6,  # solid + thick, matching the Games-era rail trunk — this is rail, not a bus feeder
-    opacity=0.9,
-    tooltip="Legacy North Corridor (rail): Culver City / Palms → Downtown LA — opens after 2028",
+    LEGACY_DOWNTOWN_CONNECTOR,
+    tooltip="Legacy Downtown Connector (rail): Culver City / Palms → Downtown LA / Union Station — opens after 2028",
+    **LEGACY_RAIL_STYLE,
 ).add_to(m)
 
 folium.PolyLine(
-    LEGACY_SOUTH_CORRIDOR,
-    color=LEGACY_COLOR,
-    weight=6,  # solid + thick, matching the Games-era rail trunk — this is rail, not a bus feeder
-    opacity=0.9,
-    tooltip="Legacy South Corridor (rail): Culver City / Palms → Long Beach — opens after 2028",
+    LEGACY_WEST_SPINE,
+    tooltip="Legacy West Side Spine (rail): Culver City / Palms → Long Beach — opens after 2028",
+    **LEGACY_RAIL_STYLE,
 ).add_to(m)
 
 for station in LEGACY_STATIONS:
     lat, lon = station["coords"]
-    folium.CircleMarker(
+    folium.Marker(
         location=[lat, lon],
-        radius=9,
-        color=LEGACY_COLOR,
-        fill=True,
-        fill_color=LEGACY_COLOR,
-        fill_opacity=0.95,
-        weight=2,
         popup=folium.Popup(
-            f"<b>{station['name']}</b><br>{LEGACY_POPUP_TEMPLATE.format(fare=LEGACY_FARE)}",
-            max_width=280,
+            f"<b>{station['name']}</b><br>"
+            + LEGACY_POPUP_TEMPLATE.format(note=station["note"], fare=LEGACY_FARE),
+            max_width=300,
         ),
         tooltip=f"{station['name']} — Legacy Phase",
+        icon=folium.Icon(color="green", icon="train", prefix="fa"),
     ).add_to(m)
 
 # ---------------------------------------------------------------------------
-# Legend
+# Legend — four line-style/color combinations (color + line style, not color alone)
 # ---------------------------------------------------------------------------
 
 legend_html = """
@@ -250,8 +257,6 @@ m.get_root().html.add_child(folium.Element(legend_html))
 # ---------------------------------------------------------------------------
 # Save
 # ---------------------------------------------------------------------------
-
-import os
 
 os.makedirs("output", exist_ok=True)
 output_path = "output/la_405_transit_concept.html"

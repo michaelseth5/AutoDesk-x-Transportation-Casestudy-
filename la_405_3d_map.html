@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LA 405 Integrated Rail + Bus Feeder Concept — 3D Map</title>
+<title>LA Connect — 110 Gateway Network — 3D Map</title>
 <script src="https://unpkg.com/maplibre-gl@3/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@3/dist/maplibre-gl.css" rel="stylesheet" />
 <style>
@@ -228,7 +228,7 @@
 
 <div id="panel">
   <div id="panel-header">
-    <h1>LA 405 Integrated Rail + Bus Feeder Concept</h1>
+    <h1>LA Connect — 110 Gateway Network</h1>
     <button id="panel-toggle" aria-label="Collapse panel" title="Collapse panel">&minus;</button>
   </div>
   <div id="panel-body">
@@ -272,17 +272,22 @@
 // Data (GeoJSON, embedded — no external files)
 // ---------------------------------------------------------------------------
 
+// Games-era I-110 rail trunk: Downtown LA south through South LA to Long Beach.
 const railStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "LAX / Westchester Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.4085, 33.9416] } },
-    { type: "Feature", properties: { name: "Culver City / Palms Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.3965, 34.0211] } },
-    { type: "Feature", properties: { name: "Sepulveda Pass / UCLA Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.4390, 34.0736] } },
-    { type: "Feature", properties: { name: "Sherman Oaks / Van Nuys Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.4480, 34.1510] } }
+    { type: "Feature", properties: { name: "Downtown LA / Union Station", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.2365, 34.0561] } },
+    { type: "Feature", properties: { name: "Downtown LA / LA Live & Crypto.com Arena", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.2673, 34.0430] } },
+    { type: "Feature", properties: { name: "USC / Exposition Park", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.2851, 34.0224] } },
+    { type: "Feature", properties: { name: "Watts / 103rd Street", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.2412, 33.9425] } },
+    { type: "Feature", properties: { name: "Compton Station", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.2201, 33.8958] } },
+    { type: "Feature", properties: { name: "Long Beach (North Long Beach Hub)", type: "rail_station" },
+      geometry: { type: "Point", coordinates: [-118.1937, 33.8853] } }
   ]
 };
 
@@ -292,47 +297,45 @@ const railTrunkGeoJSON = {
   geometry: {
     type: "LineString",
     coordinates: [
-      [-118.4085, 33.9416],
-      [-118.3965, 34.0211],
-      [-118.4390, 34.0736],
-      [-118.4480, 34.1510]
+      [-118.2365, 34.0561],
+      [-118.2673, 34.0430],
+      [-118.2851, 34.0224],
+      [-118.2412, 33.9425],
+      [-118.2201, 33.8958],
+      [-118.1937, 33.8853]
     ]
   }
 };
 
+// Culver City / Palms is a Games-era bus hub (not on the rail trunk) that becomes a
+// Legacy rail station in Phase 2. Bus feeders are two-hop: USC -> Culver City/Palms
+// -> {Santa Monica, LAX/Inglewood, SoFi Stadium}.
+const CULVER_CITY_PALMS_COORD = [-118.3965, 34.0211];
+
 const busFeedersGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Westchester", from_station: "LAX / Westchester Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4085, 33.9416], [-118.3965, 33.9597]] } },
-    { type: "Feature", properties: { name: "Playa Vista", from_station: "LAX / Westchester Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4085, 33.9416], [-118.4180, 33.9760]] } },
-    { type: "Feature", properties: { name: "Palms", from_station: "Culver City / Palms Station" },
-      geometry: { type: "LineString", coordinates: [[-118.3965, 34.0211], [-118.4140, 34.0203]] } },
-    { type: "Feature", properties: { name: "Mar Vista", from_station: "Culver City / Palms Station" },
-      geometry: { type: "LineString", coordinates: [[-118.3965, 34.0211], [-118.4300, 34.0037]] } },
-    { type: "Feature", properties: { name: "UCLA / Westwood", from_station: "Sepulveda Pass / UCLA Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4390, 34.0736], [-118.4452, 34.0689]] } },
-    { type: "Feature", properties: { name: "Brentwood", from_station: "Sepulveda Pass / UCLA Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4390, 34.0736], [-118.4695, 34.0522]] } },
-    { type: "Feature", properties: { name: "Sherman Oaks", from_station: "Sherman Oaks / Van Nuys Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4480, 34.1510], [-118.4490, 34.1511]] } },
-    { type: "Feature", properties: { name: "Van Nuys", from_station: "Sherman Oaks / Van Nuys Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4480, 34.1510], [-118.4489, 34.1867]] } }
+    { type: "Feature", properties: { name: "Culver City / Palms", from_station: "USC / Exposition Park" },
+      geometry: { type: "LineString", coordinates: [[-118.2851, 34.0224], CULVER_CITY_PALMS_COORD] } },
+    { type: "Feature", properties: { name: "Hollywood / Highland", from_station: "USC / Exposition Park" },
+      geometry: { type: "LineString", coordinates: [[-118.2851, 34.0224], [-118.3269, 34.1016]] } },
+    { type: "Feature", properties: { name: "Santa Monica", from_station: "Culver City / Palms" },
+      geometry: { type: "LineString", coordinates: [CULVER_CITY_PALMS_COORD, [-118.4912, 34.0195]] } },
+    { type: "Feature", properties: { name: "LAX / Inglewood", from_station: "Culver City / Palms" },
+      geometry: { type: "LineString", coordinates: [CULVER_CITY_PALMS_COORD, [-118.3392, 33.9535]] } },
+    { type: "Feature", properties: { name: "SoFi Stadium", from_station: "Culver City / Palms" },
+      geometry: { type: "LineString", coordinates: [CULVER_CITY_PALMS_COORD, [-118.3392, 33.9535]] } }
   ]
 };
 
 const busDestinationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Westchester" }, geometry: { type: "Point", coordinates: [-118.3965, 33.9597] } },
-    { type: "Feature", properties: { name: "Playa Vista" }, geometry: { type: "Point", coordinates: [-118.4180, 33.9760] } },
-    { type: "Feature", properties: { name: "Palms" }, geometry: { type: "Point", coordinates: [-118.4140, 34.0203] } },
-    { type: "Feature", properties: { name: "Mar Vista" }, geometry: { type: "Point", coordinates: [-118.4300, 34.0037] } },
-    { type: "Feature", properties: { name: "UCLA / Westwood" }, geometry: { type: "Point", coordinates: [-118.4452, 34.0689] } },
-    { type: "Feature", properties: { name: "Brentwood" }, geometry: { type: "Point", coordinates: [-118.4695, 34.0522] } },
-    { type: "Feature", properties: { name: "Sherman Oaks" }, geometry: { type: "Point", coordinates: [-118.4490, 34.1511] } },
-    { type: "Feature", properties: { name: "Van Nuys" }, geometry: { type: "Point", coordinates: [-118.4489, 34.1867] } }
+    { type: "Feature", properties: { name: "Culver City / Palms" }, geometry: { type: "Point", coordinates: CULVER_CITY_PALMS_COORD } },
+    { type: "Feature", properties: { name: "Hollywood / Highland" }, geometry: { type: "Point", coordinates: [-118.3269, 34.1016] } },
+    { type: "Feature", properties: { name: "Santa Monica" }, geometry: { type: "Point", coordinates: [-118.4912, 34.0195] } },
+    { type: "Feature", properties: { name: "LAX / Inglewood" }, geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } },
+    { type: "Feature", properties: { name: "SoFi Stadium" }, geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } }
   ]
 };
 
@@ -340,7 +343,12 @@ const RAIL_COLOR = "#0B3C6B";
 const BUS_COLOR = "#E8720C";
 const LEGACY_COLOR = "#1F9D6B"; // deep green — Post-Games legacy extension (Phase 2), distinct from rail/bus
 
-const DEFAULT_VIEW = { center: [-118.42, 34.02], zoom: 11, pitch: 60, bearing: -20 };
+// Shared line-weight constants — rail always renders at RAIL_LINE_WIDTH (solid, thick)
+// regardless of phase; bus always renders at BUS_LINE_WIDTH (dashed, thin) regardless of phase.
+const RAIL_LINE_WIDTH = 5;
+const BUS_LINE_WIDTH = 3;
+
+const DEFAULT_VIEW = { center: [-118.2407, 33.9742], zoom: 11, pitch: 60, bearing: -20 };
 
 // Assumed real-world travel speeds + fixed transfer time, used to compute a realistic
 // door-to-door trip time (independent of the sped-up on-screen animation duration).
@@ -353,37 +361,35 @@ const TRANSFER_MINUTES = 1.5; // walk-to-platform transfer at the station
 const LEGACY_SPEED_MPH = 40; // same standard urban rail assumption as the Games-era trunk
 const LEGACY_FARE = 4.25; // flat fare, USD — higher than feeder-bus fare, reflects longer distances
 
+// Culver City / Palms and LAX / Inglewood are the two NEW Legacy stations — both
+// upgrade from a Games-era bus stop to a full rail station in Phase 2.
 const legacyStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Downtown LA / Union Station", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2365, 34.0561] } },
-    { type: "Feature", properties: { name: "Downtown LA / LA Live & Convention Center", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2673, 34.0430] } },
-    { type: "Feature", properties: { name: "Compton Station", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2201, 33.8958] } },
-    { type: "Feature", properties: { name: "Inglewood / SoFi Stadium", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } },
-    { type: "Feature", properties: { name: "Watts / 103rd Street", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2412, 33.9425] } },
-    { type: "Feature", properties: { name: "Long Beach (North Long Beach Hub)", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.1937, 33.8853] } }
+    { type: "Feature", properties: { name: "Culver City / Palms Station", type: "legacy_station",
+        note: "Upgraded from a Games-era bus hub to a permanent rail station." },
+      geometry: { type: "Point", coordinates: CULVER_CITY_PALMS_COORD } },
+    { type: "Feature", properties: { name: "LAX / Inglewood Station", type: "legacy_station",
+        note: "Upgraded from a Games-era bus stop to a permanent rail station." },
+      geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } }
   ]
 };
 
-const CULVER_CITY_COORD = [-118.3965, 34.0211]; // matches railStationsGeoJSON.features[1]
+const LAX_INGLEWOOD_COORD = [-118.3392, 33.9535];
 
-// North corridor: Culver City / Palms -> Downtown LA / LA Live -> Downtown LA / Union Station
-const legacyNorthCorridorCoords = [
-  CULVER_CITY_COORD,
+// Downtown Connector: Culver City / Palms -> Downtown LA / LA Live -> Downtown LA / Union Station
+// (upgrades the former USC -> Culver City/Palms bus feeder into permanent rail).
+const legacyDowntownConnectorCoords = [
+  CULVER_CITY_PALMS_COORD,
   [-118.2673, 34.0430],
   [-118.2365, 34.0561]
 ];
 
-// South corridor: Culver City / Palms -> Inglewood/SoFi -> Watts -> Compton -> Long Beach
-const legacySouthCorridorCoords = [
-  CULVER_CITY_COORD,
-  [-118.3392, 33.9535],
+// West Side Spine: Culver City / Palms -> LAX/Inglewood -> Watts -> Compton -> Long Beach
+// (a second rail spine giving the west side a direct connection south, independent of Downtown).
+const legacyWestSideSpineCoords = [
+  CULVER_CITY_PALMS_COORD,
+  LAX_INGLEWOOD_COORD,
   [-118.2412, 33.9425],
   [-118.2201, 33.8958],
   [-118.1937, 33.8853]
@@ -392,24 +398,13 @@ const legacySouthCorridorCoords = [
 const legacyRoutesGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "North Corridor" }, geometry: { type: "LineString", coordinates: legacyNorthCorridorCoords } },
-    { type: "Feature", properties: { name: "South Corridor" }, geometry: { type: "LineString", coordinates: legacySouthCorridorCoords } }
+    { type: "Feature", properties: { name: "Downtown Connector" }, geometry: { type: "LineString", coordinates: legacyDowntownConnectorCoords } },
+    { type: "Feature", properties: { name: "West Side Spine" }, geometry: { type: "LineString", coordinates: legacyWestSideSpineCoords } }
   ]
 };
 
-// Maps a legacy station name to which corridor it's on and how many stops in.
-const LEGACY_BRANCHES = {
-  "Downtown LA / LA Live & Convention Center": { corridor: legacyNorthCorridorCoords, stopIndex: 1 },
-  "Downtown LA / Union Station": { corridor: legacyNorthCorridorCoords, stopIndex: 2 },
-  "Inglewood / SoFi Stadium": { corridor: legacySouthCorridorCoords, stopIndex: 1 },
-  "Watts / 103rd Street": { corridor: legacySouthCorridorCoords, stopIndex: 2 },
-  "Compton Station": { corridor: legacySouthCorridorCoords, stopIndex: 3 },
-  "Long Beach (North Long Beach Hub)": { corridor: legacySouthCorridorCoords, stopIndex: 4 }
-};
-
-const LEGACY_STATION_POPUP =
-  "Post-Games Legacy Extension — opens after 2028. " +
-  "Permanent rail service beyond the Olympics window. Flat fare: $" + LEGACY_FARE.toFixed(2) + ".";
+const LEGACY_STATION_POPUP = (note) =>
+  "Post-Games Legacy Extension — opens after 2028. " + note + " Flat fare: $" + LEGACY_FARE.toFixed(2) + ".";
 
 const RAIL_STATION_POPUP =
   "Underground Rail Station — 2 through tracks, one in each direction. " +
@@ -494,7 +489,7 @@ function addRailLayers() {
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
       "line-color": RAIL_COLOR,
-      "line-width": 5
+      "line-width": RAIL_LINE_WIDTH
     }
   });
 
@@ -560,7 +555,7 @@ function addBusLayers() {
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
       "line-color": BUS_COLOR,
-      "line-width": 3,
+      "line-width": BUS_LINE_WIDTH,
       "line-dasharray": [2, 2]
     }
   });
@@ -633,7 +628,7 @@ function addLegacyLayers() {
     layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
     paint: {
       "line-color": LEGACY_COLOR,
-      "line-width": 5
+      "line-width": RAIL_LINE_WIDTH
     }
   });
 
@@ -698,7 +693,7 @@ function wireInteractions() {
     const f = e.features[0];
     new maplibregl.Popup()
       .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(`<strong>${f.properties.name}</strong><br>${LEGACY_STATION_POPUP}`)
+      .setHTML(`<strong>${f.properties.name}</strong><br>${LEGACY_STATION_POPUP(f.properties.note)}`)
       .addTo(map);
   });
 
@@ -739,7 +734,7 @@ panelToggleBtn.addEventListener("click", () => {
 // Trip destination dropdown (all rail stations except the assumed origin)
 // ---------------------------------------------------------------------------
 
-const originStation = railStationsGeoJSON.features[0]; // LAX / Westchester Station
+const originStation = railStationsGeoJSON.features[0]; // Downtown LA / Union Station
 const tripDestinationSelect = document.getElementById("trip-destination");
 const tripRouteSelect = document.getElementById("trip-route");
 const tripRouteLabel = document.getElementById("trip-route-label");
@@ -844,18 +839,26 @@ function pathMiles(coords) {
 }
 
 // Builds the train-leg path for a chosen destination: a straight slice of the
-// Games-era trunk, or — for a legacy station — the trunk out to Culver City / Palms
-// followed by the relevant legacy corridor segment.
+// Games-era I-110 trunk (origin = Union Station), or — for a Legacy station —
+// the Downtown Connector ridden in reverse from Union Station out to Culver City /
+// Palms, continuing onto the West Side Spine if the destination is further out
+// (LAX / Inglewood). Culver City / Palms isn't on the Games-era trunk at all, so
+// this is the only way to reach it once Phase 2 opens.
 function getTripPath(destName) {
   const gamesIdx = railStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
   if (gamesIdx !== -1) {
     return { coords: railTrunkGeoJSON.geometry.coordinates.slice(0, gamesIdx + 1), isLegacy: false };
   }
 
-  const branch = LEGACY_BRANCHES[destName];
-  const trunkToCulverCity = railTrunkGeoJSON.geometry.coordinates.slice(0, 2); // LAX/Westchester -> Culver City
-  const branchSegment = branch.corridor.slice(1, branch.stopIndex + 1); // excludes Culver City (already included)
-  return { coords: trunkToCulverCity.concat(branchSegment), isLegacy: true };
+  const reversedDowntownConnector = [...legacyDowntownConnectorCoords].reverse(); // Union Station -> LA Live -> Culver City/Palms
+
+  if (destName === "Culver City / Palms Station") {
+    return { coords: reversedDowntownConnector, isLegacy: true };
+  }
+  if (destName === "LAX / Inglewood Station") {
+    return { coords: reversedDowntownConnector.concat([LAX_INGLEWOOD_COORD]), isLegacy: true };
+  }
+  throw new Error("Unknown destination: " + destName);
 }
 
 function animateValue(duration, onFrame) {
@@ -973,23 +976,30 @@ async function simulateTrip() {
   const railMinutes = (railMiles / railSpeed) * 60;
   const railSimSeconds = railMinutes * 60;
 
+  // Not every Games-era trunk station has a bus feeder attached (e.g. Watts, Compton,
+  // and Long Beach are direct rail stops with no onward feeder in this data set) — only
+  // run the bus leg when a matching feeder actually exists for the chosen destination.
   let routeName, busStart, busEnd, busMiles, busMinutes, busSimSeconds;
   const transferMinutes = TRANSFER_MINUTES;
   const transferSimSeconds = transferMinutes * 60;
+  let hasBusLeg = false;
 
   if (!pathInfo.isLegacy) {
     routeName = tripRouteSelect.value;
     const feeder = busFeedersGeoJSON.features.find(
       (f) => f.properties.from_station === destStation.properties.name && f.properties.name === routeName
     );
-    busStart = feeder.geometry.coordinates[0];
-    busEnd = feeder.geometry.coordinates[1];
-    busMiles = haversineMiles(busStart, busEnd);
-    busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
-    busSimSeconds = busMinutes * 60;
+    if (feeder) {
+      hasBusLeg = true;
+      busStart = feeder.geometry.coordinates[0];
+      busEnd = feeder.geometry.coordinates[1];
+      busMiles = haversineMiles(busStart, busEnd);
+      busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
+      busSimSeconds = busMinutes * 60;
+    }
   }
 
-  const totalMinutes = pathInfo.isLegacy ? railMinutes : railMinutes + transferMinutes + busMinutes;
+  const totalMinutes = hasBusLeg ? railMinutes + transferMinutes + busMinutes : railMinutes;
 
   updateTimer(0);
 
@@ -1034,7 +1044,7 @@ async function simulateTrip() {
     await wait(3500);
     hideCard();
     resetTimer();
-  } else {
+  } else if (hasBusLeg) {
     // 3. Transfer pause — brief on screen, but the timer counts through the realistic transfer window.
     showCard(`Arrived at ${destStation.properties.name}. Transferring to express bus.`);
     await animateValue(1200, (t) => {
@@ -1053,6 +1063,15 @@ async function simulateTrip() {
       `Trip complete: ~${(railMiles + busMiles).toFixed(1)} mi &mdash; ` +
         `Total trip time: ${Math.round(totalMinutes)} min ` +
         `(rail: ${Math.round(railMinutes)} min, transfer: ${Math.round(transferMinutes)} min, bus: ${Math.round(busMinutes)} min).`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
+  } else {
+    // Direct rail stop with no onward bus feeder (e.g. Watts, Compton, Long Beach) — trip ends at arrival.
+    showCard(
+      `Trip complete: ~${railMiles.toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(totalMinutes)} min (rail only, no feeder bus at this stop).`
     );
     await wait(3500);
     hideCard();
