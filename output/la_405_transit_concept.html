@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c59a942d3a3a513b9824e5db063b9470 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    top: 10px; left: 50%; transform: translateX(-50%);
+    z-index: 9999;
+    background: white;
+    padding: 10px 22px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0B3C6B;
+    text-align: center;
+">
+LA 405 Integrated Rail + Bus Feeder Concept
+</div>
+    
+<div style="
+    position: fixed;
+    bottom: 30px; left: 30px;
+    z-index: 9999;
+    background: white;
+    padding: 12px 16px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+">
+<b style="font-size:14px;">Legend</b><br>
+<span style="display:inline-block;width:22px;height:4px;background:#0B3C6B;margin-right:8px;"></span>
+Underground rail trunk<br>
+<span style="display:inline-block;width:22px;height:4px;background:#E8720C;margin-right:8px;"></span>
+Express bus feeder route<br>
+<span style="display:inline-block;width:12px;height:12px;background:#3186cc;border-radius:50%;margin-right:8px;"></span>
+Rail station<br>
+<span style="display:inline-block;width:12px;height:12px;background:#E8720C;border-radius:50%;margin-right:8px;"></span>
+Bus stop / local business district
+</div>
+    
+            <div class="folium-map" id="map_c59a942d3a3a513b9824e5db063b9470" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c59a942d3a3a513b9824e5db063b9470 = L.map(
+                "map_c59a942d3a3a513b9824e5db063b9470",
+                {
+                    center: [34.046825, -118.423],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 11,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_727d4116897936149a7a23d207040f13 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_727d4116897936149a7a23d207040f13.addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            var poly_line_4a01a0194879a9631252f4f51b0168ae = L.polyline(
+                [[33.9416, -118.4085], [34.0211, -118.3965], [34.0736, -118.439], [34.151, -118.448]],
+                {"bubblingMouseEvents": true, "color": "#0B3C6B", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#0B3C6B", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_4a01a0194879a9631252f4f51b0168ae.bindTooltip(
+                `<div>
+                     405 Rail Trunk (underground / grade-separated, double track)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_72936f37b0f7d0e590dd19a6c66d2da9 = L.marker(
+                [33.9416, -118.4085],
+                {
+}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            var icon_8b22a32e9c759e9ca1ed50a603e1dbce = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_13b6963fb2b7ce7561867fff364675ff = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_9bc9d64f4676d70322ce60aa84e153f2 = $(`<div id="html_9bc9d64f4676d70322ce60aa84e153f2" style="width: 100.0%; height: 100.0%;"><b>LAX / Westchester Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
+                popup_13b6963fb2b7ce7561867fff364675ff.setContent(html_9bc9d64f4676d70322ce60aa84e153f2);
+            
+        
+
+        marker_72936f37b0f7d0e590dd19a6c66d2da9.bindPopup(popup_13b6963fb2b7ce7561867fff364675ff)
+        ;
+
+        
+    
+    
+            marker_72936f37b0f7d0e590dd19a6c66d2da9.bindTooltip(
+                `<div>
+                     LAX / Westchester Station
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_72936f37b0f7d0e590dd19a6c66d2da9.setIcon(icon_8b22a32e9c759e9ca1ed50a603e1dbce);
+            
+    
+            var marker_ffe95415a1611dd817625dcb15c778e7 = L.marker(
+                [34.0211, -118.3965],
+                {
+}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            var icon_aa1389251007f472d76ff7b2c5bb3424 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_504e90cfdeb96408c320df0c04f398f9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_bfe2d6b55f1202df14e0c8cc49dfdc96 = $(`<div id="html_bfe2d6b55f1202df14e0c8cc49dfdc96" style="width: 100.0%; height: 100.0%;"><b>Culver City / Palms Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
+                popup_504e90cfdeb96408c320df0c04f398f9.setContent(html_bfe2d6b55f1202df14e0c8cc49dfdc96);
+            
+        
+
+        marker_ffe95415a1611dd817625dcb15c778e7.bindPopup(popup_504e90cfdeb96408c320df0c04f398f9)
+        ;
+
+        
+    
+    
+            marker_ffe95415a1611dd817625dcb15c778e7.bindTooltip(
+                `<div>
+                     Culver City / Palms Station
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ffe95415a1611dd817625dcb15c778e7.setIcon(icon_aa1389251007f472d76ff7b2c5bb3424);
+            
+    
+            var marker_a9f2c05d3b0a39eb577a18a149f1b551 = L.marker(
+                [34.0736, -118.439],
+                {
+}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            var icon_f18d139ea2c2afe6b97d06d7c72cc5a6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3e85441c47dcb95aa735c2576a135ad3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fb88f93c7a94777b3e78d92da0660ec4 = $(`<div id="html_fb88f93c7a94777b3e78d92da0660ec4" style="width: 100.0%; height: 100.0%;"><b>Sepulveda Pass / UCLA Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
+                popup_3e85441c47dcb95aa735c2576a135ad3.setContent(html_fb88f93c7a94777b3e78d92da0660ec4);
+            
+        
+
+        marker_a9f2c05d3b0a39eb577a18a149f1b551.bindPopup(popup_3e85441c47dcb95aa735c2576a135ad3)
+        ;
+
+        
+    
+    
+            marker_a9f2c05d3b0a39eb577a18a149f1b551.bindTooltip(
+                `<div>
+                     Sepulveda Pass / UCLA Station
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a9f2c05d3b0a39eb577a18a149f1b551.setIcon(icon_f18d139ea2c2afe6b97d06d7c72cc5a6);
+            
+    
+            var marker_affb1004ae182fb087437bb86440b8de = L.marker(
+                [34.151, -118.448],
+                {
+}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            var icon_55cc68a16d53414c9f2efbf6aadaff97 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "train",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5485a6e64620bdb987aedce6adf4f18b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b6509dc170252dc9716e8a909a9d4e36 = $(`<div id="html_b6509dc170252dc9716e8a909a9d4e36" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks / Van Nuys Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
+                popup_5485a6e64620bdb987aedce6adf4f18b.setContent(html_b6509dc170252dc9716e8a909a9d4e36);
+            
+        
+
+        marker_affb1004ae182fb087437bb86440b8de.bindPopup(popup_5485a6e64620bdb987aedce6adf4f18b)
+        ;
+
+        
+    
+    
+            marker_affb1004ae182fb087437bb86440b8de.bindTooltip(
+                `<div>
+                     Sherman Oaks / Van Nuys Station
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_affb1004ae182fb087437bb86440b8de.setIcon(icon_55cc68a16d53414c9f2efbf6aadaff97);
+            
+    
+            var poly_line_cd2396f082a6d402a715e275c44e6e92 = L.polyline(
+                [[33.9416, -118.4085], [33.9597, -118.3965]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_cd2396f082a6d402a715e275c44e6e92.bindTooltip(
+                `<div>
+                     Express bus feeder: LAX / Westchester Station to Westchester
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e574989eb8713024e2773c0311162c1 = L.circleMarker(
+                [33.9597, -118.3965],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_0cd1473087cb77f7a1e7537b3d2fa33b = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_f752aa9e5160d92c245651f024c3e1b6 = $(`<div id="html_f752aa9e5160d92c245651f024c3e1b6" style="width: 100.0%; height: 100.0%;"><b>Westchester</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_0cd1473087cb77f7a1e7537b3d2fa33b.setContent(html_f752aa9e5160d92c245651f024c3e1b6);
+            
+        
+
+        circle_marker_5e574989eb8713024e2773c0311162c1.bindPopup(popup_0cd1473087cb77f7a1e7537b3d2fa33b)
+        ;
+
+        
+    
+    
+            circle_marker_5e574989eb8713024e2773c0311162c1.bindTooltip(
+                `<div>
+                     Westchester — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6723cad1d3bbd78e89ef696abb422cfd = L.polyline(
+                [[33.9416, -118.4085], [33.976, -118.418]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_6723cad1d3bbd78e89ef696abb422cfd.bindTooltip(
+                `<div>
+                     Express bus feeder: LAX / Westchester Station to Playa Vista
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_64dd319ff3c4f91a85e589670b38d955 = L.circleMarker(
+                [33.976, -118.418],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_01d959df175dd6cc29ce829eb21b7bec = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_cc5cf37f0f42cdbdce4deda888c5e4ed = $(`<div id="html_cc5cf37f0f42cdbdce4deda888c5e4ed" style="width: 100.0%; height: 100.0%;"><b>Playa Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_01d959df175dd6cc29ce829eb21b7bec.setContent(html_cc5cf37f0f42cdbdce4deda888c5e4ed);
+            
+        
+
+        circle_marker_64dd319ff3c4f91a85e589670b38d955.bindPopup(popup_01d959df175dd6cc29ce829eb21b7bec)
+        ;
+
+        
+    
+    
+            circle_marker_64dd319ff3c4f91a85e589670b38d955.bindTooltip(
+                `<div>
+                     Playa Vista — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_fb28182b976f7f0f103d08b2445e79bd = L.polyline(
+                [[34.0211, -118.3965], [34.0203, -118.414]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_fb28182b976f7f0f103d08b2445e79bd.bindTooltip(
+                `<div>
+                     Express bus feeder: Culver City / Palms Station to Palms
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_95bdac27eafaa9ed85baffd321bd924a = L.circleMarker(
+                [34.0203, -118.414],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_6c24b1bccb4e12254e09b4252f105cc2 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_1b68a3102a20e22d2df1fd8d031bb152 = $(`<div id="html_1b68a3102a20e22d2df1fd8d031bb152" style="width: 100.0%; height: 100.0%;"><b>Palms</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_6c24b1bccb4e12254e09b4252f105cc2.setContent(html_1b68a3102a20e22d2df1fd8d031bb152);
+            
+        
+
+        circle_marker_95bdac27eafaa9ed85baffd321bd924a.bindPopup(popup_6c24b1bccb4e12254e09b4252f105cc2)
+        ;
+
+        
+    
+    
+            circle_marker_95bdac27eafaa9ed85baffd321bd924a.bindTooltip(
+                `<div>
+                     Palms — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_cec83b283c376f1f65c855f0865e3489 = L.polyline(
+                [[34.0211, -118.3965], [34.0037, -118.43]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_cec83b283c376f1f65c855f0865e3489.bindTooltip(
+                `<div>
+                     Express bus feeder: Culver City / Palms Station to Mar Vista
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a4540bdea7e77f63edca2599dfef949 = L.circleMarker(
+                [34.0037, -118.43],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_9c5faf2edec3a6fe7ad47caef8137e58 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_b47ecdfe1701ec3db296c795de8228d1 = $(`<div id="html_b47ecdfe1701ec3db296c795de8228d1" style="width: 100.0%; height: 100.0%;"><b>Mar Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_9c5faf2edec3a6fe7ad47caef8137e58.setContent(html_b47ecdfe1701ec3db296c795de8228d1);
+            
+        
+
+        circle_marker_3a4540bdea7e77f63edca2599dfef949.bindPopup(popup_9c5faf2edec3a6fe7ad47caef8137e58)
+        ;
+
+        
+    
+    
+            circle_marker_3a4540bdea7e77f63edca2599dfef949.bindTooltip(
+                `<div>
+                     Mar Vista — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_26a5dbff09ef59187112bb58aaffca2d = L.polyline(
+                [[34.0736, -118.439], [34.0689, -118.4452]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_26a5dbff09ef59187112bb58aaffca2d.bindTooltip(
+                `<div>
+                     Express bus feeder: Sepulveda Pass / UCLA Station to UCLA / Westwood
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ec025828b97092aed73f16ed0861f4c1 = L.circleMarker(
+                [34.0689, -118.4452],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_314c838fb81de8004f8686d42a7fab72 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_fb735e4c2c0ffb51ba9a4e2da3827c18 = $(`<div id="html_fb735e4c2c0ffb51ba9a4e2da3827c18" style="width: 100.0%; height: 100.0%;"><b>UCLA / Westwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_314c838fb81de8004f8686d42a7fab72.setContent(html_fb735e4c2c0ffb51ba9a4e2da3827c18);
+            
+        
+
+        circle_marker_ec025828b97092aed73f16ed0861f4c1.bindPopup(popup_314c838fb81de8004f8686d42a7fab72)
+        ;
+
+        
+    
+    
+            circle_marker_ec025828b97092aed73f16ed0861f4c1.bindTooltip(
+                `<div>
+                     UCLA / Westwood — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a55f0e2c018901f39577e87201e3cc27 = L.polyline(
+                [[34.0736, -118.439], [34.0522, -118.4695]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_a55f0e2c018901f39577e87201e3cc27.bindTooltip(
+                `<div>
+                     Express bus feeder: Sepulveda Pass / UCLA Station to Brentwood
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_458b385596013c2b92c1a99b028e1cfe = L.circleMarker(
+                [34.0522, -118.4695],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_83605b8735afe9d6d3f3b4d7d8b60263 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_3e6e79a0319abcee9e30f0bca7dc7e8c = $(`<div id="html_3e6e79a0319abcee9e30f0bca7dc7e8c" style="width: 100.0%; height: 100.0%;"><b>Brentwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_83605b8735afe9d6d3f3b4d7d8b60263.setContent(html_3e6e79a0319abcee9e30f0bca7dc7e8c);
+            
+        
+
+        circle_marker_458b385596013c2b92c1a99b028e1cfe.bindPopup(popup_83605b8735afe9d6d3f3b4d7d8b60263)
+        ;
+
+        
+    
+    
+            circle_marker_458b385596013c2b92c1a99b028e1cfe.bindTooltip(
+                `<div>
+                     Brentwood — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_aafeff0b51ca66904410a45cad877d17 = L.polyline(
+                [[34.151, -118.448], [34.1511, -118.449]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_aafeff0b51ca66904410a45cad877d17.bindTooltip(
+                `<div>
+                     Express bus feeder: Sherman Oaks / Van Nuys Station to Sherman Oaks
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c192be8f1d20e253c1e40c29476b7fb8 = L.circleMarker(
+                [34.1511, -118.449],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_6d87c86076640372928f09b9d92d30fb = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_f203a3b74d4bf6ef9bdebaee4900f2ea = $(`<div id="html_f203a3b74d4bf6ef9bdebaee4900f2ea" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_6d87c86076640372928f09b9d92d30fb.setContent(html_f203a3b74d4bf6ef9bdebaee4900f2ea);
+            
+        
+
+        circle_marker_c192be8f1d20e253c1e40c29476b7fb8.bindPopup(popup_6d87c86076640372928f09b9d92d30fb)
+        ;
+
+        
+    
+    
+            circle_marker_c192be8f1d20e253c1e40c29476b7fb8.bindTooltip(
+                `<div>
+                     Sherman Oaks — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e4f99c5094a1147a1e54382f1e241a81 = L.polyline(
+                [[34.151, -118.448], [34.1867, -118.4489]],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+            poly_line_e4f99c5094a1147a1e54382f1e241a81.bindTooltip(
+                `<div>
+                     Express bus feeder: Sherman Oaks / Van Nuys Station to Van Nuys
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_940939ae7469181e4a2c1c7d2b43027b = L.circleMarker(
+                [34.1867, -118.4489],
+                {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+        
+    
+        var popup_1fde7104c31ad560c691bc34416f6a5a = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_fd9a61a167d5195192588fed0757b3e0 = $(`<div id="html_fd9a61a167d5195192588fed0757b3e0" style="width: 100.0%; height: 100.0%;"><b>Van Nuys</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_1fde7104c31ad560c691bc34416f6a5a.setContent(html_fd9a61a167d5195192588fed0757b3e0);
+            
+        
+
+        circle_marker_940939ae7469181e4a2c1c7d2b43027b.bindPopup(popup_1fde7104c31ad560c691bc34416f6a5a)
+        ;
+
+        
+    
+    
+            circle_marker_940939ae7469181e4a2c1c7d2b43027b.bindTooltip(
+                `<div>
+                     Van Nuys — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

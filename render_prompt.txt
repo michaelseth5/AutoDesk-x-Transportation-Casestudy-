@@ -1,0 +1,62 @@
+LA 405 RAIL + BUS FEEDER CONCEPT — PHOTOREALISTIC RENDER PROMPT
+For use with Midjourney, DALL-E, Stable Diffusion, or similar image generators.
+Recommended aspect ratio: 16:9 (slide-deck friendly).
+
+--------------------------------------------------------------------------------
+PROMPT
+--------------------------------------------------------------------------------
+
+Photorealistic 3D isometric aerial architectural visualization of a Los Angeles
+freeway transit corridor, camera angled 30-45 degrees downward over a dense
+urban highway styled after the I-405: multiple lanes of traffic, concrete
+overpasses, low-rise commercial buildings, and palm-tree-lined surface streets
+typical of LA.
+
+Down the center median of the freeway runs a dark navy blue (#0B3C6B) elevated
+double-track rail line on sleek modern concrete piers, with a streamlined
+high-speed train visible mid-transit. Mid-scene, a glass-and-steel elevated
+rail station platform is visible, with covered escalators descending from the
+platform down to a street-level bus plaza below.
+
+On the surface street branching away from the station, one traffic lane in
+each direction is painted bright orange (#E8720C) with bold white "BUS ONLY"
+stencil lettering, visually distinct from the surrounding gray asphalt lanes —
+a dedicated peak-hour bus lane. Small overhead signage on poles above the
+lane reads "BUS LANE 6-9AM / 4-7PM".
+
+On that dedicated orange bus lane, a tight convoy of five articulated express
+buses travels nose-to-tail in tight formation, clearly moving together as a
+pack with a sense of coordinated motion. At the head of the convoy, a police
+escort vehicle (motorcycle or cruiser) with illuminated flashing light bars
+leads the buses through an intersection that is clearly held open for them —
+a green signal or visibly cleared cross-traffic ahead, conveying right-of-way
+and priority movement.
+
+Lighting: golden hour / early morning, warm low-angle sunlight, soft shadows,
+light atmospheric haze typical of LA. Background city context is softly
+blurred, with sharp focus held on the rail line, station, and bus convoy.
+
+Style: clean, modern, polished architectural-visualization look — like an
+Autodesk Forma or Revit concept render — rather than gritty photorealism.
+Presentation-ready. Color palette limited to dark navy blue (rail), orange
+(bus lane and signage), white, and warm neutral tones. No text overlays
+anywhere in the image except the "BUS ONLY" lane stencil and the "BUS LANE
+6-9AM / 4-7PM" sign — no other labels, watermarks, or UI elements.
+
+--------------------------------------------------------------------------------
+OPTIONAL MIDJOURNEY SUFFIX
+--------------------------------------------------------------------------------
+--ar 16:9 --style raw --v 6.1
+
+--------------------------------------------------------------------------------
+NOTES
+--------------------------------------------------------------------------------
+- If the model struggles with legible text ("BUS ONLY", the sign copy), expect
+  to regenerate a few times or clean up the lettering in post — text rendering
+  is the weakest point for most image generators.
+- If you want a version with zero readable text (safest for a clean render),
+  drop the two sentences describing the stencil and sign copy.
+- This is a standalone hero visual for the pitch deck — it is not wired into
+  generate_map.py or generate_schematic.py, and uses no shared data from
+  those scripts since it's an illustrative/atmospheric shot rather than a
+  geographically accurate diagram.
