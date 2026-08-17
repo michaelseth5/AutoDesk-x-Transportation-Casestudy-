@@ -280,7 +280,7 @@
     </label>
 
     <div class="trip-controls">
-      <div class="trip-origin-note">Start at LAX — where the Sepulveda Corridor meets the C Line.</div>
+      <div class="trip-origin-note">Start at LAX — where the LA Connect Sepulveda Extension Concept meets the real C Line.</div>
       <label for="trip-destination">Simulate trip to:</label>
       <select id="trip-destination"></select>
 
@@ -299,10 +299,10 @@
     </div>
 
     <div class="legend">
-      <div class="legend-caption">Solid + thick = rail &nbsp;|&nbsp; Dashed/dotted + thin = bus / future</div>
-      <div class="legend-row"><span class="swatch phase0-line"></span> Phase 0 — Existing / Approved Metro</div>
+      <div class="legend-caption">Solid + thick = real rail &nbsp;|&nbsp; Dashed/dotted + thin = bus / future / concept-only</div>
+      <div class="legend-row"><span class="swatch phase0-line"></span> Phase 0 — Existing / Selected Metro (C Line, K Line, Sepulveda LPA)</div>
       <div class="legend-row"><span class="swatch phase1-line"></span> Phase 1 — Bus feeder route</div>
-      <div class="legend-row"><span class="swatch phase2-line"></span> Phase 2 — New Rail Connector</div>
+      <div class="legend-row"><span class="swatch phase2-line"></span> Phase 2 — New Rail Connector (concept)</div>
       <div class="legend-row"><span class="swatch bus-lane-fill"></span> Active peak-hour bus lane</div>
       <div class="legend-row"><span class="swatch train-dot"></span> Train</div>
       <div class="legend-row"><span class="swatch synergy-ring-ok"></span> Transfer synergy: within 10 min (standard met)</div>
@@ -336,18 +336,21 @@ const RAIL_LINE_WIDTH = 5;
 const BUS_LINE_WIDTH = 3;
 const FUTURE_LINE_WIDTH = 2.5;
 
-// Phase 0: Sepulveda Transit Corridor (Metro-approved, funded, underground).
+// LA Connect Sepulveda Extension Concept — an UNOFFICIAL idea this project sketched
+// before Metro selected its real Locally Preferred Alternative. NOT part of Metro's
+// selected Sepulveda Transit Corridor alignment (see sepulvedaLpaStationsGeoJSON
+// below for the real project: Van Nuys <-> Expo/Sepulveda, selected Jan 2026).
 // Ordered north -> south; index 0 is the assumed trip-simulator origin.
 const sepulvedaStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Sherman Oaks / Van Nuys", type: "phase0_station" },
+    { type: "Feature", properties: { name: "Sherman Oaks / Van Nuys", type: "concept_station" },
       geometry: { type: "Point", coordinates: [-118.4480, 34.1510] } },
-    { type: "Feature", properties: { name: "Sepulveda Pass / UCLA", type: "phase0_station" },
+    { type: "Feature", properties: { name: "Sepulveda Pass / UCLA", type: "concept_station" },
       geometry: { type: "Point", coordinates: [-118.4390, 34.0736] } },
-    { type: "Feature", properties: { name: "Culver City / Palms", type: "phase0_station" },
+    { type: "Feature", properties: { name: "Culver City / Palms", type: "concept_station" },
       geometry: { type: "Point", coordinates: [-118.3965, 34.0211] } },
-    { type: "Feature", properties: { name: "LAX / Westchester", type: "phase0_station" },
+    { type: "Feature", properties: { name: "LAX / Westchester", type: "concept_station" },
       geometry: { type: "Point", coordinates: [-118.4085, 33.9416] } }
   ]
 };
@@ -359,19 +362,66 @@ const sepulvedaTrunkGeoJSON = {
   geometry: { type: "LineString", coordinates: sepulvedaTrunkCoords }
 };
 
+const SEPULVEDA_EXTENSION_CONCEPT_POPUP =
+  "LA Connect Extension Concept — NOT part of Metro's selected Sepulveda Transit " +
+  "Corridor Locally Preferred Alternative (Van Nuys ↔ Expo/Sepulveda, selected " +
+  "January 2026). This is an unofficial concept sketched by this project; it is not " +
+  "funded, approved, or under environmental review.";
+
+// Phase 0 (real, selected, unfunded): Sepulveda Transit Corridor Locally Preferred
+// Alternative. In January 2026, Metro's Board selected "Modified Alternative 5" —
+// underground heavy rail — as the LPA. Real, formal milestone, but still in
+// planning/environmental review, NOT approved as funded or shovel-ready. Alignment:
+// Van Nuys Metrolink Station -> Van Nuys Blvd/G Line transfer -> Sepulveda Pass ->
+// E Line Expo/Sepulveda Station (endpoint). Concept contemplates 2.5-min peak
+// headways. No confirmed opening date. The $6-15B figure circulating publicly is a
+// concept estimate, not an official Metro cost.
+const sepulvedaLpaStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { name: "Van Nuys Metrolink Station", coords: [-118.4489, 34.1858] },
+    { name: "Van Nuys Blvd / G Line", coords: [-118.4489, 34.1817] },
+    { name: "Sepulveda Pass", coords: [-118.4460, 34.1000] },
+    { name: "E Line Expo / Sepulveda", coords: [-118.4368, 34.0247] }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name, type: "phase0_station" },
+    geometry: { type: "Point", coordinates: s.coords }
+  }))
+};
+const sepulvedaLpaTrunkCoords = sepulvedaLpaStationsGeoJSON.features.map((f) => f.geometry.coordinates);
+const sepulvedaLpaTrunkGeoJSON = {
+  type: "Feature",
+  properties: { type: "rail_trunk" },
+  geometry: { type: "LineString", coordinates: sepulvedaLpaTrunkCoords }
+};
+const SEPULVEDA_LPA_POPUP =
+  "Metro selected an underground heavy-rail alternative between Van Nuys and " +
+  "Expo/Sepulveda as its Locally Preferred Alternative (\"Modified Alternative 5\") " +
+  "in January 2026; environmental review, design, funding, and a construction " +
+  "schedule remain pending. Concept contemplates trains capable of 2.5-minute peak " +
+  "headways. No confirmed opening date exists. Publicly circulated cost figures " +
+  "($6-15B) are a concept estimate, not an official Metro cost.";
+
 // Phase 0: Metro C Line (I-105 corridor) — existing light rail, in service today.
+// LAX/Metro Transit Center <-> Norwalk, 12 stations, 17.8 mi, opened Aug 12, 1995.
+// Connects to the A Line at Willowbrook/Rosa Parks and the J Line busway at Harbor
+// Freeway. Frequency: approximately every 10 min for most of the day, approximately
+// every 20 min early mornings/late evenings.
 const cLineStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
     { name: "LAX / Metro Transit Center", coords: [-118.4076, 33.9382] },
     { name: "Aviation / Century", coords: [-118.3928, 33.9434] },
+    { name: "Aviation / Imperial", coords: [-118.3756, 33.9296] },
     { name: "Hawthorne / Lennox", coords: [-118.3562, 33.9247] },
     { name: "Crenshaw", coords: [-118.3265, 33.9252] },
     { name: "Vermont / Athens", coords: [-118.2917, 33.9252] },
     { name: "Harbor Freeway", coords: [-118.2775, 33.9256] },
+    { name: "Avalon", coords: [-118.2652, 33.9258] },
     { name: "Willowbrook / Rosa Parks", coords: [-118.2489, 33.9271] },
-    { name: "Long Beach Blvd", coords: [-118.2251, 33.9271] },
-    { name: "Lakewood Blvd", coords: [-118.1554, 33.9271] },
+    { name: "Lynwood", coords: [-118.2107, 33.9271] },
+    { name: "Lakewood Boulevard", coords: [-118.1554, 33.9271] },
     { name: "Norwalk", coords: [-118.1156, 33.9188] }
   ].map((s) => ({
     type: "Feature",
@@ -387,7 +437,60 @@ const cLineTrunkGeoJSON = {
   geometry: { type: "LineString", coordinates: cLineTrunkCoords }
 };
 
-const PHASE0_POPUP = "Existing / Approved Metro Infrastructure. This project connects to it — it does not propose or fund it.";
+const C_LINE_POPUP =
+  "The existing C Line provides an east-west connection between Norwalk and the " +
+  "LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks " +
+  "and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, " +
+  "1995. Frequency: approximately every 10 minutes for most of the day, " +
+  "approximately every 20 minutes early mornings and late evenings.";
+
+// Phase 0: Metro K Line — existing light rail, in service today. 13 stations,
+// continuous service Expo/Crenshaw <-> Redondo Beach. The Crenshaw/LAX segment
+// opened Oct 2022; the LAX/Metro Transit Center segment opened June 2025,
+// completing through-service. Shares LAX/Metro Transit Center and Aviation/Century
+// with the C Line. Does NOT share a platform with the E Line — riders transfer at
+// Expo/Crenshaw via a short at-grade crossing, not an in-station transfer. "K Line"
+// is the primary/current name; "Crenshaw/LAX Line" is a legacy/informal alt-name
+// from construction.
+const kLineStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { name: "Expo / Crenshaw", coords: [-118.3382, 34.0227] },
+    { name: "Martin Luther King Jr.", coords: [-118.3358, 34.0089] },
+    { name: "Leimert Park", coords: [-118.3323, 34.0084] },
+    { name: "Hyde Park", coords: [-118.3358, 33.9934] },
+    { name: "Fairview Heights", coords: [-118.3358, 33.9885] },
+    { name: "Downtown Inglewood", coords: [-118.3550, 33.9556] },
+    { name: "Westchester / Veterans", coords: [-118.3970, 33.9611] },
+    { name: "LAX / Metro Transit Center", coords: [-118.4076, 33.9382] },
+    { name: "Aviation / Century", coords: [-118.3928, 33.9434] },
+    { name: "Mariposa", coords: [-118.3875, 33.9200] },
+    { name: "El Segundo", coords: [-118.3875, 33.9137] },
+    { name: "Douglas", coords: [-118.3875, 33.8975] },
+    { name: "Redondo Beach", coords: [-118.3887, 33.8497] }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name, type: "phase0_station" },
+    geometry: { type: "Point", coordinates: s.coords }
+  }))
+};
+
+const kLineTrunkCoords = kLineStationsGeoJSON.features.map((f) => f.geometry.coordinates);
+const kLineTrunkGeoJSON = {
+  type: "Feature",
+  properties: { type: "rail_trunk" },
+  geometry: { type: "LineString", coordinates: kLineTrunkCoords }
+};
+
+const K_LINE_POPUP =
+  "K Line (formerly known informally as the Crenshaw/LAX Line during construction) " +
+  "— 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The " +
+  "Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment " +
+  "opened June 2025, completing through-service. Shares LAX/Metro Transit Center " +
+  "and Aviation/Century with the C Line. Does not share a platform with the E Line " +
+  "at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform.";
+
+const PHASE0_POPUP = "Existing Metro Infrastructure. This project connects to it — it does not propose or fund it.";
 
 // Phase 1: bus feeders off the Sepulveda Corridor. Each feeder carries a scheduled
 // transferMinutes value — the gap between train arrival and the connecting bus's
@@ -415,35 +518,23 @@ const busFeedersGeoJSON = {
 
     // Feeders off the new Phase 2 Downtown LA Connector stations — added so the
     // transfer-synergy standard applies at every rail-bus junction on the map, not
-    // just the original Sepulveda Corridor stops. (These never gain a bus leg in the
-    // trip simulator, since Downtown Connector destinations always cross the
-    // connector and take the direct-rail path — see getTripPath.)
-    { type: "Feature", properties: { name: "Leimert Park", from_station: "Expo / Crenshaw", transferMinutes: 7 },
+    // just the extension-concept stops. (These never gain a bus leg in the trip
+    // simulator, since Downtown Connector destinations always cross the connector
+    // and take the direct-rail path — see getTripPath.) Named "West Adams" rather
+    // than "Leimert Park" to avoid colliding with the real K Line's Leimert Park
+    // station, which sits nearby.
+    { type: "Feature", properties: { name: "West Adams", from_station: "Expo / Crenshaw", transferMinutes: 7 },
       geometry: { type: "LineString", coordinates: [[-118.3382, 34.0227], [-118.3287, 34.0084]] } },
     { type: "Feature", properties: { name: "USC Village", from_station: "Expo Park / USC", transferMinutes: 5 },
       geometry: { type: "LineString", coordinates: [[-118.2868, 34.0181], [-118.2853, 34.0247]] } },
     { type: "Feature", properties: { name: "Fashion District", from_station: "7th St / Metro Center", transferMinutes: 9 },
-      geometry: { type: "LineString", coordinates: [[-118.2588, 34.0489], [-118.2569, 34.0367]] } },
+      geometry: { type: "LineString", coordinates: [[-118.2588, 34.0489], [-118.2569, 34.0367]] } }
 
-    // Crenshaw–Expo Connector — a single Games-era bus feeder linking the real K Line
-    // (Crenshaw/LAX Line, mostly not otherwise modeled on this map) through SoFi
-    // Stadium to the Expo/Crenshaw station on the Downtown LA Connector (which
-    // follows the real E Line alignment). Extended past Downtown Inglewood to the
-    // existing C Line "Crenshaw" station, reusing that station's exact coordinate
-    // (same no-duplicate-marker pattern used elsewhere) so the route now touches two
-    // real rail lines end to end. Rendered as one continuous dashed line via the same
-    // bus-feeder-lines layer as every other Phase 1 feeder — no new layer or legend
-    // entry needed.
-    { type: "Feature", properties: { name: "Crenshaw–Expo Connector", from_station: "Expo / Crenshaw", transferMinutes: 8 },
-      geometry: {
-        type: "LineString",
-        coordinates: [
-          [-118.3382, 34.0227], // E Line — Expo/Crenshaw (reuses the existing station's exact coordinate)
-          [-118.3392, 33.9535], // SoFi Stadium — via stop
-          [-118.3550, 33.9556], // K Line — Downtown Inglewood (not otherwise modeled on this map)
-          [-118.3265, 33.9252]  // C Line — Crenshaw (reuses the existing station's exact coordinate)
-        ]
-      } }
+    // NOTE: The "Crenshaw–Expo Connector" bus feeder that previously ran here (Expo/
+    // Crenshaw -> SoFi Stadium -> "K Line / Downtown Inglewood" -> C Line Crenshaw)
+    // has been removed. It duplicated a connection that already exists as real rail:
+    // the K Line already runs Expo/Crenshaw -> Downtown Inglewood -> LAX/Metro
+    // Transit Center today (see kLineStationsGeoJSON above).
   ]
 };
 
@@ -458,22 +549,17 @@ const busDestinationsGeoJSON = {
     { type: "Feature", properties: { name: "Brentwood" }, geometry: { type: "Point", coordinates: [-118.4695, 34.0522] } },
     { type: "Feature", properties: { name: "Sherman Oaks" }, geometry: { type: "Point", coordinates: [-118.4490, 34.1511] } },
     { type: "Feature", properties: { name: "Van Nuys" }, geometry: { type: "Point", coordinates: [-118.4489, 34.1867] } },
-    { type: "Feature", properties: { name: "Leimert Park" }, geometry: { type: "Point", coordinates: [-118.3287, 34.0084] } },
+    { type: "Feature", properties: { name: "West Adams" }, geometry: { type: "Point", coordinates: [-118.3287, 34.0084] } },
     { type: "Feature", properties: { name: "USC Village" }, geometry: { type: "Point", coordinates: [-118.2853, 34.0247] } },
-    { type: "Feature", properties: { name: "Fashion District" }, geometry: { type: "Point", coordinates: [-118.2569, 34.0367] } },
-    { type: "Feature",
-      properties: {
-        name: "SoFi Stadium",
-        popup: "<strong>SoFi Stadium</strong> — Event-day feeder stop, connects K Line to E Line via the Crenshaw–Expo Connector."
-      },
-      geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } },
-    { type: "Feature", properties: { name: "K Line / Downtown Inglewood" }, geometry: { type: "Point", coordinates: [-118.3550, 33.9556] } }
+    { type: "Feature", properties: { name: "Fashion District" }, geometry: { type: "Point", coordinates: [-118.2569, 34.0367] } }
   ]
 };
 
-// Phase 2: the ONE new rail segment this project proposes — links the two real lines at LAX.
+// Phase 2: the ONE new rail segment this project proposes (concept, contingent on
+// the Sepulveda Extension Concept) — links the extension concept to the real C Line
+// at LAX.
 const CONNECTOR_COORDS = [
-  [-118.4085, 33.9416], // LAX / Westchester — Sepulveda Corridor terminus
+  [-118.4085, 33.9416], // LAX / Westchester — Sepulveda Extension Concept terminus
   [-118.4076, 33.9382]  // LAX / Metro Transit Center — C Line terminus
 ];
 const connectorGeoJSON = {
@@ -481,10 +567,17 @@ const connectorGeoJSON = {
   properties: { type: "connector" },
   geometry: { type: "LineString", coordinates: CONNECTOR_COORDS }
 };
+const LEGACY_CONNECTOR_POPUP =
+  "New Connector — Post-Games Legacy Rail (concept).<br>A short link this project " +
+  "proposes joining the LA Connect Sepulveda Extension Concept to Metro's real C " +
+  "Line at LAX. Contingent on that extension concept, which is not part of Metro's " +
+  "selected Sepulveda Transit Corridor alternative.";
 
 // Phase 2: Downtown LA Connector — a second new segment this project proposes,
-// branching off the existing Culver City / Palms station and following the
-// real E Line alignment northeast through Exposition Park / USC into Downtown LA.
+// branching off the Sepulveda Extension Concept's Culver City / Palms station and
+// following the real E Line alignment northeast through Exposition Park / USC into
+// Downtown LA. Its Expo/Crenshaw stop reuses the real K Line station's coordinate
+// but is a separate, unofficial concept segment, not part of the K Line.
 const CULVER_CITY_PALMS_COORD = sepulvedaStationsGeoJSON.features.find(
   (f) => f.properties.name === "Culver City / Palms"
 ).geometry.coordinates;
@@ -591,8 +684,8 @@ const JUNCTION_EXTRA_ROUTES = {
 
 // Every rail-to-bus junction on the map — every route leaving every junction is
 // held within the SYNERGY_WINDOW_MINUTES promise (the synergy buffer holds a late
-// bus rather than letting a connection miss it). Covers Phase 0 (Sepulveda
-// Corridor) and Phase 2 (Downtown LA Connector) junctions alike, so the standard is
+// bus rather than letting a connection miss it). Covers the Sepulveda Extension
+// Concept and Phase 2 (Downtown LA Connector) junctions alike, so the standard is
 // visible everywhere a bus meets a train, not just on one showcase route.
 const allJunctionStations = sepulvedaStationsGeoJSON.features.concat(downtownConnectorStationsGeoJSON.features);
 const junctionNames = [
@@ -646,7 +739,10 @@ function makeCircleFeature(centerCoord, radiusMiles, name) {
   return { type: "Feature", properties: { name }, geometry: { type: "Polygon", coordinates: [ring] } };
 }
 
-const allPhase0Stations = sepulvedaStationsGeoJSON.features.concat(cLineStationsGeoJSON.features);
+const allPhase0Stations = sepulvedaStationsGeoJSON.features
+  .concat(cLineStationsGeoJSON.features)
+  .concat(kLineStationsGeoJSON.features)
+  .concat(sepulvedaLpaStationsGeoJSON.features);
 const allDensityZoneStations = allPhase0Stations.concat(downtownConnectorStationsGeoJSON.features);
 const densityZonesGeoJSON = {
   type: "FeatureCollection",
@@ -677,27 +773,45 @@ const RIDESHARE_PICKUP_MINUTES = 4; // fixed 3-5 min pickup wait
 const RIDESHARE_BASE_FARE = 1.5;
 const RIDESHARE_PER_MILE = 1.2;
 
-// Phase 4: future / planned regional link — K Line extension to Torrance, not funded.
+// Phase 4: future / planned regional link — K Line Extension to Torrance. Real:
+// Final EIR certified and approved Jan 22, 2026 (Hawthorne Option), ~4.5 mi from
+// Redondo Beach (Marine) to Torrance Transit Center. Estimated opening 2036;
+// construction possibly starting as early as 2027. Operates as part of the K Line,
+// not the C Line. Also noted here (not separately modeled): the K Line Northern
+// Extension toward Mid-City/West Hollywood/Hollywood is long-range only —
+// construction funding unavailable until 2041, projected opening 2047-2049, not
+// relevant to 2028 — and the D Line Extension, Section 1 opened May 8, 2026, adding
+// three underground stations toward Beverly Hills (existing/approved, regional
+// Westside context only).
 const FUTURE_LINK_COORDS = [
-  [-118.3887, 33.8497], // Redondo Beach
-  [-118.3406, 33.8358]  // Torrance Transit Center
+  [-118.3887, 33.8497], // Redondo Beach — real, existing K Line terminus today
+  [-118.3406, 33.8358]  // Torrance Transit Center — future
 ];
 const futureLinkGeoJSON = {
   type: "Feature",
   properties: { type: "future_link" },
   geometry: { type: "LineString", coordinates: FUTURE_LINK_COORDS }
 };
+const FUTURE_K_LINE_TORRANCE_POPUP =
+  "K Line Extension to Torrance — Final EIR certified and approved January 22, " +
+  "2026 (Hawthorne Option), ~4.5 miles from Redondo Beach (Marine) to Torrance " +
+  "Transit Center. Estimated opening 2036; construction possibly starting as early " +
+  "as 2027. Operates as part of the K Line, not the C Line.<br><br>Also: the K Line " +
+  "Northern Extension (toward Mid-City/West Hollywood/Hollywood) is long-range only " +
+  "— funding unavailable until 2041, opening 2047-2049. The D Line Extension, " +
+  "Section 1 opened May 8, 2026 (three new underground stations toward Beverly " +
+  "Hills) — existing/approved, shown for regional context only.";
 const futureStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Redondo Beach" }, geometry: { type: "Point", coordinates: FUTURE_LINK_COORDS[0] } },
     { type: "Feature", properties: { name: "Torrance Transit Center" }, geometry: { type: "Point", coordinates: FUTURE_LINK_COORDS[1] } }
   ]
 };
 
-// Default camera centers on the LAX interchange — where the Sepulveda Corridor
-// (LAX / Westchester) meets the C Line (LAX / Metro Transit Center) — since LAX is
-// the network's default starting point, not the old corridor-wide overview.
+// Default camera centers on the LAX interchange — where the LA Connect Sepulveda
+// Extension Concept (LAX / Westchester) meets the real C Line (LAX / Metro Transit
+// Center) — since LAX is the network's default starting point, not the old
+// corridor-wide overview.
 const DEFAULT_VIEW = { center: [-118.408, 33.9399], zoom: 12.8, pitch: 60, bearing: -20 };
 
 // ---------------------------------------------------------------------------
@@ -772,12 +886,15 @@ function addThreeDBuildings() {
 // ---------------------------------------------------------------------------
 
 function addPhase0Layers() {
-  map.addSource("sepulveda-trunk", { type: "geojson", data: sepulvedaTrunkGeoJSON });
-  map.addSource("sepulveda-stations", { type: "geojson", data: sepulvedaStationsGeoJSON });
+  // Real / existing / selected Metro infrastructure — C Line, K Line, Sepulveda LPA.
   map.addSource("cline-trunk", { type: "geojson", data: cLineTrunkGeoJSON });
   map.addSource("cline-stations", { type: "geojson", data: cLineStationsGeoJSON });
+  map.addSource("kline-trunk", { type: "geojson", data: kLineTrunkGeoJSON });
+  map.addSource("kline-stations", { type: "geojson", data: kLineStationsGeoJSON });
+  map.addSource("sepulveda-lpa-trunk", { type: "geojson", data: sepulvedaLpaTrunkGeoJSON });
+  map.addSource("sepulveda-lpa-stations", { type: "geojson", data: sepulvedaLpaStationsGeoJSON });
 
-  ["sepulveda-trunk", "cline-trunk"].forEach((sourceId) => {
+  ["cline-trunk", "kline-trunk", "sepulveda-lpa-trunk"].forEach((sourceId) => {
     map.addLayer({
       id: sourceId + "-line",
       type: "line",
@@ -787,7 +904,7 @@ function addPhase0Layers() {
     });
   });
 
-  ["sepulveda-stations", "cline-stations"].forEach((sourceId) => {
+  ["cline-stations", "kline-stations", "sepulveda-lpa-stations"].forEach((sourceId) => {
     map.addLayer({
       id: sourceId + "-circle",
       type: "circle",
@@ -819,6 +936,52 @@ function addPhase0Layers() {
         "text-halo-width": 1.6
       }
     });
+  });
+
+  // LA Connect Sepulveda Extension Concept — unofficial, styled like Phase 4
+  // (dotted, light blue) rather than real Phase 0 rail, since it is NOT part of
+  // Metro's selected Sepulveda Transit Corridor alternative.
+  map.addSource("sepulveda-trunk", { type: "geojson", data: sepulvedaTrunkGeoJSON });
+  map.addSource("sepulveda-stations", { type: "geojson", data: sepulvedaStationsGeoJSON });
+
+  map.addLayer({
+    id: "sepulveda-trunk-line",
+    type: "line",
+    source: "sepulveda-trunk",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": PHASE4_COLOR, "line-width": FUTURE_LINE_WIDTH, "line-dasharray": [1, 2] }
+  });
+
+  map.addLayer({
+    id: "sepulveda-stations-circle",
+    type: "circle",
+    source: "sepulveda-stations",
+    paint: {
+      "circle-radius": 7,
+      "circle-color": "#ffffff",
+      "circle-stroke-width": 2,
+      "circle-stroke-color": PHASE4_COLOR
+    }
+  });
+
+  map.addLayer({
+    id: "sepulveda-stations-label",
+    type: "symbol",
+    source: "sepulveda-stations",
+    layout: {
+      "text-field": ["concat", ["get", "name"], " (concept)"],
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, 1.3],
+      "text-anchor": "top",
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    },
+    paint: {
+      "text-color": PHASE4_COLOR,
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 1.6
+    }
   });
 }
 
@@ -1187,15 +1350,36 @@ function addPhase4Layer() {
 // Popups, hover cursor, checkbox toggles
 // ---------------------------------------------------------------------------
 
+const LAX_TRANSIT_CENTER_POPUP =
+  "LAX/Metro Transit Center — opened June 6, 2025. Served by both the C Line and " +
+  "K Line, plus bus bays for Metro Lines 102, 111, 117, 120, 232 and municipal " +
+  "operators. The LAX Automated People Mover (APM) remains under testing and is " +
+  "expected to open later in 2026; until then, a free airport-operated shuttle " +
+  "links the LAX/Metro Transit Center with terminals.";
+
 function wireInteractions() {
-  ["sepulveda-stations-circle", "cline-stations-circle"].forEach((layerId) => {
+  const REAL_LINE_POPUPS = {
+    "cline-stations-circle": C_LINE_POPUP,
+    "kline-stations-circle": K_LINE_POPUP,
+    "sepulveda-lpa-stations-circle": SEPULVEDA_LPA_POPUP
+  };
+  Object.keys(REAL_LINE_POPUPS).forEach((layerId) => {
     map.on("click", layerId, (e) => {
       const f = e.features[0];
+      const extra = f.properties.name === "LAX / Metro Transit Center" ? ` ${LAX_TRANSIT_CENTER_POPUP}` : "";
       new maplibregl.Popup()
         .setLngLat(f.geometry.coordinates.slice())
-        .setHTML(`<strong>${f.properties.name}</strong><br>${PHASE0_POPUP}`)
+        .setHTML(`<strong>${f.properties.name}</strong><br>${PHASE0_POPUP} ${REAL_LINE_POPUPS[layerId]}${extra}`)
         .addTo(map);
     });
+  });
+
+  map.on("click", "sepulveda-stations-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>${f.properties.name} (concept)</strong><br>${SEPULVEDA_EXTENSION_CONCEPT_POPUP}`)
+      .addTo(map);
   });
 
   map.on("click", "bus-destinations-circle", (e) => {
@@ -1208,11 +1392,7 @@ function wireInteractions() {
     const f = e.features[0];
     new maplibregl.Popup()
       .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(
-        `<strong>New Connector — Post-Games Legacy Rail</strong><br>` +
-          `The one new rail segment this project proposes: a short link joining the Sepulveda ` +
-          `Transit Corridor to Metro's C Line at LAX.<br>Flat fare: $${CONNECTOR_FARE.toFixed(2)}`
-      )
+      .setHTML(`${LEGACY_CONNECTOR_POPUP}<br>Flat fare: $${CONNECTOR_FARE.toFixed(2)}`)
       .addTo(map);
   });
 
@@ -1220,7 +1400,7 @@ function wireInteractions() {
     const f = e.features[0];
     new maplibregl.Popup()
       .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(`<strong>${f.properties.name}</strong><br>Future / Planned Regional Link — K Line extension, not yet funded.`)
+      .setHTML(`<strong>${f.properties.name}</strong><br>${FUTURE_K_LINE_TORRANCE_POPUP}`)
       .addTo(map);
   });
 
@@ -1230,9 +1410,9 @@ function wireInteractions() {
       .setLngLat(f.geometry.coordinates.slice())
       .setHTML(
         `<strong>${f.properties.name}</strong><br>` +
-          `New Rail Connector — Downtown LA Branch. Part of the new rail connector this project ` +
-          `proposes, linking the Sepulveda Corridor into Downtown LA via Culver City / Palms.<br>` +
-          `Flat fare: $${CONNECTOR_FARE.toFixed(2)}`
+          `New Rail Connector — Downtown LA Branch (concept). Part of the new rail connector this ` +
+          `project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver ` +
+          `City / Palms.<br>Flat fare: $${CONNECTOR_FARE.toFixed(2)}`
       )
       .addTo(map);
   });
@@ -1277,6 +1457,8 @@ function wireInteractions() {
   [
     "sepulveda-stations-circle",
     "cline-stations-circle",
+    "kline-stations-circle",
+    "sepulveda-lpa-stations-circle",
     "bus-destinations-circle",
     "connector-midpoint-circle",
     "future-stations-circle",
@@ -1325,15 +1507,18 @@ panelToggleBtn.addEventListener("click", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Trip destination dropdown — other Sepulveda stations, plus every C Line
-// station reached by crossing the new Phase 2 connector.
+// Trip destination dropdown — other Sepulveda Extension Concept stations, plus
+// every C Line station reached by crossing the new Phase 2 connector. (The real
+// K Line and real Sepulveda LPA are shown on the map with their own popups but
+// are not wired into this trip simulator, which models the LA Connect concept
+// network only.)
 // ---------------------------------------------------------------------------
 
 // LAX is the network's default starting point — the interchange between the
-// Sepulveda Corridor (405) and the C Line (105), and the natural entry point for
-// Olympic visitors. LAX / Westchester is the Sepulveda-side station at that
-// interchange (it sits at the same coordinate as the Phase 2 connector's Sepulveda
-// end, CONNECTOR_COORDS[0]).
+// Sepulveda Extension Concept (405) and the real C Line (105), and the natural
+// entry point for Olympic visitors. LAX / Westchester is the extension concept's
+// station at that interchange (it sits at the same coordinate as the Phase 2
+// connector's concept-side end, CONNECTOR_COORDS[0]).
 const originIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === "LAX / Westchester");
 const originStation = sepulvedaStationsGeoJSON.features[originIdx];
 const tripDestinationSelect = document.getElementById("trip-destination");
@@ -1343,7 +1528,7 @@ const tripLastMileSelect = document.getElementById("trip-lastmile");
 const tripLastMileLabel = document.getElementById("trip-lastmile-label");
 
 const sepulvedaGroup = document.createElement("optgroup");
-sepulvedaGroup.label = "Sepulveda Corridor (Phase 0)";
+sepulvedaGroup.label = "Sepulveda Extension Concept (not part of Metro's LPA)";
 sepulvedaStationsGeoJSON.features
   .filter((f) => f.properties.name !== originStation.properties.name)
   .forEach((f) => {
@@ -1384,16 +1569,10 @@ vermontBrtStationsGeoJSON.features.forEach((f) => {
 });
 tripDestinationSelect.appendChild(vermontGroup);
 
-// SoFi Stadium is reachable via rail to Expo/Crenshaw, then the Crenshaw–Expo
-// Connector bus (see getTripPath and the special case in simulateTrip). The K Line /
-// Downtown Inglewood end isn't offered here — that line isn't modeled on this map.
-const crenshawExpoGroup = document.createElement("optgroup");
-crenshawExpoGroup.label = "Crenshaw–Expo Connector, via New Connector (Phase 0 + 1 + 2)";
-const sofiOpt = document.createElement("option");
-sofiOpt.value = "SoFi Stadium";
-sofiOpt.textContent = "SoFi Stadium";
-crenshawExpoGroup.appendChild(sofiOpt);
-tripDestinationSelect.appendChild(crenshawExpoGroup);
+// NOTE: The former "Crenshaw–Expo Connector" destination group (SoFi Stadium, via
+// a bus feeder through Downtown Inglewood) has been removed — it duplicated a
+// connection that already exists as real rail via the K Line. SoFi Stadium remains
+// visible on the map as an Olympic-venue context marker only.
 
 // Bus route options are pulled live from busFeedersGeoJSON for whichever station is selected.
 function populateRouteOptions(stationName) {
@@ -1413,8 +1592,9 @@ function populateRouteOptions(stationName) {
   tripRouteLabel.style.display = showRoutePicker ? "" : "none";
 
   // Rail + Rideshare is only offered as an alternative wherever Rail + Bus already
-  // is (every Sepulveda Corridor station) — rideshare is the fallback/convenience
-  // tier, not a substitute for stations that have no last-mile option at all.
+  // is (every Sepulveda Extension Concept station) — rideshare is the fallback/
+  // convenience tier, not a substitute for stations that have no last-mile option
+  // at all.
   const showLastMilePicker = isSepulvedaStation && routes.length > 0;
   tripLastMileSelect.style.display = showLastMilePicker ? "" : "none";
   tripLastMileLabel.style.display = showLastMilePicker ? "" : "none";
@@ -1490,12 +1670,6 @@ function getTripPath(destName) {
     // LAX is the last point in the trunk array; walk backward from there to the
     // chosen destination so every Sepulveda-corridor trip starts at LAX.
     return { coords: sepulvedaTrunkCoords.slice(sepulvedaIdx, originIdx + 1).reverse(), crossesConnector: false };
-  }
-
-  if (destName === "SoFi Stadium") {
-    // Rail leg only goes as far as Expo/Crenshaw; the Crenshaw–Expo Connector bus
-    // leg from there to SoFi Stadium is added separately in simulateTrip.
-    return getTripPath("Expo / Crenshaw");
   }
 
   const downtownIdx = downtownConnectorStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
@@ -1633,12 +1807,10 @@ async function simulateTrip() {
   const destName = tripDestinationSelect.value;
   const pathInfo = getTripPath(destName); // { coords, crossesConnector }
   const destStation =
-    destName === "SoFi Stadium"
-      ? { properties: { name: "Expo / Crenshaw" } } // the rail leg's real destination; SoFi Stadium is a bus tail from there
-      : sepulvedaStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
-        downtownConnectorStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
-        vermontBrtStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
-        cLineStationsGeoJSON.features.find((f) => f.properties.name === destName);
+    sepulvedaStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+    downtownConnectorStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+    vermontBrtStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+    cLineStationsGeoJSON.features.find((f) => f.properties.name === destName);
 
   const railMiles = pathMiles(pathInfo.coords);
   const railMinutes = (railMiles / RAIL_SPEED_MPH) * 60;
@@ -1706,35 +1878,7 @@ async function simulateTrip() {
   trainMarker.remove();
   updateTimer(railSimSeconds);
 
-  if (pathInfo.crossesConnector && destName === "SoFi Stadium") {
-    showCard(
-      `Arrived at Expo / Crenshaw via the New Connector — transferring to the Crenshaw–Expo Connector bus.`
-    );
-    await wait(1800);
-
-    const sofiFeeder = busFeedersGeoJSON.features.find((f) => f.properties.name === "Crenshaw–Expo Connector");
-    const sofiBusStart = sofiFeeder.geometry.coordinates[0];
-    const sofiBusEnd = sofiFeeder.geometry.coordinates[1]; // SoFi Stadium — the connector's mid-point
-    const sofiBusMiles = haversineMiles(sofiBusStart, sofiBusEnd);
-    const sofiBusMinutes = (sofiBusMiles / BUS_SPEED_MPH) * 60;
-    const sofiBusSimSeconds = sofiBusMinutes * 60;
-    const sofiTotalMinutes = railMinutes + sofiBusMinutes;
-
-    showCard(`Crenshaw–Expo Connector to SoFi Stadium: event-day feeder bus.`);
-    await animateBusConvoy(sofiBusStart, sofiBusEnd, 6000, (t) => {
-      updateTimer(railSimSeconds + t * sofiBusSimSeconds);
-    });
-    updateTimer(sofiTotalMinutes * 60);
-
-    showCard(
-      `Trip complete: ~${(railMiles + sofiBusMiles).toFixed(1)} mi &mdash; ` +
-        `Total trip time: ${Math.round(sofiTotalMinutes)} min ` +
-        `(rail: ${Math.round(railMinutes)} min, connector fare: $${CONNECTOR_FARE.toFixed(2)}, bus: ${Math.round(sofiBusMinutes)} min).`
-    );
-    await wait(3500);
-    hideCard();
-    resetTimer();
-  } else if (pathInfo.crossesConnector) {
+  if (pathInfo.crossesConnector) {
     showCard(
       `Arrived at ${destStation.properties.name} via the New Connector — flat connector fare $${CONNECTOR_FARE.toFixed(2)}.`
     );

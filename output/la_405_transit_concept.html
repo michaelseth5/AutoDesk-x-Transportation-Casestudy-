@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_c59a942d3a3a513b9824e5db063b9470 {
+                #map_a7c9b0951470eb8462e946f44392a002 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -69,7 +69,10 @@
     color: #0B3C6B;
     text-align: center;
 ">
-LA 405 Integrated Rail + Bus Feeder Concept
+LA Connect — Sepulveda + C Line Network
+<div style="font-size:12px; font-weight:normal; color:#666; margin-top:2px;">
+Built on LA's real rail network — connecting what exists to what's next.
+</div>
 </div>
     
 <div style="
@@ -87,29 +90,36 @@ LA 405 Integrated Rail + Bus Feeder Concept
     line-height: 1.6;
 ">
 <b style="font-size:14px;">Legend</b><br>
-<span style="display:inline-block;width:22px;height:4px;background:#0B3C6B;margin-right:8px;"></span>
-Underground rail trunk<br>
-<span style="display:inline-block;width:22px;height:4px;background:#E8720C;margin-right:8px;"></span>
-Express bus feeder route<br>
-<span style="display:inline-block;width:12px;height:12px;background:#3186cc;border-radius:50%;margin-right:8px;"></span>
-Rail station<br>
+<i style="font-size:11px; color:#666;">Solid + thick = real rail &nbsp;|&nbsp; Dashed/dotted + thin = bus / future / concept-only</i><br><br>
+<span style="display:inline-block;width:22px;height:4px;background:#8A8D91;margin-right:8px;"></span>
+Phase 0 — Existing Metro (C Line, K Line) + Sepulveda LPA (selected, unfunded)<br>
+<span style="display:inline-block;width:22px;height:0;border-top:3px dashed #E8720C;margin-right:8px;"></span>
+Phase 1 — Bus feeder route<br>
+<span style="display:inline-block;width:22px;height:4px;background:#1F9D6B;margin-right:8px;"></span>
+Phase 2 — New Connector (concept, contingent on the extension concept)<br>
+<span style="display:inline-block;width:16px;height:16px;background:rgba(242,183,5,0.3);border:1px solid #F2B705;border-radius:50%;margin-right:8px;"></span>
+Phase 3 — Station-area density zone (0.5 mi)<br>
+<span style="display:inline-block;width:22px;height:0;border-top:3px dotted #5B9BD9;margin-right:8px;"></span>
+Phase 4 — Future / Planned / LA Connect Extension Concept (not part of Metro's LPA)<br><br>
+<span style="display:inline-block;width:12px;height:12px;background:#8A8D91;border-radius:50%;margin-right:8px;"></span>
+Existing / real station<br>
 <span style="display:inline-block;width:12px;height:12px;background:#E8720C;border-radius:50%;margin-right:8px;"></span>
 Bus stop / local business district
 </div>
     
-            <div class="folium-map" id="map_c59a942d3a3a513b9824e5db063b9470" ></div>
+            <div class="folium-map" id="map_a7c9b0951470eb8462e946f44392a002" ></div>
         
 </body>
 <script>
     
     
-            var map_c59a942d3a3a513b9824e5db063b9470 = L.map(
-                "map_c59a942d3a3a513b9824e5db063b9470",
+            var map_a7c9b0951470eb8462e946f44392a002 = L.map(
+                "map_a7c9b0951470eb8462e946f44392a002",
                 {
-                    center: [34.046825, -118.423],
+                    center: [33.941556, -118.32820799999999],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 11,
+  "zoom": 10,
   "zoomControl": true,
   "preferCanvas": false,
 }
@@ -121,7 +131,7 @@ Bus stop / local business district
 
         
     
-            var tile_layer_727d4116897936149a7a23d207040f13 = L.tileLayer(
+            var tile_layer_e7ada3b928d79da52d9527803982fe32 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -138,18 +148,18 @@ Bus stop / local business district
             );
         
     
-            tile_layer_727d4116897936149a7a23d207040f13.addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            tile_layer_e7ada3b928d79da52d9527803982fe32.addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            var poly_line_4a01a0194879a9631252f4f51b0168ae = L.polyline(
-                [[33.9416, -118.4085], [34.0211, -118.3965], [34.0736, -118.439], [34.151, -118.448]],
-                {"bubblingMouseEvents": true, "color": "#0B3C6B", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#0B3C6B", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            var poly_line_f33410504b5fa99910ba9c5913560114 = L.polyline(
+                [[33.9382, -118.4076], [33.9434, -118.3928], [33.9296, -118.3756], [33.9247, -118.3562], [33.9252, -118.3265], [33.9252, -118.2917], [33.9256, -118.2775], [33.9258, -118.2652], [33.9271, -118.2489], [33.9271, -118.2107], [33.9271, -118.1554], [33.9188, -118.1156]],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8A8D91", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_4a01a0194879a9631252f4f51b0168ae.bindTooltip(
+            poly_line_f33410504b5fa99910ba9c5913560114.bindTooltip(
                 `<div>
-                     405 Rail Trunk (underground / grade-separated, double track)
+                     Metro C Line — existing light rail, in service today
                  </div>`,
                 {
   "sticky": true,
@@ -157,44 +167,32 @@ Bus stop / local business district
             );
         
     
-            var marker_72936f37b0f7d0e590dd19a6c66d2da9 = L.marker(
-                [33.9416, -118.4085],
-                {
-}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            var circle_marker_98a5be967cb2772990f7b132812d1ec7 = L.circleMarker(
+                [33.9382, -118.4076],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            var icon_8b22a32e9c759e9ca1ed50a603e1dbce = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "train",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_13b6963fb2b7ce7561867fff364675ff = L.popup({
-  "maxWidth": 280,
+        var popup_4e8730933bdd379e646ece031a22a016 = L.popup({
+  "maxWidth": 320,
 });
 
         
             
-                var html_9bc9d64f4676d70322ce60aa84e153f2 = $(`<div id="html_9bc9d64f4676d70322ce60aa84e153f2" style="width: 100.0%; height: 100.0%;"><b>LAX / Westchester Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
-                popup_13b6963fb2b7ce7561867fff364675ff.setContent(html_9bc9d64f4676d70322ce60aa84e153f2);
+                var html_9afa22c8a1637ad62ef4ca21d6c4cdae = $(`<div id="html_9afa22c8a1637ad62ef4ca21d6c4cdae" style="width: 100.0%; height: 100.0%;"><b>LAX / Metro Transit Center</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_4e8730933bdd379e646ece031a22a016.setContent(html_9afa22c8a1637ad62ef4ca21d6c4cdae);
             
         
 
-        marker_72936f37b0f7d0e590dd19a6c66d2da9.bindPopup(popup_13b6963fb2b7ce7561867fff364675ff)
+        circle_marker_98a5be967cb2772990f7b132812d1ec7.bindPopup(popup_4e8730933bdd379e646ece031a22a016)
         ;
 
         
     
     
-            marker_72936f37b0f7d0e590dd19a6c66d2da9.bindTooltip(
+            circle_marker_98a5be967cb2772990f7b132812d1ec7.bindTooltip(
                 `<div>
-                     LAX / Westchester Station
+                     LAX / Metro Transit Center — Metro C Line — existing light rail, in service today
                  </div>`,
                 {
   "sticky": true,
@@ -202,47 +200,32 @@ Bus stop / local business district
             );
         
     
-                marker_72936f37b0f7d0e590dd19a6c66d2da9.setIcon(icon_8b22a32e9c759e9ca1ed50a603e1dbce);
-            
-    
-            var marker_ffe95415a1611dd817625dcb15c778e7 = L.marker(
-                [34.0211, -118.3965],
-                {
-}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            var circle_marker_8f48ba5871776168c34467c6d94145e1 = L.circleMarker(
+                [33.9434, -118.3928],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            var icon_aa1389251007f472d76ff7b2c5bb3424 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "train",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_504e90cfdeb96408c320df0c04f398f9 = L.popup({
-  "maxWidth": 280,
+        var popup_d34fc51407d35aa91b69cf6f73df0c51 = L.popup({
+  "maxWidth": 320,
 });
 
         
             
-                var html_bfe2d6b55f1202df14e0c8cc49dfdc96 = $(`<div id="html_bfe2d6b55f1202df14e0c8cc49dfdc96" style="width: 100.0%; height: 100.0%;"><b>Culver City / Palms Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
-                popup_504e90cfdeb96408c320df0c04f398f9.setContent(html_bfe2d6b55f1202df14e0c8cc49dfdc96);
+                var html_0902f2ef93b9052db0bb2432fb5e8342 = $(`<div id="html_0902f2ef93b9052db0bb2432fb5e8342" style="width: 100.0%; height: 100.0%;"><b>Aviation / Century</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_d34fc51407d35aa91b69cf6f73df0c51.setContent(html_0902f2ef93b9052db0bb2432fb5e8342);
             
         
 
-        marker_ffe95415a1611dd817625dcb15c778e7.bindPopup(popup_504e90cfdeb96408c320df0c04f398f9)
+        circle_marker_8f48ba5871776168c34467c6d94145e1.bindPopup(popup_d34fc51407d35aa91b69cf6f73df0c51)
         ;
 
         
     
     
-            marker_ffe95415a1611dd817625dcb15c778e7.bindTooltip(
+            circle_marker_8f48ba5871776168c34467c6d94145e1.bindTooltip(
                 `<div>
-                     Culver City / Palms Station
+                     Aviation / Century — Metro C Line — existing light rail, in service today
                  </div>`,
                 {
   "sticky": true,
@@ -250,47 +233,32 @@ Bus stop / local business district
             );
         
     
-                marker_ffe95415a1611dd817625dcb15c778e7.setIcon(icon_aa1389251007f472d76ff7b2c5bb3424);
-            
-    
-            var marker_a9f2c05d3b0a39eb577a18a149f1b551 = L.marker(
-                [34.0736, -118.439],
-                {
-}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            var circle_marker_5649eebd78c22cebb7cd4bf8626df4c1 = L.circleMarker(
+                [33.9296, -118.3756],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            var icon_f18d139ea2c2afe6b97d06d7c72cc5a6 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "train",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_3e85441c47dcb95aa735c2576a135ad3 = L.popup({
-  "maxWidth": 280,
+        var popup_e13d3db18b54a62780048a62fa7cf52a = L.popup({
+  "maxWidth": 320,
 });
 
         
             
-                var html_fb88f93c7a94777b3e78d92da0660ec4 = $(`<div id="html_fb88f93c7a94777b3e78d92da0660ec4" style="width: 100.0%; height: 100.0%;"><b>Sepulveda Pass / UCLA Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
-                popup_3e85441c47dcb95aa735c2576a135ad3.setContent(html_fb88f93c7a94777b3e78d92da0660ec4);
+                var html_16856521608ec7b012a03ad9b75b94d7 = $(`<div id="html_16856521608ec7b012a03ad9b75b94d7" style="width: 100.0%; height: 100.0%;"><b>Aviation / Imperial</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_e13d3db18b54a62780048a62fa7cf52a.setContent(html_16856521608ec7b012a03ad9b75b94d7);
             
         
 
-        marker_a9f2c05d3b0a39eb577a18a149f1b551.bindPopup(popup_3e85441c47dcb95aa735c2576a135ad3)
+        circle_marker_5649eebd78c22cebb7cd4bf8626df4c1.bindPopup(popup_e13d3db18b54a62780048a62fa7cf52a)
         ;
 
         
     
     
-            marker_a9f2c05d3b0a39eb577a18a149f1b551.bindTooltip(
+            circle_marker_5649eebd78c22cebb7cd4bf8626df4c1.bindTooltip(
                 `<div>
-                     Sepulveda Pass / UCLA Station
+                     Aviation / Imperial — Metro C Line — existing light rail, in service today
                  </div>`,
                 {
   "sticky": true,
@@ -298,47 +266,938 @@ Bus stop / local business district
             );
         
     
-                marker_a9f2c05d3b0a39eb577a18a149f1b551.setIcon(icon_f18d139ea2c2afe6b97d06d7c72cc5a6);
-            
+            var circle_marker_6927d230c141754301879f11ae35f582 = L.circleMarker(
+                [33.9247, -118.3562],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
     
-            var marker_affb1004ae182fb087437bb86440b8de = L.marker(
+        var popup_c87e66f36017e6a924fa503c3e5b7a4c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_14207c3b656984d4dadfa4e8dfa09f56 = $(`<div id="html_14207c3b656984d4dadfa4e8dfa09f56" style="width: 100.0%; height: 100.0%;"><b>Hawthorne / Lennox</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_c87e66f36017e6a924fa503c3e5b7a4c.setContent(html_14207c3b656984d4dadfa4e8dfa09f56);
+            
+        
+
+        circle_marker_6927d230c141754301879f11ae35f582.bindPopup(popup_c87e66f36017e6a924fa503c3e5b7a4c)
+        ;
+
+        
+    
+    
+            circle_marker_6927d230c141754301879f11ae35f582.bindTooltip(
+                `<div>
+                     Hawthorne / Lennox — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3614af93b968ef20f9595ebb49672111 = L.circleMarker(
+                [33.9252, -118.3265],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_9651c441f7e8943643fd909c3c642852 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dd3f0bb71aad0ee6eee4f04c9bc984c9 = $(`<div id="html_dd3f0bb71aad0ee6eee4f04c9bc984c9" style="width: 100.0%; height: 100.0%;"><b>Crenshaw</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_9651c441f7e8943643fd909c3c642852.setContent(html_dd3f0bb71aad0ee6eee4f04c9bc984c9);
+            
+        
+
+        circle_marker_3614af93b968ef20f9595ebb49672111.bindPopup(popup_9651c441f7e8943643fd909c3c642852)
+        ;
+
+        
+    
+    
+            circle_marker_3614af93b968ef20f9595ebb49672111.bindTooltip(
+                `<div>
+                     Crenshaw — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b15c3dd18921130c585a74d20ba94ab = L.circleMarker(
+                [33.9252, -118.2917],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_765adb175949ca0592afe7b679b6cf0d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_75f3bccbd5cf498883182a383051f830 = $(`<div id="html_75f3bccbd5cf498883182a383051f830" style="width: 100.0%; height: 100.0%;"><b>Vermont / Athens</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_765adb175949ca0592afe7b679b6cf0d.setContent(html_75f3bccbd5cf498883182a383051f830);
+            
+        
+
+        circle_marker_2b15c3dd18921130c585a74d20ba94ab.bindPopup(popup_765adb175949ca0592afe7b679b6cf0d)
+        ;
+
+        
+    
+    
+            circle_marker_2b15c3dd18921130c585a74d20ba94ab.bindTooltip(
+                `<div>
+                     Vermont / Athens — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a1d9efce42fa01898593a13a54976083 = L.circleMarker(
+                [33.9256, -118.2775],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_d46fa168da743bc53f7f46e2ecc66efb = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_bbe136bf79ab1dc0d968865981934227 = $(`<div id="html_bbe136bf79ab1dc0d968865981934227" style="width: 100.0%; height: 100.0%;"><b>Harbor Freeway</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_d46fa168da743bc53f7f46e2ecc66efb.setContent(html_bbe136bf79ab1dc0d968865981934227);
+            
+        
+
+        circle_marker_a1d9efce42fa01898593a13a54976083.bindPopup(popup_d46fa168da743bc53f7f46e2ecc66efb)
+        ;
+
+        
+    
+    
+            circle_marker_a1d9efce42fa01898593a13a54976083.bindTooltip(
+                `<div>
+                     Harbor Freeway — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e71d959ad21610e13cc523395fb70d59 = L.circleMarker(
+                [33.9258, -118.2652],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_c40a565088ccc003c2373b4228480fc8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ba3abfdb3836d64b9a15077482cbd156 = $(`<div id="html_ba3abfdb3836d64b9a15077482cbd156" style="width: 100.0%; height: 100.0%;"><b>Avalon</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_c40a565088ccc003c2373b4228480fc8.setContent(html_ba3abfdb3836d64b9a15077482cbd156);
+            
+        
+
+        circle_marker_e71d959ad21610e13cc523395fb70d59.bindPopup(popup_c40a565088ccc003c2373b4228480fc8)
+        ;
+
+        
+    
+    
+            circle_marker_e71d959ad21610e13cc523395fb70d59.bindTooltip(
+                `<div>
+                     Avalon — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4af79151688bc4b28084bcbb8c6e9971 = L.circleMarker(
+                [33.9271, -118.2489],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_8e19e6e14a43fb2a1b150a41c7e50fc1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3a188482d91cc0996972c06ae7bc627a = $(`<div id="html_3a188482d91cc0996972c06ae7bc627a" style="width: 100.0%; height: 100.0%;"><b>Willowbrook / Rosa Parks</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_8e19e6e14a43fb2a1b150a41c7e50fc1.setContent(html_3a188482d91cc0996972c06ae7bc627a);
+            
+        
+
+        circle_marker_4af79151688bc4b28084bcbb8c6e9971.bindPopup(popup_8e19e6e14a43fb2a1b150a41c7e50fc1)
+        ;
+
+        
+    
+    
+            circle_marker_4af79151688bc4b28084bcbb8c6e9971.bindTooltip(
+                `<div>
+                     Willowbrook / Rosa Parks — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_efb98b94333e4a39df7f32f486bdd40a = L.circleMarker(
+                [33.9271, -118.2107],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_577e8d1fa15c41704d41ca9bb839e674 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_02852e7720d4fa40dff2f55f6acb34f5 = $(`<div id="html_02852e7720d4fa40dff2f55f6acb34f5" style="width: 100.0%; height: 100.0%;"><b>Lynwood</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_577e8d1fa15c41704d41ca9bb839e674.setContent(html_02852e7720d4fa40dff2f55f6acb34f5);
+            
+        
+
+        circle_marker_efb98b94333e4a39df7f32f486bdd40a.bindPopup(popup_577e8d1fa15c41704d41ca9bb839e674)
+        ;
+
+        
+    
+    
+            circle_marker_efb98b94333e4a39df7f32f486bdd40a.bindTooltip(
+                `<div>
+                     Lynwood — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_52f12e84454dcf11816807cd475aeec5 = L.circleMarker(
+                [33.9271, -118.1554],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_be4159ccc24ea3a6786da93b954604e7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_89d22f84b7fcba227f3ef970dff33ec7 = $(`<div id="html_89d22f84b7fcba227f3ef970dff33ec7" style="width: 100.0%; height: 100.0%;"><b>Lakewood Boulevard</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_be4159ccc24ea3a6786da93b954604e7.setContent(html_89d22f84b7fcba227f3ef970dff33ec7);
+            
+        
+
+        circle_marker_52f12e84454dcf11816807cd475aeec5.bindPopup(popup_be4159ccc24ea3a6786da93b954604e7)
+        ;
+
+        
+    
+    
+            circle_marker_52f12e84454dcf11816807cd475aeec5.bindTooltip(
+                `<div>
+                     Lakewood Boulevard — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_687603b367d954a76724aff91817327b = L.circleMarker(
+                [33.9188, -118.1156],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_a839ba05a4896f721a3ec98c2ea372d4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_da5f5a809687e7e02c12db8292da1f82 = $(`<div id="html_da5f5a809687e7e02c12db8292da1f82" style="width: 100.0%; height: 100.0%;"><b>Norwalk</b><br>Existing Metro Infrastructure.<br>The existing C Line provides an east-west connection between Norwalk and the LAX/Metro Transit Center, with transfers to the A Line at Willowbrook/Rosa Parks and the J Line at Harbor Freeway. 12 stations, 17.8 miles, opened August 12, 1995. Frequency: approximately every 10 minutes for most of the day, approximately every 20 minutes early mornings and late evenings. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_a839ba05a4896f721a3ec98c2ea372d4.setContent(html_da5f5a809687e7e02c12db8292da1f82);
+            
+        
+
+        circle_marker_687603b367d954a76724aff91817327b.bindPopup(popup_a839ba05a4896f721a3ec98c2ea372d4)
+        ;
+
+        
+    
+    
+            circle_marker_687603b367d954a76724aff91817327b.bindTooltip(
+                `<div>
+                     Norwalk — Metro C Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ca43059b40a92fd36ba019fdc58dd6b1 = L.polyline(
+                [[34.0227, -118.3382], [34.0089, -118.3358], [34.0084, -118.3323], [33.9934, -118.3358], [33.9885, -118.3358], [33.9556, -118.355], [33.9611, -118.397], [33.9382, -118.4076], [33.9434, -118.3928], [33.92, -118.3875], [33.9137, -118.3875], [33.8975, -118.3875], [33.8497, -118.3887]],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8A8D91", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_ca43059b40a92fd36ba019fdc58dd6b1.bindTooltip(
+                `<div>
+                     Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e69dd033d5d517786520c34128c5e02 = L.circleMarker(
+                [34.0227, -118.3382],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_7fe7fb0ef694d9a14887c57bbbb33bb2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f3f668386fdda1cc981fdb3b28b106c6 = $(`<div id="html_f3f668386fdda1cc981fdb3b28b106c6" style="width: 100.0%; height: 100.0%;"><b>Expo / Crenshaw</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_7fe7fb0ef694d9a14887c57bbbb33bb2.setContent(html_f3f668386fdda1cc981fdb3b28b106c6);
+            
+        
+
+        circle_marker_3e69dd033d5d517786520c34128c5e02.bindPopup(popup_7fe7fb0ef694d9a14887c57bbbb33bb2)
+        ;
+
+        
+    
+    
+            circle_marker_3e69dd033d5d517786520c34128c5e02.bindTooltip(
+                `<div>
+                     Expo / Crenshaw — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f6b0c8192bc81e34c2a9b2d991e17499 = L.circleMarker(
+                [34.0089, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_ec90bdf0fbb57ab83923d90bc99bb387 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1d37be196f483885affa9f212e13b793 = $(`<div id="html_1d37be196f483885affa9f212e13b793" style="width: 100.0%; height: 100.0%;"><b>Martin Luther King Jr.</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_ec90bdf0fbb57ab83923d90bc99bb387.setContent(html_1d37be196f483885affa9f212e13b793);
+            
+        
+
+        circle_marker_f6b0c8192bc81e34c2a9b2d991e17499.bindPopup(popup_ec90bdf0fbb57ab83923d90bc99bb387)
+        ;
+
+        
+    
+    
+            circle_marker_f6b0c8192bc81e34c2a9b2d991e17499.bindTooltip(
+                `<div>
+                     Martin Luther King Jr. — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc9af5fc49e3299fcca93f42f7f3ca27 = L.circleMarker(
+                [34.0084, -118.3323],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_608dc75e978baca8792797cefce98efd = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9fe2efe50e280118ae08818b7c306751 = $(`<div id="html_9fe2efe50e280118ae08818b7c306751" style="width: 100.0%; height: 100.0%;"><b>Leimert Park</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_608dc75e978baca8792797cefce98efd.setContent(html_9fe2efe50e280118ae08818b7c306751);
+            
+        
+
+        circle_marker_bc9af5fc49e3299fcca93f42f7f3ca27.bindPopup(popup_608dc75e978baca8792797cefce98efd)
+        ;
+
+        
+    
+    
+            circle_marker_bc9af5fc49e3299fcca93f42f7f3ca27.bindTooltip(
+                `<div>
+                     Leimert Park — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a78142d1c70dfd573ecc72bd836b0dc2 = L.circleMarker(
+                [33.9934, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_17fad887b4975443a39c584edb1c671b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_50e19358f3067205ff15f746ed953f5a = $(`<div id="html_50e19358f3067205ff15f746ed953f5a" style="width: 100.0%; height: 100.0%;"><b>Hyde Park</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_17fad887b4975443a39c584edb1c671b.setContent(html_50e19358f3067205ff15f746ed953f5a);
+            
+        
+
+        circle_marker_a78142d1c70dfd573ecc72bd836b0dc2.bindPopup(popup_17fad887b4975443a39c584edb1c671b)
+        ;
+
+        
+    
+    
+            circle_marker_a78142d1c70dfd573ecc72bd836b0dc2.bindTooltip(
+                `<div>
+                     Hyde Park — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51f94a358961883655d82176b3d84972 = L.circleMarker(
+                [33.9885, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_412e5a39e1c514900c68e16f6b18140e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e8614112428772db33ca75b0069d3120 = $(`<div id="html_e8614112428772db33ca75b0069d3120" style="width: 100.0%; height: 100.0%;"><b>Fairview Heights</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_412e5a39e1c514900c68e16f6b18140e.setContent(html_e8614112428772db33ca75b0069d3120);
+            
+        
+
+        circle_marker_51f94a358961883655d82176b3d84972.bindPopup(popup_412e5a39e1c514900c68e16f6b18140e)
+        ;
+
+        
+    
+    
+            circle_marker_51f94a358961883655d82176b3d84972.bindTooltip(
+                `<div>
+                     Fairview Heights — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8f29154ed95ba70fece7e224c1ccd983 = L.circleMarker(
+                [33.9556, -118.355],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_0b76044d97b4dfaae613f32a2cf986c5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fd552feec8a6747edaabd1e4f38f4d45 = $(`<div id="html_fd552feec8a6747edaabd1e4f38f4d45" style="width: 100.0%; height: 100.0%;"><b>Downtown Inglewood</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_0b76044d97b4dfaae613f32a2cf986c5.setContent(html_fd552feec8a6747edaabd1e4f38f4d45);
+            
+        
+
+        circle_marker_8f29154ed95ba70fece7e224c1ccd983.bindPopup(popup_0b76044d97b4dfaae613f32a2cf986c5)
+        ;
+
+        
+    
+    
+            circle_marker_8f29154ed95ba70fece7e224c1ccd983.bindTooltip(
+                `<div>
+                     Downtown Inglewood — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_403957bf12b4319e2b98d72426ee6551 = L.circleMarker(
+                [33.9611, -118.397],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_7c33519a71e4b07b366ac9290b45bce1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_bbeee6b79b4052828714666976dc0175 = $(`<div id="html_bbeee6b79b4052828714666976dc0175" style="width: 100.0%; height: 100.0%;"><b>Westchester / Veterans</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_7c33519a71e4b07b366ac9290b45bce1.setContent(html_bbeee6b79b4052828714666976dc0175);
+            
+        
+
+        circle_marker_403957bf12b4319e2b98d72426ee6551.bindPopup(popup_7c33519a71e4b07b366ac9290b45bce1)
+        ;
+
+        
+    
+    
+            circle_marker_403957bf12b4319e2b98d72426ee6551.bindTooltip(
+                `<div>
+                     Westchester / Veterans — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fa0f55a02400c58b05d64677bf2291bf = L.circleMarker(
+                [33.9382, -118.4076],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_9d68fcf0612fc003cb99469184898f3e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1d73f3608defddccab1a4e5dbc11920e = $(`<div id="html_1d73f3608defddccab1a4e5dbc11920e" style="width: 100.0%; height: 100.0%;"><b>LAX / Metro Transit Center</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_9d68fcf0612fc003cb99469184898f3e.setContent(html_1d73f3608defddccab1a4e5dbc11920e);
+            
+        
+
+        circle_marker_fa0f55a02400c58b05d64677bf2291bf.bindPopup(popup_9d68fcf0612fc003cb99469184898f3e)
+        ;
+
+        
+    
+    
+            circle_marker_fa0f55a02400c58b05d64677bf2291bf.bindTooltip(
+                `<div>
+                     LAX / Metro Transit Center — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_50fba53a234d1d93e6d28de19d680a6a = L.circleMarker(
+                [33.9434, -118.3928],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_745368d47210f472336e744a2dcbff59 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_94c3b7d67b8ebf956d111d1b3513a912 = $(`<div id="html_94c3b7d67b8ebf956d111d1b3513a912" style="width: 100.0%; height: 100.0%;"><b>Aviation / Century</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_745368d47210f472336e744a2dcbff59.setContent(html_94c3b7d67b8ebf956d111d1b3513a912);
+            
+        
+
+        circle_marker_50fba53a234d1d93e6d28de19d680a6a.bindPopup(popup_745368d47210f472336e744a2dcbff59)
+        ;
+
+        
+    
+    
+            circle_marker_50fba53a234d1d93e6d28de19d680a6a.bindTooltip(
+                `<div>
+                     Aviation / Century — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1e565054e40778a8c44eb5ebbd258466 = L.circleMarker(
+                [33.92, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_aafbc85a9c3bdc3403976cc3917ae7b7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_6d5d6d8acf4254c01c2eb1959dcadce5 = $(`<div id="html_6d5d6d8acf4254c01c2eb1959dcadce5" style="width: 100.0%; height: 100.0%;"><b>Mariposa</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_aafbc85a9c3bdc3403976cc3917ae7b7.setContent(html_6d5d6d8acf4254c01c2eb1959dcadce5);
+            
+        
+
+        circle_marker_1e565054e40778a8c44eb5ebbd258466.bindPopup(popup_aafbc85a9c3bdc3403976cc3917ae7b7)
+        ;
+
+        
+    
+    
+            circle_marker_1e565054e40778a8c44eb5ebbd258466.bindTooltip(
+                `<div>
+                     Mariposa — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ef187c9ce94a2d236b657398e41abeb9 = L.circleMarker(
+                [33.9137, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_0825c8072b281d67315e36fc8afb15d3 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_0ccfe2ab3a09c65cbd641876203f6810 = $(`<div id="html_0ccfe2ab3a09c65cbd641876203f6810" style="width: 100.0%; height: 100.0%;"><b>El Segundo</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_0825c8072b281d67315e36fc8afb15d3.setContent(html_0ccfe2ab3a09c65cbd641876203f6810);
+            
+        
+
+        circle_marker_ef187c9ce94a2d236b657398e41abeb9.bindPopup(popup_0825c8072b281d67315e36fc8afb15d3)
+        ;
+
+        
+    
+    
+            circle_marker_ef187c9ce94a2d236b657398e41abeb9.bindTooltip(
+                `<div>
+                     El Segundo — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e7c82f1533a00f2406898e6b7b9a65d = L.circleMarker(
+                [33.8975, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_c29b2f96c852bcc5096b7a3449287bc5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a92f06e31d3a34ed7a6e48b48fa6a263 = $(`<div id="html_a92f06e31d3a34ed7a6e48b48fa6a263" style="width: 100.0%; height: 100.0%;"><b>Douglas</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_c29b2f96c852bcc5096b7a3449287bc5.setContent(html_a92f06e31d3a34ed7a6e48b48fa6a263);
+            
+        
+
+        circle_marker_3e7c82f1533a00f2406898e6b7b9a65d.bindPopup(popup_c29b2f96c852bcc5096b7a3449287bc5)
+        ;
+
+        
+    
+    
+            circle_marker_3e7c82f1533a00f2406898e6b7b9a65d.bindTooltip(
+                `<div>
+                     Douglas — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d42df57247f2df494989bff5a07a9de8 = L.circleMarker(
+                [33.8497, -118.3887],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_bc5f960e14549b2efb8bd0bc946a270d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ece238aa3f7150c1c04e64804dab5c9b = $(`<div id="html_ece238aa3f7150c1c04e64804dab5c9b" style="width: 100.0%; height: 100.0%;"><b>Redondo Beach</b><br>Existing Metro Infrastructure.<br>K Line (formerly known informally as the Crenshaw/LAX Line during construction) — 13 stations, continuous service between Expo/Crenshaw and Redondo Beach. The Crenshaw/LAX segment opened October 2022; the LAX/Metro Transit Center segment opened June 2025, completing through-service. Shares LAX/Metro Transit Center and Aviation/Century with the C Line. Does not share a platform with the E Line at Expo/Crenshaw — transfer is via a short at-grade crossing, not same-platform. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_bc5f960e14549b2efb8bd0bc946a270d.setContent(html_ece238aa3f7150c1c04e64804dab5c9b);
+            
+        
+
+        circle_marker_d42df57247f2df494989bff5a07a9de8.bindPopup(popup_bc5f960e14549b2efb8bd0bc946a270d)
+        ;
+
+        
+    
+    
+            circle_marker_d42df57247f2df494989bff5a07a9de8.bindTooltip(
+                `<div>
+                     Redondo Beach — Metro K Line — existing light rail, in service today
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f3fc4b712967ae9f487ed3858ff5d758 = L.polyline(
+                [[34.1858, -118.4489], [34.1817, -118.4489], [34.1, -118.446], [34.0247, -118.4368]],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#8A8D91", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_f3fc4b712967ae9f487ed3858ff5d758.bindTooltip(
+                `<div>
+                     Sepulveda Transit Corridor — Locally Preferred Alternative (selected Jan 2026, pending funding)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ac71f740598e9bb8b7d1a53b17c3edd2 = L.circleMarker(
+                [34.1858, -118.4489],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_afdd91db8243510c9622598fd63146ef = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_eb034f503d0205142e21c9acffd83fbf = $(`<div id="html_eb034f503d0205142e21c9acffd83fbf" style="width: 100.0%; height: 100.0%;"><b>Van Nuys Metrolink Station</b><br>Existing Metro Infrastructure.<br>Metro selected an underground heavy-rail alternative between Van Nuys and Expo/Sepulveda as its Locally Preferred Alternative ("Modified Alternative 5") in January 2026; environmental review, design, funding, and a construction schedule remain pending. Concept contemplates trains capable of 2.5-minute peak headways. No confirmed opening date exists. Publicly circulated cost figures ($6-15B) are a concept estimate, not an official Metro cost. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_afdd91db8243510c9622598fd63146ef.setContent(html_eb034f503d0205142e21c9acffd83fbf);
+            
+        
+
+        circle_marker_ac71f740598e9bb8b7d1a53b17c3edd2.bindPopup(popup_afdd91db8243510c9622598fd63146ef)
+        ;
+
+        
+    
+    
+            circle_marker_ac71f740598e9bb8b7d1a53b17c3edd2.bindTooltip(
+                `<div>
+                     Van Nuys Metrolink Station — Sepulveda Transit Corridor — Locally Preferred Alternative (selected Jan 2026, pending funding)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_62d7cb8ef22b9085caad18681a9e3912 = L.circleMarker(
+                [34.1817, -118.4489],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_c5964a83ab95477c7de8a0fff2f36fe9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3228d7ab6c5042a2b9890917fbd8bc03 = $(`<div id="html_3228d7ab6c5042a2b9890917fbd8bc03" style="width: 100.0%; height: 100.0%;"><b>Van Nuys Blvd / G Line</b><br>Existing Metro Infrastructure.<br>Metro selected an underground heavy-rail alternative between Van Nuys and Expo/Sepulveda as its Locally Preferred Alternative ("Modified Alternative 5") in January 2026; environmental review, design, funding, and a construction schedule remain pending. Concept contemplates trains capable of 2.5-minute peak headways. No confirmed opening date exists. Publicly circulated cost figures ($6-15B) are a concept estimate, not an official Metro cost. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_c5964a83ab95477c7de8a0fff2f36fe9.setContent(html_3228d7ab6c5042a2b9890917fbd8bc03);
+            
+        
+
+        circle_marker_62d7cb8ef22b9085caad18681a9e3912.bindPopup(popup_c5964a83ab95477c7de8a0fff2f36fe9)
+        ;
+
+        
+    
+    
+            circle_marker_62d7cb8ef22b9085caad18681a9e3912.bindTooltip(
+                `<div>
+                     Van Nuys Blvd / G Line — Sepulveda Transit Corridor — Locally Preferred Alternative (selected Jan 2026, pending funding)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4ee08d9ff908fb09885ecee6125cd2a9 = L.circleMarker(
+                [34.1, -118.446],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_7d68154a70f679dc471fd5a1e4f23118 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_537652f3fc4a604de630cc7f2c04c8f3 = $(`<div id="html_537652f3fc4a604de630cc7f2c04c8f3" style="width: 100.0%; height: 100.0%;"><b>Sepulveda Pass</b><br>Existing Metro Infrastructure.<br>Metro selected an underground heavy-rail alternative between Van Nuys and Expo/Sepulveda as its Locally Preferred Alternative ("Modified Alternative 5") in January 2026; environmental review, design, funding, and a construction schedule remain pending. Concept contemplates trains capable of 2.5-minute peak headways. No confirmed opening date exists. Publicly circulated cost figures ($6-15B) are a concept estimate, not an official Metro cost. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_7d68154a70f679dc471fd5a1e4f23118.setContent(html_537652f3fc4a604de630cc7f2c04c8f3);
+            
+        
+
+        circle_marker_4ee08d9ff908fb09885ecee6125cd2a9.bindPopup(popup_7d68154a70f679dc471fd5a1e4f23118)
+        ;
+
+        
+    
+    
+            circle_marker_4ee08d9ff908fb09885ecee6125cd2a9.bindTooltip(
+                `<div>
+                     Sepulveda Pass — Sepulveda Transit Corridor — Locally Preferred Alternative (selected Jan 2026, pending funding)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ed64c267257fdecf780b70846b5e9a9a = L.circleMarker(
+                [34.0247, -118.4368],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_07a20a4a4a6181ab8c6530247548a2ff = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f5fd3b57745af538767ccb3b2f5e31bc = $(`<div id="html_f5fd3b57745af538767ccb3b2f5e31bc" style="width: 100.0%; height: 100.0%;"><b>E Line Expo / Sepulveda</b><br>Existing Metro Infrastructure.<br>Metro selected an underground heavy-rail alternative between Van Nuys and Expo/Sepulveda as its Locally Preferred Alternative ("Modified Alternative 5") in January 2026; environmental review, design, funding, and a construction schedule remain pending. Concept contemplates trains capable of 2.5-minute peak headways. No confirmed opening date exists. Publicly circulated cost figures ($6-15B) are a concept estimate, not an official Metro cost. This project connects to it — it does not propose or fund it.</div>`)[0];
+                popup_07a20a4a4a6181ab8c6530247548a2ff.setContent(html_f5fd3b57745af538767ccb3b2f5e31bc);
+            
+        
+
+        circle_marker_ed64c267257fdecf780b70846b5e9a9a.bindPopup(popup_07a20a4a4a6181ab8c6530247548a2ff)
+        ;
+
+        
+    
+    
+            circle_marker_ed64c267257fdecf780b70846b5e9a9a.bindTooltip(
+                `<div>
+                     E Line Expo / Sepulveda — Sepulveda Transit Corridor — Locally Preferred Alternative (selected Jan 2026, pending funding)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4f9b9251cd4111b1acd992e397fb8c27 = L.polyline(
+                [[34.151, -118.448], [34.0736, -118.439], [34.0211, -118.3965], [33.9416, -118.4085]],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": "2,8", "dashOffset": null, "fill": false, "fillColor": "#5B9BD9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_4f9b9251cd4111b1acd992e397fb8c27.bindTooltip(
+                `<div>
+                     LA Connect Extension Concept — not part of Metro's selected alternative
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_746b2aa060981423ca7555eaf911371c = L.circleMarker(
                 [34.151, -118.448],
-                {
-}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5B9BD9", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            var icon_55cc68a16d53414c9f2efbf6aadaff97 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "blue",
-  "iconColor": "white",
-  "icon": "train",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_5485a6e64620bdb987aedce6adf4f18b = L.popup({
-  "maxWidth": 280,
+        var popup_78f6c7ef44db239fe17cb6bf2467948a = L.popup({
+  "maxWidth": 320,
 });
 
         
             
-                var html_b6509dc170252dc9716e8a909a9d4e36 = $(`<div id="html_b6509dc170252dc9716e8a909a9d4e36" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks / Van Nuys Station</b><br>Underground Rail Station — 2 through tracks, one in each direction. Timed transfers connect to express bus feeders.</div>`)[0];
-                popup_5485a6e64620bdb987aedce6adf4f18b.setContent(html_b6509dc170252dc9716e8a909a9d4e36);
+                var html_c3a6d84ed9011177b9b9cc8172090f73 = $(`<div id="html_c3a6d84ed9011177b9b9cc8172090f73" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks / Van Nuys</b><br>LA Connect Extension Concept — NOT part of Metro's selected Sepulveda Transit Corridor Locally Preferred Alternative (which runs Van Nuys ↔ Expo/Sepulveda, selected January 2026). This is an unofficial concept extension sketched by this project; it is not funded, approved, or under environmental review.</div>`)[0];
+                popup_78f6c7ef44db239fe17cb6bf2467948a.setContent(html_c3a6d84ed9011177b9b9cc8172090f73);
             
         
 
-        marker_affb1004ae182fb087437bb86440b8de.bindPopup(popup_5485a6e64620bdb987aedce6adf4f18b)
+        circle_marker_746b2aa060981423ca7555eaf911371c.bindPopup(popup_78f6c7ef44db239fe17cb6bf2467948a)
         ;
 
         
     
     
-            marker_affb1004ae182fb087437bb86440b8de.bindTooltip(
+            circle_marker_746b2aa060981423ca7555eaf911371c.bindTooltip(
                 `<div>
-                     Sherman Oaks / Van Nuys Station
+                     Sherman Oaks / Van Nuys — LA Connect Extension Concept — not part of Metro's selected alternative
                  </div>`,
                 {
   "sticky": true,
@@ -346,18 +1205,114 @@ Bus stop / local business district
             );
         
     
-                marker_affb1004ae182fb087437bb86440b8de.setIcon(icon_55cc68a16d53414c9f2efbf6aadaff97);
-            
+            var circle_marker_5c958b30e8518acbd8a8ed97c3217e9f = L.circleMarker(
+                [34.0736, -118.439],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5B9BD9", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
     
-            var poly_line_cd2396f082a6d402a715e275c44e6e92 = L.polyline(
+        var popup_c15773cce2b098e16f34ebf2480a1ee6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_34511d0f2adc6ee8015861e779a8933f = $(`<div id="html_34511d0f2adc6ee8015861e779a8933f" style="width: 100.0%; height: 100.0%;"><b>Sepulveda Pass / UCLA</b><br>LA Connect Extension Concept — NOT part of Metro's selected Sepulveda Transit Corridor Locally Preferred Alternative (which runs Van Nuys ↔ Expo/Sepulveda, selected January 2026). This is an unofficial concept extension sketched by this project; it is not funded, approved, or under environmental review.</div>`)[0];
+                popup_c15773cce2b098e16f34ebf2480a1ee6.setContent(html_34511d0f2adc6ee8015861e779a8933f);
+            
+        
+
+        circle_marker_5c958b30e8518acbd8a8ed97c3217e9f.bindPopup(popup_c15773cce2b098e16f34ebf2480a1ee6)
+        ;
+
+        
+    
+    
+            circle_marker_5c958b30e8518acbd8a8ed97c3217e9f.bindTooltip(
+                `<div>
+                     Sepulveda Pass / UCLA — LA Connect Extension Concept — not part of Metro's selected alternative
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_97df005f9eb2d3aed07fc8586a7b9e59 = L.circleMarker(
+                [34.0211, -118.3965],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5B9BD9", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_5a3c82d7f2e33a3934dcbf78e3edce43 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ee2021a1d8459dee8f777cf1ed53cef6 = $(`<div id="html_ee2021a1d8459dee8f777cf1ed53cef6" style="width: 100.0%; height: 100.0%;"><b>Culver City / Palms</b><br>LA Connect Extension Concept — NOT part of Metro's selected Sepulveda Transit Corridor Locally Preferred Alternative (which runs Van Nuys ↔ Expo/Sepulveda, selected January 2026). This is an unofficial concept extension sketched by this project; it is not funded, approved, or under environmental review.</div>`)[0];
+                popup_5a3c82d7f2e33a3934dcbf78e3edce43.setContent(html_ee2021a1d8459dee8f777cf1ed53cef6);
+            
+        
+
+        circle_marker_97df005f9eb2d3aed07fc8586a7b9e59.bindPopup(popup_5a3c82d7f2e33a3934dcbf78e3edce43)
+        ;
+
+        
+    
+    
+            circle_marker_97df005f9eb2d3aed07fc8586a7b9e59.bindTooltip(
+                `<div>
+                     Culver City / Palms — LA Connect Extension Concept — not part of Metro's selected alternative
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4df456914b658f97668bc9d2a156bca8 = L.circleMarker(
+                [33.9416, -118.4085],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5B9BD9", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_65e2683c4b0b499f56cf8183451854fc = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8be91b548ef21ed674d7212c19bac44d = $(`<div id="html_8be91b548ef21ed674d7212c19bac44d" style="width: 100.0%; height: 100.0%;"><b>LAX / Westchester</b><br>LA Connect Extension Concept — NOT part of Metro's selected Sepulveda Transit Corridor Locally Preferred Alternative (which runs Van Nuys ↔ Expo/Sepulveda, selected January 2026). This is an unofficial concept extension sketched by this project; it is not funded, approved, or under environmental review.</div>`)[0];
+                popup_65e2683c4b0b499f56cf8183451854fc.setContent(html_8be91b548ef21ed674d7212c19bac44d);
+            
+        
+
+        circle_marker_4df456914b658f97668bc9d2a156bca8.bindPopup(popup_65e2683c4b0b499f56cf8183451854fc)
+        ;
+
+        
+    
+    
+            circle_marker_4df456914b658f97668bc9d2a156bca8.bindTooltip(
+                `<div>
+                     LAX / Westchester — LA Connect Extension Concept — not part of Metro's selected alternative
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5ba9f75d7fc83cd98860066f2807e0f9 = L.polyline(
                 [[33.9416, -118.4085], [33.9597, -118.3965]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_cd2396f082a6d402a715e275c44e6e92.bindTooltip(
+            poly_line_5ba9f75d7fc83cd98860066f2807e0f9.bindTooltip(
                 `<div>
-                     Express bus feeder: LAX / Westchester Station to Westchester
+                     Express bus feeder: LAX / Westchester to Westchester
                  </div>`,
                 {
   "sticky": true,
@@ -365,30 +1320,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_5e574989eb8713024e2773c0311162c1 = L.circleMarker(
+            var circle_marker_ff25481cb0993a6010c70701b1951053 = L.circleMarker(
                 [33.9597, -118.3965],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_0cd1473087cb77f7a1e7537b3d2fa33b = L.popup({
+        var popup_26a593bedddf3bdfafb1234145d7742a = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_f752aa9e5160d92c245651f024c3e1b6 = $(`<div id="html_f752aa9e5160d92c245651f024c3e1b6" style="width: 100.0%; height: 100.0%;"><b>Westchester</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_0cd1473087cb77f7a1e7537b3d2fa33b.setContent(html_f752aa9e5160d92c245651f024c3e1b6);
+                var html_838b18232f1de70642b178e136d4f76b = $(`<div id="html_838b18232f1de70642b178e136d4f76b" style="width: 100.0%; height: 100.0%;"><b>Westchester</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_26a593bedddf3bdfafb1234145d7742a.setContent(html_838b18232f1de70642b178e136d4f76b);
             
         
 
-        circle_marker_5e574989eb8713024e2773c0311162c1.bindPopup(popup_0cd1473087cb77f7a1e7537b3d2fa33b)
+        circle_marker_ff25481cb0993a6010c70701b1951053.bindPopup(popup_26a593bedddf3bdfafb1234145d7742a)
         ;
 
         
     
     
-            circle_marker_5e574989eb8713024e2773c0311162c1.bindTooltip(
+            circle_marker_ff25481cb0993a6010c70701b1951053.bindTooltip(
                 `<div>
                      Westchester — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -398,15 +1353,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_6723cad1d3bbd78e89ef696abb422cfd = L.polyline(
+            var poly_line_b499566a040b4cb4227f9accf51627ec = L.polyline(
                 [[33.9416, -118.4085], [33.976, -118.418]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_6723cad1d3bbd78e89ef696abb422cfd.bindTooltip(
+            poly_line_b499566a040b4cb4227f9accf51627ec.bindTooltip(
                 `<div>
-                     Express bus feeder: LAX / Westchester Station to Playa Vista
+                     Express bus feeder: LAX / Westchester to Playa Vista
                  </div>`,
                 {
   "sticky": true,
@@ -414,30 +1369,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_64dd319ff3c4f91a85e589670b38d955 = L.circleMarker(
+            var circle_marker_4d3686be8f2601d48d423919f4723b6d = L.circleMarker(
                 [33.976, -118.418],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_01d959df175dd6cc29ce829eb21b7bec = L.popup({
+        var popup_ba57fa0f25336e4dc0b74980b138c7be = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_cc5cf37f0f42cdbdce4deda888c5e4ed = $(`<div id="html_cc5cf37f0f42cdbdce4deda888c5e4ed" style="width: 100.0%; height: 100.0%;"><b>Playa Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_01d959df175dd6cc29ce829eb21b7bec.setContent(html_cc5cf37f0f42cdbdce4deda888c5e4ed);
+                var html_b4fac14a07e8edcbcebf3133b839a789 = $(`<div id="html_b4fac14a07e8edcbcebf3133b839a789" style="width: 100.0%; height: 100.0%;"><b>Playa Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_ba57fa0f25336e4dc0b74980b138c7be.setContent(html_b4fac14a07e8edcbcebf3133b839a789);
             
         
 
-        circle_marker_64dd319ff3c4f91a85e589670b38d955.bindPopup(popup_01d959df175dd6cc29ce829eb21b7bec)
+        circle_marker_4d3686be8f2601d48d423919f4723b6d.bindPopup(popup_ba57fa0f25336e4dc0b74980b138c7be)
         ;
 
         
     
     
-            circle_marker_64dd319ff3c4f91a85e589670b38d955.bindTooltip(
+            circle_marker_4d3686be8f2601d48d423919f4723b6d.bindTooltip(
                 `<div>
                      Playa Vista — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -447,15 +1402,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_fb28182b976f7f0f103d08b2445e79bd = L.polyline(
+            var poly_line_d9d2b8439d4f405f05892ea091a6b5ab = L.polyline(
                 [[34.0211, -118.3965], [34.0203, -118.414]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_fb28182b976f7f0f103d08b2445e79bd.bindTooltip(
+            poly_line_d9d2b8439d4f405f05892ea091a6b5ab.bindTooltip(
                 `<div>
-                     Express bus feeder: Culver City / Palms Station to Palms
+                     Express bus feeder: Culver City / Palms to Palms
                  </div>`,
                 {
   "sticky": true,
@@ -463,30 +1418,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_95bdac27eafaa9ed85baffd321bd924a = L.circleMarker(
+            var circle_marker_42f3b3d3d98f9dc3842fc79610bcd922 = L.circleMarker(
                 [34.0203, -118.414],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_6c24b1bccb4e12254e09b4252f105cc2 = L.popup({
+        var popup_39d754c4f4fab34de8cef7ad366cdca5 = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_1b68a3102a20e22d2df1fd8d031bb152 = $(`<div id="html_1b68a3102a20e22d2df1fd8d031bb152" style="width: 100.0%; height: 100.0%;"><b>Palms</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_6c24b1bccb4e12254e09b4252f105cc2.setContent(html_1b68a3102a20e22d2df1fd8d031bb152);
+                var html_127fc4758bce6e7e0355f25a6c18d150 = $(`<div id="html_127fc4758bce6e7e0355f25a6c18d150" style="width: 100.0%; height: 100.0%;"><b>Palms</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_39d754c4f4fab34de8cef7ad366cdca5.setContent(html_127fc4758bce6e7e0355f25a6c18d150);
             
         
 
-        circle_marker_95bdac27eafaa9ed85baffd321bd924a.bindPopup(popup_6c24b1bccb4e12254e09b4252f105cc2)
+        circle_marker_42f3b3d3d98f9dc3842fc79610bcd922.bindPopup(popup_39d754c4f4fab34de8cef7ad366cdca5)
         ;
 
         
     
     
-            circle_marker_95bdac27eafaa9ed85baffd321bd924a.bindTooltip(
+            circle_marker_42f3b3d3d98f9dc3842fc79610bcd922.bindTooltip(
                 `<div>
                      Palms — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -496,15 +1451,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_cec83b283c376f1f65c855f0865e3489 = L.polyline(
+            var poly_line_9eeaee7539c6eb42d4aa20bdbce8a519 = L.polyline(
                 [[34.0211, -118.3965], [34.0037, -118.43]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_cec83b283c376f1f65c855f0865e3489.bindTooltip(
+            poly_line_9eeaee7539c6eb42d4aa20bdbce8a519.bindTooltip(
                 `<div>
-                     Express bus feeder: Culver City / Palms Station to Mar Vista
+                     Express bus feeder: Culver City / Palms to Mar Vista
                  </div>`,
                 {
   "sticky": true,
@@ -512,30 +1467,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_3a4540bdea7e77f63edca2599dfef949 = L.circleMarker(
+            var circle_marker_fb3415699e09efc21a2179ae83d215ec = L.circleMarker(
                 [34.0037, -118.43],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_9c5faf2edec3a6fe7ad47caef8137e58 = L.popup({
+        var popup_aad038e6cb0cd95c2b30883cef3fc68e = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_b47ecdfe1701ec3db296c795de8228d1 = $(`<div id="html_b47ecdfe1701ec3db296c795de8228d1" style="width: 100.0%; height: 100.0%;"><b>Mar Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_9c5faf2edec3a6fe7ad47caef8137e58.setContent(html_b47ecdfe1701ec3db296c795de8228d1);
+                var html_339956f6141ce92d8b3c6ea740bbe6e3 = $(`<div id="html_339956f6141ce92d8b3c6ea740bbe6e3" style="width: 100.0%; height: 100.0%;"><b>Mar Vista</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_aad038e6cb0cd95c2b30883cef3fc68e.setContent(html_339956f6141ce92d8b3c6ea740bbe6e3);
             
         
 
-        circle_marker_3a4540bdea7e77f63edca2599dfef949.bindPopup(popup_9c5faf2edec3a6fe7ad47caef8137e58)
+        circle_marker_fb3415699e09efc21a2179ae83d215ec.bindPopup(popup_aad038e6cb0cd95c2b30883cef3fc68e)
         ;
 
         
     
     
-            circle_marker_3a4540bdea7e77f63edca2599dfef949.bindTooltip(
+            circle_marker_fb3415699e09efc21a2179ae83d215ec.bindTooltip(
                 `<div>
                      Mar Vista — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -545,15 +1500,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_26a5dbff09ef59187112bb58aaffca2d = L.polyline(
+            var poly_line_ffb1e962ce93b04ca8a6e88e92482982 = L.polyline(
                 [[34.0736, -118.439], [34.0689, -118.4452]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_26a5dbff09ef59187112bb58aaffca2d.bindTooltip(
+            poly_line_ffb1e962ce93b04ca8a6e88e92482982.bindTooltip(
                 `<div>
-                     Express bus feeder: Sepulveda Pass / UCLA Station to UCLA / Westwood
+                     Express bus feeder: Sepulveda Pass / UCLA to UCLA / Westwood
                  </div>`,
                 {
   "sticky": true,
@@ -561,30 +1516,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_ec025828b97092aed73f16ed0861f4c1 = L.circleMarker(
+            var circle_marker_dad51244571d05a1cc252309d5d9b05e = L.circleMarker(
                 [34.0689, -118.4452],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_314c838fb81de8004f8686d42a7fab72 = L.popup({
+        var popup_7c7e29df016c2ad2d488c97a55bfa649 = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_fb735e4c2c0ffb51ba9a4e2da3827c18 = $(`<div id="html_fb735e4c2c0ffb51ba9a4e2da3827c18" style="width: 100.0%; height: 100.0%;"><b>UCLA / Westwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_314c838fb81de8004f8686d42a7fab72.setContent(html_fb735e4c2c0ffb51ba9a4e2da3827c18);
+                var html_4ae85cc115f21b9586b22abc6365a65b = $(`<div id="html_4ae85cc115f21b9586b22abc6365a65b" style="width: 100.0%; height: 100.0%;"><b>UCLA / Westwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_7c7e29df016c2ad2d488c97a55bfa649.setContent(html_4ae85cc115f21b9586b22abc6365a65b);
             
         
 
-        circle_marker_ec025828b97092aed73f16ed0861f4c1.bindPopup(popup_314c838fb81de8004f8686d42a7fab72)
+        circle_marker_dad51244571d05a1cc252309d5d9b05e.bindPopup(popup_7c7e29df016c2ad2d488c97a55bfa649)
         ;
 
         
     
     
-            circle_marker_ec025828b97092aed73f16ed0861f4c1.bindTooltip(
+            circle_marker_dad51244571d05a1cc252309d5d9b05e.bindTooltip(
                 `<div>
                      UCLA / Westwood — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -594,15 +1549,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_a55f0e2c018901f39577e87201e3cc27 = L.polyline(
+            var poly_line_66fd9692f30942dcc79ed9226ad334c3 = L.polyline(
                 [[34.0736, -118.439], [34.0522, -118.4695]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_a55f0e2c018901f39577e87201e3cc27.bindTooltip(
+            poly_line_66fd9692f30942dcc79ed9226ad334c3.bindTooltip(
                 `<div>
-                     Express bus feeder: Sepulveda Pass / UCLA Station to Brentwood
+                     Express bus feeder: Sepulveda Pass / UCLA to Brentwood
                  </div>`,
                 {
   "sticky": true,
@@ -610,30 +1565,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_458b385596013c2b92c1a99b028e1cfe = L.circleMarker(
+            var circle_marker_cb458027f4876d430cf531b8753ce25c = L.circleMarker(
                 [34.0522, -118.4695],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_83605b8735afe9d6d3f3b4d7d8b60263 = L.popup({
+        var popup_9ed7b1ab907bf63dd3e6036609285ccc = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_3e6e79a0319abcee9e30f0bca7dc7e8c = $(`<div id="html_3e6e79a0319abcee9e30f0bca7dc7e8c" style="width: 100.0%; height: 100.0%;"><b>Brentwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_83605b8735afe9d6d3f3b4d7d8b60263.setContent(html_3e6e79a0319abcee9e30f0bca7dc7e8c);
+                var html_b46f14b8aa07aceb29ae9b402bf160cd = $(`<div id="html_b46f14b8aa07aceb29ae9b402bf160cd" style="width: 100.0%; height: 100.0%;"><b>Brentwood</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_9ed7b1ab907bf63dd3e6036609285ccc.setContent(html_b46f14b8aa07aceb29ae9b402bf160cd);
             
         
 
-        circle_marker_458b385596013c2b92c1a99b028e1cfe.bindPopup(popup_83605b8735afe9d6d3f3b4d7d8b60263)
+        circle_marker_cb458027f4876d430cf531b8753ce25c.bindPopup(popup_9ed7b1ab907bf63dd3e6036609285ccc)
         ;
 
         
     
     
-            circle_marker_458b385596013c2b92c1a99b028e1cfe.bindTooltip(
+            circle_marker_cb458027f4876d430cf531b8753ce25c.bindTooltip(
                 `<div>
                      Brentwood — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -643,15 +1598,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_aafeff0b51ca66904410a45cad877d17 = L.polyline(
+            var poly_line_9b53f89113408bdda90b154c4cdcb640 = L.polyline(
                 [[34.151, -118.448], [34.1511, -118.449]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_aafeff0b51ca66904410a45cad877d17.bindTooltip(
+            poly_line_9b53f89113408bdda90b154c4cdcb640.bindTooltip(
                 `<div>
-                     Express bus feeder: Sherman Oaks / Van Nuys Station to Sherman Oaks
+                     Express bus feeder: Sherman Oaks / Van Nuys to Sherman Oaks
                  </div>`,
                 {
   "sticky": true,
@@ -659,30 +1614,30 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_c192be8f1d20e253c1e40c29476b7fb8 = L.circleMarker(
+            var circle_marker_f38b5c8ffe0b80ac38dd22ba3ac2166c = L.circleMarker(
                 [34.1511, -118.449],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_6d87c86076640372928f09b9d92d30fb = L.popup({
+        var popup_84cb42e6dd96429f0b7c7b85372c7043 = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_f203a3b74d4bf6ef9bdebaee4900f2ea = $(`<div id="html_f203a3b74d4bf6ef9bdebaee4900f2ea" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_6d87c86076640372928f09b9d92d30fb.setContent(html_f203a3b74d4bf6ef9bdebaee4900f2ea);
+                var html_593801545725c5c89221fb6558f4786b = $(`<div id="html_593801545725c5c89221fb6558f4786b" style="width: 100.0%; height: 100.0%;"><b>Sherman Oaks</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_84cb42e6dd96429f0b7c7b85372c7043.setContent(html_593801545725c5c89221fb6558f4786b);
             
         
 
-        circle_marker_c192be8f1d20e253c1e40c29476b7fb8.bindPopup(popup_6d87c86076640372928f09b9d92d30fb)
+        circle_marker_f38b5c8ffe0b80ac38dd22ba3ac2166c.bindPopup(popup_84cb42e6dd96429f0b7c7b85372c7043)
         ;
 
         
     
     
-            circle_marker_c192be8f1d20e253c1e40c29476b7fb8.bindTooltip(
+            circle_marker_f38b5c8ffe0b80ac38dd22ba3ac2166c.bindTooltip(
                 `<div>
                      Sherman Oaks — Bus Feeder Stop / Local Business District
                  </div>`,
@@ -692,15 +1647,15 @@ Bus stop / local business district
             );
         
     
-            var poly_line_e4f99c5094a1147a1e54382f1e241a81 = L.polyline(
+            var poly_line_5788183063f10d1cb2727c02b4b8ab7a = L.polyline(
                 [[34.151, -118.448], [34.1867, -118.4489]],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": "8,6", "dashOffset": null, "fill": false, "fillColor": "#E8720C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 3.5}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-            poly_line_e4f99c5094a1147a1e54382f1e241a81.bindTooltip(
+            poly_line_5788183063f10d1cb2727c02b4b8ab7a.bindTooltip(
                 `<div>
-                     Express bus feeder: Sherman Oaks / Van Nuys Station to Van Nuys
+                     Express bus feeder: Sherman Oaks / Van Nuys to Van Nuys
                  </div>`,
                 {
   "sticky": true,
@@ -708,32 +1663,1067 @@ Bus stop / local business district
             );
         
     
-            var circle_marker_940939ae7469181e4a2c1c7d2b43027b = L.circleMarker(
+            var circle_marker_71d88b866df3a549fa566115e33491b9 = L.circleMarker(
                 [34.1867, -118.4489],
                 {"bubblingMouseEvents": true, "color": "#E8720C", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8720C", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_c59a942d3a3a513b9824e5db063b9470);
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
         
     
-        var popup_1fde7104c31ad560c691bc34416f6a5a = L.popup({
+        var popup_d0c4f57b1ea17f86f0e0b42fa3e4e3cd = L.popup({
   "maxWidth": 260,
 });
 
         
             
-                var html_fd9a61a167d5195192588fed0757b3e0 = $(`<div id="html_fd9a61a167d5195192588fed0757b3e0" style="width: 100.0%; height: 100.0%;"><b>Van Nuys</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
-                popup_1fde7104c31ad560c691bc34416f6a5a.setContent(html_fd9a61a167d5195192588fed0757b3e0);
+                var html_3bb65e4f4111f9884693379bc9f08601 = $(`<div id="html_3bb65e4f4111f9884693379bc9f08601" style="width: 100.0%; height: 100.0%;"><b>Van Nuys</b><br>Bus Feeder Stop / Local Business District<br><i>Food perk redemptions available for riders</i></div>`)[0];
+                popup_d0c4f57b1ea17f86f0e0b42fa3e4e3cd.setContent(html_3bb65e4f4111f9884693379bc9f08601);
             
         
 
-        circle_marker_940939ae7469181e4a2c1c7d2b43027b.bindPopup(popup_1fde7104c31ad560c691bc34416f6a5a)
+        circle_marker_71d88b866df3a549fa566115e33491b9.bindPopup(popup_d0c4f57b1ea17f86f0e0b42fa3e4e3cd)
         ;
 
         
     
     
-            circle_marker_940939ae7469181e4a2c1c7d2b43027b.bindTooltip(
+            circle_marker_71d88b866df3a549fa566115e33491b9.bindTooltip(
                 `<div>
                      Van Nuys — Bus Feeder Stop / Local Business District
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1772d1d9752f27f9a81876ef17240e4f = L.polyline(
+                [[33.9416, -118.4085], [33.9382, -118.4076]],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1F9D6B", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.95, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_1772d1d9752f27f9a81876ef17240e4f.bindTooltip(
+                `<div>
+                     New Connector (concept, rail): LAX / Westchester → LAX / Metro Transit Center
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_86fae7bc412508f13b9e35bb60edb351 = L.circleMarker(
+                [33.9399, -118.40805],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_18b8666d8dc594d4b215d4f96b3599e9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d5fef3d6dd7c48cca94ef2fe8fe73d16 = $(`<div id="html_d5fef3d6dd7c48cca94ef2fe8fe73d16" style="width: 100.0%; height: 100.0%;"><b>New Connector</b><br>New Connector — Post-Games Legacy Rail (concept).<br>A short link this project proposes joining the LA Connect Sepulveda Extension Concept to Metro's real C Line at LAX. Contingent on that extension concept, which is not part of Metro's selected Sepulveda Transit Corridor alternative.<br>Flat fare: $4.25</div>`)[0];
+                popup_18b8666d8dc594d4b215d4f96b3599e9.setContent(html_d5fef3d6dd7c48cca94ef2fe8fe73d16);
+            
+        
+
+        circle_marker_86fae7bc412508f13b9e35bb60edb351.bindPopup(popup_18b8666d8dc594d4b215d4f96b3599e9)
+        ;
+
+        
+    
+    
+            circle_marker_86fae7bc412508f13b9e35bb60edb351.bindTooltip(
+                `<div>
+                     New Connector — concept, contingent on the Sepulveda Extension Concept
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2dcd9a19f5bf09d09a43914be2cd4a66 = L.polyline(
+                [[34.0211, -118.3965], [34.0217, -118.3776], [34.0227, -118.3382], [34.0181, -118.2868], [34.0489, -118.2588], [34.0561, -118.2365]],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1F9D6B", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.95, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_2dcd9a19f5bf09d09a43914be2cd4a66.bindTooltip(
+                `<div>
+                     New Connector (concept, rail): Culver City / Palms → Downtown LA / Union Station
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fff7345a34e22fc06f913c7a87434bd6 = L.circleMarker(
+                [34.0217, -118.3776],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1F9D6B", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_fc7838f81986ad4d169d6e42718583c5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8d4129cbcf7860b13399e05e0b971efd = $(`<div id="html_8d4129cbcf7860b13399e05e0b971efd" style="width: 100.0%; height: 100.0%;"><b>La Cienega / Jefferson</b><br>New Rail Connector — Downtown LA Branch (concept).<br>Part of the new rail connector this project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver City / Palms. Note: this branch's Expo / Crenshaw stop reuses the real K Line station's coordinate but is a separate, unofficial concept segment, not part of the K Line.<br>Flat fare: $4.25</div>`)[0];
+                popup_fc7838f81986ad4d169d6e42718583c5.setContent(html_8d4129cbcf7860b13399e05e0b971efd);
+            
+        
+
+        circle_marker_fff7345a34e22fc06f913c7a87434bd6.bindPopup(popup_fc7838f81986ad4d169d6e42718583c5)
+        ;
+
+        
+    
+    
+            circle_marker_fff7345a34e22fc06f913c7a87434bd6.bindTooltip(
+                `<div>
+                     La Cienega / Jefferson — New Rail Connector, Downtown LA Branch (concept)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1dcd0333d6b33fb64e3dc69d530126e1 = L.circleMarker(
+                [34.0227, -118.3382],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1F9D6B", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_de2369ca058f583be94b45a8a269d890 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b649b17feee269854d087940815ebd68 = $(`<div id="html_b649b17feee269854d087940815ebd68" style="width: 100.0%; height: 100.0%;"><b>Expo / Crenshaw</b><br>New Rail Connector — Downtown LA Branch (concept).<br>Part of the new rail connector this project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver City / Palms. Note: this branch's Expo / Crenshaw stop reuses the real K Line station's coordinate but is a separate, unofficial concept segment, not part of the K Line.<br>Flat fare: $4.25</div>`)[0];
+                popup_de2369ca058f583be94b45a8a269d890.setContent(html_b649b17feee269854d087940815ebd68);
+            
+        
+
+        circle_marker_1dcd0333d6b33fb64e3dc69d530126e1.bindPopup(popup_de2369ca058f583be94b45a8a269d890)
+        ;
+
+        
+    
+    
+            circle_marker_1dcd0333d6b33fb64e3dc69d530126e1.bindTooltip(
+                `<div>
+                     Expo / Crenshaw — New Rail Connector, Downtown LA Branch (concept)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_05b45e60669186953d0d301938988a4b = L.circleMarker(
+                [34.0181, -118.2868],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1F9D6B", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_736ddb4c94838d551f8d5e2e31772411 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c69a5f4cbda8c26e97b9512003a2c3ea = $(`<div id="html_c69a5f4cbda8c26e97b9512003a2c3ea" style="width: 100.0%; height: 100.0%;"><b>Expo Park / USC</b><br>New Rail Connector — Downtown LA Branch (concept).<br>Part of the new rail connector this project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver City / Palms. Note: this branch's Expo / Crenshaw stop reuses the real K Line station's coordinate but is a separate, unofficial concept segment, not part of the K Line.<br>Flat fare: $4.25</div>`)[0];
+                popup_736ddb4c94838d551f8d5e2e31772411.setContent(html_c69a5f4cbda8c26e97b9512003a2c3ea);
+            
+        
+
+        circle_marker_05b45e60669186953d0d301938988a4b.bindPopup(popup_736ddb4c94838d551f8d5e2e31772411)
+        ;
+
+        
+    
+    
+            circle_marker_05b45e60669186953d0d301938988a4b.bindTooltip(
+                `<div>
+                     Expo Park / USC — New Rail Connector, Downtown LA Branch (concept)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_49229aa3e7964a9798f05cd1d34551ce = L.circleMarker(
+                [34.0489, -118.2588],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1F9D6B", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_1ab4407de6310bfc5aa9f5293027ed5a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d69c2900160ef05a4f8d2a56ca6b4d58 = $(`<div id="html_d69c2900160ef05a4f8d2a56ca6b4d58" style="width: 100.0%; height: 100.0%;"><b>7th St / Metro Center</b><br>New Rail Connector — Downtown LA Branch (concept).<br>Part of the new rail connector this project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver City / Palms. Note: this branch's Expo / Crenshaw stop reuses the real K Line station's coordinate but is a separate, unofficial concept segment, not part of the K Line.<br>Flat fare: $4.25</div>`)[0];
+                popup_1ab4407de6310bfc5aa9f5293027ed5a.setContent(html_d69c2900160ef05a4f8d2a56ca6b4d58);
+            
+        
+
+        circle_marker_49229aa3e7964a9798f05cd1d34551ce.bindPopup(popup_1ab4407de6310bfc5aa9f5293027ed5a)
+        ;
+
+        
+    
+    
+            circle_marker_49229aa3e7964a9798f05cd1d34551ce.bindTooltip(
+                `<div>
+                     7th St / Metro Center — New Rail Connector, Downtown LA Branch (concept)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_95aad68fae71953ebfbbb8400b7d5436 = L.circleMarker(
+                [34.0561, -118.2365],
+                {"bubblingMouseEvents": true, "color": "#1F9D6B", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1F9D6B", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_01a58683f2639af58c6be4f784ec0a58 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_bca9f2e3dbc0cd44cca2fdc1361bde7f = $(`<div id="html_bca9f2e3dbc0cd44cca2fdc1361bde7f" style="width: 100.0%; height: 100.0%;"><b>Downtown LA / Union Station</b><br>New Rail Connector — Downtown LA Branch (concept).<br>Part of the new rail connector this project proposes, linking the Sepulveda Extension Concept into Downtown LA via Culver City / Palms. Note: this branch's Expo / Crenshaw stop reuses the real K Line station's coordinate but is a separate, unofficial concept segment, not part of the K Line.<br>Flat fare: $4.25</div>`)[0];
+                popup_01a58683f2639af58c6be4f784ec0a58.setContent(html_bca9f2e3dbc0cd44cca2fdc1361bde7f);
+            
+        
+
+        circle_marker_95aad68fae71953ebfbbb8400b7d5436.bindPopup(popup_01a58683f2639af58c6be4f784ec0a58)
+        ;
+
+        
+    
+    
+            circle_marker_95aad68fae71953ebfbbb8400b7d5436.bindTooltip(
+                `<div>
+                     Downtown LA / Union Station — New Rail Connector, Downtown LA Branch (concept)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d6409cee5715c6fe417c6deba3746a7 = L.circleMarker(
+                [33.9382, -118.4076],
+                {"bubblingMouseEvents": true, "color": "#0B2A4A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#0B2A4A", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_f96837eabb292dad6a345e2f77510647 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_93ee38fdd5f01c43b6e98ab7b62804d2 = $(`<div id="html_93ee38fdd5f01c43b6e98ab7b62804d2" style="width: 100.0%; height: 100.0%;"><b>LAX / Metro Transit Center</b><br>LAX/Metro Transit Center — opened June 6, 2025. Served by both the C Line and K Line, plus bus bays for Metro Lines 102, 111, 117, 120, 232 and municipal operators. The LAX Automated People Mover (APM) remains under testing and is expected to open later in 2026; until then, a free airport-operated shuttle links the LAX/Metro Transit Center with terminals.</div>`)[0];
+                popup_f96837eabb292dad6a345e2f77510647.setContent(html_93ee38fdd5f01c43b6e98ab7b62804d2);
+            
+        
+
+        circle_marker_5d6409cee5715c6fe417c6deba3746a7.bindPopup(popup_f96837eabb292dad6a345e2f77510647)
+        ;
+
+        
+    
+    
+            circle_marker_5d6409cee5715c6fe417c6deba3746a7.bindTooltip(
+                `<div>
+                     LAX / Metro Transit Center — C Line + K Line interchange
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_5f4d72a8278e50bdc0d97e26d79b26f6 = L.circle(
+                [33.9382, -118.4076],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_5f4d72a8278e50bdc0d97e26d79b26f6.bindTooltip(
+                `<div>
+                     LAX / Metro Transit Center — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_350086be1cf6e33807f2338fd0164996 = L.circle(
+                [33.9434, -118.3928],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_350086be1cf6e33807f2338fd0164996.bindTooltip(
+                `<div>
+                     Aviation / Century — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_3fe0f0d2e5cff814f49d827c85863927 = L.circle(
+                [33.9296, -118.3756],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_3fe0f0d2e5cff814f49d827c85863927.bindTooltip(
+                `<div>
+                     Aviation / Imperial — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_ceebe2e011fc216181b0bb7aad6d8465 = L.circle(
+                [33.9247, -118.3562],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_ceebe2e011fc216181b0bb7aad6d8465.bindTooltip(
+                `<div>
+                     Hawthorne / Lennox — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_618ddb55cb1477e7a5984385b3c90b72 = L.circle(
+                [33.9252, -118.3265],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_618ddb55cb1477e7a5984385b3c90b72.bindTooltip(
+                `<div>
+                     Crenshaw — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c97cb40b6a1699cb058836cbd20cc423 = L.circle(
+                [33.9252, -118.2917],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_c97cb40b6a1699cb058836cbd20cc423.bindTooltip(
+                `<div>
+                     Vermont / Athens — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_77de16ba8bbe4f25323b127e490abcd1 = L.circle(
+                [33.9256, -118.2775],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_77de16ba8bbe4f25323b127e490abcd1.bindTooltip(
+                `<div>
+                     Harbor Freeway — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_44bb8962501b5b18c1a33294f4af74af = L.circle(
+                [33.9258, -118.2652],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_44bb8962501b5b18c1a33294f4af74af.bindTooltip(
+                `<div>
+                     Avalon — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_9b7cf8231a73d9ce75157b64cd500d4c = L.circle(
+                [33.9271, -118.2489],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_9b7cf8231a73d9ce75157b64cd500d4c.bindTooltip(
+                `<div>
+                     Willowbrook / Rosa Parks — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_e1af5f535f4ffa948926e48cc2704576 = L.circle(
+                [33.9271, -118.2107],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_e1af5f535f4ffa948926e48cc2704576.bindTooltip(
+                `<div>
+                     Lynwood — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_9adb703088cdd9a953eb1b749c22659b = L.circle(
+                [33.9271, -118.1554],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_9adb703088cdd9a953eb1b749c22659b.bindTooltip(
+                `<div>
+                     Lakewood Boulevard — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_6f331eb05dd8456db677315e2091974a = L.circle(
+                [33.9188, -118.1156],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_6f331eb05dd8456db677315e2091974a.bindTooltip(
+                `<div>
+                     Norwalk — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_f808eced322a60ff18dcb306f0014a34 = L.circle(
+                [34.0227, -118.3382],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_f808eced322a60ff18dcb306f0014a34.bindTooltip(
+                `<div>
+                     Expo / Crenshaw — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_444dfee619d3c72caff95bb0d4baddb9 = L.circle(
+                [34.0089, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_444dfee619d3c72caff95bb0d4baddb9.bindTooltip(
+                `<div>
+                     Martin Luther King Jr. — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c39ce5749b0bd0b3398718043390d306 = L.circle(
+                [34.0084, -118.3323],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_c39ce5749b0bd0b3398718043390d306.bindTooltip(
+                `<div>
+                     Leimert Park — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_352b45a4370353be47fd84f67f0dda8d = L.circle(
+                [33.9934, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_352b45a4370353be47fd84f67f0dda8d.bindTooltip(
+                `<div>
+                     Hyde Park — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_31d3d1f3530f6422c57a79761a7e6cca = L.circle(
+                [33.9885, -118.3358],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_31d3d1f3530f6422c57a79761a7e6cca.bindTooltip(
+                `<div>
+                     Fairview Heights — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_44186188790598059365a147b50debec = L.circle(
+                [33.9556, -118.355],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_44186188790598059365a147b50debec.bindTooltip(
+                `<div>
+                     Downtown Inglewood — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_76b3dabbf3fd18161466f02ab8d75356 = L.circle(
+                [33.9611, -118.397],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_76b3dabbf3fd18161466f02ab8d75356.bindTooltip(
+                `<div>
+                     Westchester / Veterans — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_74158dd46520648bacab46a7701e5691 = L.circle(
+                [33.9382, -118.4076],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_74158dd46520648bacab46a7701e5691.bindTooltip(
+                `<div>
+                     LAX / Metro Transit Center — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_00c51ef857fadad9c0c95d67012b386e = L.circle(
+                [33.9434, -118.3928],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_00c51ef857fadad9c0c95d67012b386e.bindTooltip(
+                `<div>
+                     Aviation / Century — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_3e6db26ec7660b95248a213ebed65d19 = L.circle(
+                [33.92, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_3e6db26ec7660b95248a213ebed65d19.bindTooltip(
+                `<div>
+                     Mariposa — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_b8a39b8ac8a05a35eb27e4d058cc11d2 = L.circle(
+                [33.9137, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_b8a39b8ac8a05a35eb27e4d058cc11d2.bindTooltip(
+                `<div>
+                     El Segundo — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_b29baaea862bbaf594671a6be13dcb01 = L.circle(
+                [33.8975, -118.3875],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_b29baaea862bbaf594671a6be13dcb01.bindTooltip(
+                `<div>
+                     Douglas — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_586ecdaaa826e9b2c5d91a15b73f9b05 = L.circle(
+                [33.8497, -118.3887],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_586ecdaaa826e9b2c5d91a15b73f9b05.bindTooltip(
+                `<div>
+                     Redondo Beach — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_d5f3b50cf6ff4c75e19df69e18a81024 = L.circle(
+                [34.1858, -118.4489],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_d5f3b50cf6ff4c75e19df69e18a81024.bindTooltip(
+                `<div>
+                     Van Nuys Metrolink Station — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_0b369cf1a13f1e04a5386b489eba1ed9 = L.circle(
+                [34.1817, -118.4489],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_0b369cf1a13f1e04a5386b489eba1ed9.bindTooltip(
+                `<div>
+                     Van Nuys Blvd / G Line — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_0fdb2e14e0eb76873bec14cea4759f30 = L.circle(
+                [34.1, -118.446],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_0fdb2e14e0eb76873bec14cea4759f30.bindTooltip(
+                `<div>
+                     Sepulveda Pass — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c9e5fa8f62dfb59d3947337976641caa = L.circle(
+                [34.0247, -118.4368],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_c9e5fa8f62dfb59d3947337976641caa.bindTooltip(
+                `<div>
+                     E Line Expo / Sepulveda — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_c530a11fbcf1f27b796b507f6bafde15 = L.circle(
+                [34.151, -118.448],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_c530a11fbcf1f27b796b507f6bafde15.bindTooltip(
+                `<div>
+                     Sherman Oaks / Van Nuys — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_ea80d0542d03803caf2189539f278888 = L.circle(
+                [34.0736, -118.439],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_ea80d0542d03803caf2189539f278888.bindTooltip(
+                `<div>
+                     Sepulveda Pass / UCLA — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_5951a66e68b337d190b3a6453e062641 = L.circle(
+                [34.0211, -118.3965],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_5951a66e68b337d190b3a6453e062641.bindTooltip(
+                `<div>
+                     Culver City / Palms — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_ed44b9624ea61f0d0beb23069194437a = L.circle(
+                [33.9416, -118.4085],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_ed44b9624ea61f0d0beb23069194437a.bindTooltip(
+                `<div>
+                     LAX / Westchester — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_a715ba96896dfb045d5b743f303fc216 = L.circle(
+                [34.0217, -118.3776],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_a715ba96896dfb045d5b743f303fc216.bindTooltip(
+                `<div>
+                     La Cienega / Jefferson — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_078c1e2e1c37e4cd0ace77b24c02d41f = L.circle(
+                [34.0227, -118.3382],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_078c1e2e1c37e4cd0ace77b24c02d41f.bindTooltip(
+                `<div>
+                     Expo / Crenshaw — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_d5a9a58ca5830901d3b49021971e5389 = L.circle(
+                [34.0181, -118.2868],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_d5a9a58ca5830901d3b49021971e5389.bindTooltip(
+                `<div>
+                     Expo Park / USC — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_a12b85c452dc9026762cfd2876e12d99 = L.circle(
+                [34.0489, -118.2588],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_a12b85c452dc9026762cfd2876e12d99.bindTooltip(
+                `<div>
+                     7th St / Metro Center — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_0df2e582fee6d09a214025d67f8b92a8 = L.circle(
+                [34.0561, -118.2365],
+                {"bubblingMouseEvents": true, "color": "#F2B705", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2B705", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 805, "stroke": true, "weight": 1}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            circle_0df2e582fee6d09a214025d67f8b92a8.bindTooltip(
+                `<div>
+                     Downtown LA / Union Station — 0.5 mi station-area density zone
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5189bee2ab9766cdec0142eb8ec014bc = L.polyline(
+                [[33.8497, -118.3887], [33.8358, -118.3406]],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": "2,8", "dashOffset": null, "fill": false, "fillColor": "#5B9BD9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_5189bee2ab9766cdec0142eb8ec014bc.bindTooltip(
+                `<div>
+                     Future: K Line extension to Torrance — EIR certified Jan 2026, opening ~2036
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9e280e7f94e53b42b0e575a23ac33490 = L.circleMarker(
+                [33.8497, -118.3887],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_abd576e259b059583abdbc692c00b998 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1a88fbda1f60fd263970aca3b6a82a8b = $(`<div id="html_1a88fbda1f60fd263970aca3b6a82a8b" style="width: 100.0%; height: 100.0%;"><b>Redondo Beach</b><br>K Line Extension to Torrance — Final EIR certified and approved January 22, 2026 (Hawthorne Option), ~4.5 miles from Redondo Beach (Marine) to Torrance Transit Center. Estimated opening 2036; construction possibly starting as early as 2027. Operates as part of the K Line, not the C Line.</div>`)[0];
+                popup_abd576e259b059583abdbc692c00b998.setContent(html_1a88fbda1f60fd263970aca3b6a82a8b);
+            
+        
+
+        circle_marker_9e280e7f94e53b42b0e575a23ac33490.bindPopup(popup_abd576e259b059583abdbc692c00b998)
+        ;
+
+        
+    
+    
+            circle_marker_9e280e7f94e53b42b0e575a23ac33490.bindTooltip(
+                `<div>
+                     Redondo Beach — K Line Extension to Torrance
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_564787ca28eb4eb31959ff53192c4148 = L.circleMarker(
+                [33.8358, -118.3406],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_f8a751db94be32ccac44fbc577f143e5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_26741679e609c9e34574663cfae65259 = $(`<div id="html_26741679e609c9e34574663cfae65259" style="width: 100.0%; height: 100.0%;"><b>Torrance Transit Center</b><br>K Line Extension to Torrance — Final EIR certified and approved January 22, 2026 (Hawthorne Option), ~4.5 miles from Redondo Beach (Marine) to Torrance Transit Center. Estimated opening 2036; construction possibly starting as early as 2027. Operates as part of the K Line, not the C Line.</div>`)[0];
+                popup_f8a751db94be32ccac44fbc577f143e5.setContent(html_26741679e609c9e34574663cfae65259);
+            
+        
+
+        circle_marker_564787ca28eb4eb31959ff53192c4148.bindPopup(popup_f8a751db94be32ccac44fbc577f143e5)
+        ;
+
+        
+    
+    
+            circle_marker_564787ca28eb4eb31959ff53192c4148.bindTooltip(
+                `<div>
+                     Torrance Transit Center — K Line Extension to Torrance
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ceb159c9541b3d0be5ddcdb547375e8e = L.polyline(
+                [[34.0227, -118.3382], [34.0912, -118.3617]],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": "2,8", "dashOffset": null, "fill": false, "fillColor": "#5B9BD9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+            poly_line_ceb159c9541b3d0be5ddcdb547375e8e.bindTooltip(
+                `<div>
+                     Future: K Line Northern Extension — long-range, post-2040s
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b0bf9f6c665e495b4bb9c26a0f53b254 = L.circleMarker(
+                [34.0912, -118.3617],
+                {"bubblingMouseEvents": true, "color": "#5B9BD9", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "white", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_845103cc367a666c4251adb34fea4134 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_085783aa20b9671b3acc688287e2efed = $(`<div id="html_085783aa20b9671b3acc688287e2efed" style="width: 100.0%; height: 100.0%;"><b>K Line Northern Extension</b><br>K Line Northern Extension (toward Mid-City / West Hollywood / Hollywood) — long-range only. Construction funding is not available until 2041; projected opening 2047-2049. Not relevant to the 2028 Olympics.</div>`)[0];
+                popup_845103cc367a666c4251adb34fea4134.setContent(html_085783aa20b9671b3acc688287e2efed);
+            
+        
+
+        circle_marker_b0bf9f6c665e495b4bb9c26a0f53b254.bindPopup(popup_845103cc367a666c4251adb34fea4134)
+        ;
+
+        
+    
+    
+            circle_marker_b0bf9f6c665e495b4bb9c26a0f53b254.bindTooltip(
+                `<div>
+                     K Line Northern Extension — long-range, post-2040s
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e0dff8043c9e3371983b98436c27c853 = L.circleMarker(
+                [34.062, -118.361],
+                {"bubblingMouseEvents": true, "color": "#8A8D91", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8A8D91", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_a7c9b0951470eb8462e946f44392a002);
+        
+    
+        var popup_c892f84549583ce4e6391cc0c891166e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8ef34152f814935363586c9cf92c5cef = $(`<div id="html_8ef34152f814935363586c9cf92c5cef" style="width: 100.0%; height: 100.0%;"><b>D Line Extension, Section 1</b><br>D Line Extension, Section 1 — opened May 8, 2026, adding three underground stations toward Beverly Hills. Existing / approved Metro infrastructure, shown for regional Olympic-travel and Westside-access context; not otherwise modeled on this map.</div>`)[0];
+                popup_c892f84549583ce4e6391cc0c891166e.setContent(html_8ef34152f814935363586c9cf92c5cef);
+            
+        
+
+        circle_marker_e0dff8043c9e3371983b98436c27c853.bindPopup(popup_c892f84549583ce4e6391cc0c891166e)
+        ;
+
+        
+    
+    
+            circle_marker_e0dff8043c9e3371983b98436c27c853.bindTooltip(
+                `<div>
+                     D Line Extension, Section 1 — Phase 0, existing/approved (opened May 2026)
                  </div>`,
                 {
   "sticky": true,
