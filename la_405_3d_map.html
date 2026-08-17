@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LA 405 Integrated Rail + Bus Feeder Concept — 3D Map</title>
+<title>LA Connect — Sepulveda + C Line Network — 3D Map</title>
 <script src="https://unpkg.com/maplibre-gl@3/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@3/dist/maplibre-gl.css" rel="stylesheet" />
 <style>
@@ -24,7 +24,7 @@
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
     padding: 14px 18px;
-    width: 280px;
+    width: 290px;
     color: #222;
   }
 
@@ -39,7 +39,12 @@
     margin: 0;
     font-size: 15px;
     line-height: 1.3;
-    color: #0B3C6B;
+    color: #4B4E52;
+  }
+  #panel .subtitle {
+    font-size: 10.5px;
+    color: #888;
+    margin-top: 2px;
   }
 
   #panel-toggle {
@@ -49,7 +54,7 @@
     border-radius: 5px;
     border: 1px solid #ccc;
     background: #f4f4f4;
-    color: #0B3C6B;
+    color: #4B4E52;
     font-size: 15px;
     font-weight: 700;
     line-height: 1;
@@ -83,7 +88,7 @@
     margin-bottom: 5px;
   }
 
-  #trip-destination, #trip-route {
+  #trip-destination, #trip-route, #trip-lastmile {
     width: 100%;
     font-size: 13px;
     padding: 6px 8px;
@@ -98,7 +103,7 @@
     margin-top: 8px;
     font-size: 13px;
     font-weight: 700;
-    color: #0B3C6B;
+    color: #4B4E52;
     font-variant-numeric: tabular-nums;
   }
 
@@ -122,6 +127,12 @@
     font-size: 12px;
     color: #444;
   }
+  .legend-caption {
+    font-size: 10.5px;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
 
   .legend-row {
     display: flex;
@@ -134,14 +145,19 @@
     display: inline-block;
     flex: none;
   }
-  .swatch.rail-line {
+  .swatch.phase0-line {
     width: 20px; height: 4px;
-    background: #0B3C6B;
+    background: #8A8D91;
     border-radius: 2px;
   }
-  .swatch.bus-line {
+  .swatch.phase1-line {
     width: 20px; height: 0;
     border-top: 2px dashed #E8720C;
+  }
+  .swatch.phase2-line {
+    width: 20px; height: 4px;
+    background: #1F9D6B;
+    border-radius: 2px;
   }
   .swatch.bus-lane-fill {
     width: 20px; height: 10px;
@@ -149,32 +165,40 @@
     border: 1px solid #E8720C;
     border-radius: 2px;
   }
-  .swatch.police-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: #d32f2f;
-    border: 2px solid white;
-    box-shadow: 0 0 0 1px #999;
-  }
   .swatch.train-dot {
     width: 20px; height: 8px;
-    background: #0B3C6B;
+    background: #4B4E52;
     border-radius: 4px;
     border: 2px solid white;
     box-shadow: 0 0 0 1px #999;
   }
-  .swatch.legacy-line {
-    width: 20px; height: 4px;
-    background: #1F9D6B;
-    border-radius: 2px;
+  .swatch.synergy-ring-ok {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: transparent;
+    border: 3px solid #2E7D32;
+  }
+  .swatch.olympic-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #B8860B;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #999;
+  }
+  .swatch.roundabout-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #4B4E52;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #999;
   }
 
   #trip-card {
     position: absolute;
     top: 16px;
-    left: 316px;
+    left: 326px;
     z-index: 5;
-    background: rgba(11, 60, 107, 0.95);
+    background: rgba(75, 78, 82, 0.95);
     color: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -189,25 +213,25 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #0B3C6B;
+    background: #E8720C;
     border: 2px solid white;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
   }
 
-  .police-marker {
-    width: 16px;
-    height: 16px;
+  .rideshare-marker {
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background: #d32f2f;
+    background: #4B4E52;
     border: 2px solid white;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
   }
 
   .train-marker {
     width: 28px;
     height: 11px;
     border-radius: 5px;
-    background: #0B3C6B;
+    background: #4B4E52;
     border: 2px solid white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
@@ -218,7 +242,7 @@
   }
 
   @media (max-width: 640px) {
-    #trip-card { left: 16px; top: 340px; }
+    #trip-card { left: 16px; top: 380px; }
   }
 </style>
 </head>
@@ -228,7 +252,10 @@
 
 <div id="panel">
   <div id="panel-header">
-    <h1>LA 405 Integrated Rail + Bus Feeder Concept</h1>
+    <div>
+      <h1>LA Connect — Sepulveda + C Line</h1>
+      <div class="subtitle">Built on LA's real rail network</div>
+    </div>
     <button id="panel-toggle" aria-label="Collapse panel" title="Collapse panel">&minus;</button>
   </div>
   <div id="panel-body">
@@ -237,8 +264,12 @@
       Show peak-hour bus lanes
     </label>
     <label class="row">
-      <input type="checkbox" id="toggle-legacy-network" />
-      Show post-Games legacy network
+      <input type="checkbox" id="toggle-density-zones" />
+      Show station-area density zones
+    </label>
+    <label class="row">
+      <input type="checkbox" id="toggle-future-links" />
+      Show future regional links
     </label>
 
     <div class="trip-controls">
@@ -248,19 +279,27 @@
       <label for="trip-route" id="trip-route-label">Bus route:</label>
       <select id="trip-route"></select>
 
+      <label for="trip-lastmile" id="trip-lastmile-label">Last mile:</label>
+      <select id="trip-lastmile">
+        <option value="bus">Rail + Bus</option>
+        <option value="rideshare">Rail + Rideshare (Uber/Lyft)</option>
+      </select>
+
       <button id="trip-btn">Simulate Trip</button>
 
       <div id="trip-timer">Elapsed: --:--</div>
     </div>
 
     <div class="legend">
-      <div class="legend-row" style="font-size:11px; color:#777; font-style:italic;">Solid + thick = rail &nbsp;|&nbsp; Dashed + thin = bus</div>
-      <div class="legend-row"><span class="swatch rail-line"></span> Games-era rail trunk / station</div>
-      <div class="legend-row"><span class="swatch bus-line"></span> Games-era bus feeder route</div>
-      <div class="legend-row"><span class="swatch legacy-line"></span> Legacy rail extension (post-Games)</div>
+      <div class="legend-caption">Solid + thick = rail &nbsp;|&nbsp; Dashed/dotted + thin = bus / future</div>
+      <div class="legend-row"><span class="swatch phase0-line"></span> Phase 0 — Existing / Approved Metro</div>
+      <div class="legend-row"><span class="swatch phase1-line"></span> Phase 1 — Bus feeder route</div>
+      <div class="legend-row"><span class="swatch phase2-line"></span> Phase 2 — New Rail Connector</div>
       <div class="legend-row"><span class="swatch bus-lane-fill"></span> Active peak-hour bus lane</div>
       <div class="legend-row"><span class="swatch train-dot"></span> Train</div>
-      <div class="legend-row"><span class="swatch police-dot"></span> Police escort</div>
+      <div class="legend-row"><span class="swatch synergy-ring-ok"></span> Transfer synergy: within 10 min (standard met)</div>
+      <div class="legend-row"><span class="swatch olympic-dot"></span> LA28 Olympic venue</div>
+      <div class="legend-row"><span class="swatch roundabout-dot"></span> Rideshare pickup (Uber/Lyft, synced)</div>
     </div>
   </div>
 </div>
@@ -271,54 +310,132 @@
 // ---------------------------------------------------------------------------
 // Data (GeoJSON, embedded — no external files)
 // ---------------------------------------------------------------------------
+// Phase 0 = existing / approved Metro infrastructure (NOT proposed by this project).
+// Phase 1 = bus feeders off the Sepulveda Corridor.
+// Phase 2 = the one new rail segment this project proposes (the LAX connector).
+// Phase 3 = station-area density zones (0.5 mi walk buffer).
+// Phase 4 = future / planned regional link, shown for context only.
 
-const railStationsGeoJSON = {
+const PHASE0_COLOR = "#8A8D91"; // muted gray — existing / approved
+const PHASE1_COLOR = "#E8720C"; // orange — bus feeders
+const PHASE2_COLOR = "#1F9D6B"; // green — the one new rail connector
+const PHASE3_COLOR = "#F2B705"; // gold — density zones
+const PHASE4_COLOR = "#5B9BD9"; // light blue — future regional links
+
+// Shared line-weight constants — rail always renders at RAIL_LINE_WIDTH (solid, thick)
+// whether it's Phase 0 or Phase 2; bus/future always render thin.
+const RAIL_LINE_WIDTH = 5;
+const BUS_LINE_WIDTH = 3;
+const FUTURE_LINE_WIDTH = 2.5;
+
+// Phase 0: Sepulveda Transit Corridor (Metro-approved, funded, underground).
+// Ordered north -> south; index 0 is the assumed trip-simulator origin.
+const sepulvedaStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "LAX / Westchester Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.4085, 33.9416] } },
-    { type: "Feature", properties: { name: "Culver City / Palms Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.3965, 34.0211] } },
-    { type: "Feature", properties: { name: "Sepulveda Pass / UCLA Station", type: "rail_station" },
+    { type: "Feature", properties: { name: "Sherman Oaks / Van Nuys", type: "phase0_station" },
+      geometry: { type: "Point", coordinates: [-118.4480, 34.1510] } },
+    { type: "Feature", properties: { name: "Sepulveda Pass / UCLA", type: "phase0_station" },
       geometry: { type: "Point", coordinates: [-118.4390, 34.0736] } },
-    { type: "Feature", properties: { name: "Sherman Oaks / Van Nuys Station", type: "rail_station" },
-      geometry: { type: "Point", coordinates: [-118.4480, 34.1510] } }
+    { type: "Feature", properties: { name: "Culver City / Palms", type: "phase0_station" },
+      geometry: { type: "Point", coordinates: [-118.3965, 34.0211] } },
+    { type: "Feature", properties: { name: "LAX / Westchester", type: "phase0_station" },
+      geometry: { type: "Point", coordinates: [-118.4085, 33.9416] } }
   ]
 };
 
-const railTrunkGeoJSON = {
+const sepulvedaTrunkCoords = sepulvedaStationsGeoJSON.features.map((f) => f.geometry.coordinates);
+const sepulvedaTrunkGeoJSON = {
   type: "Feature",
   properties: { type: "rail_trunk" },
-  geometry: {
-    type: "LineString",
-    coordinates: [
-      [-118.4085, 33.9416],
-      [-118.3965, 34.0211],
-      [-118.4390, 34.0736],
-      [-118.4480, 34.1510]
-    ]
-  }
+  geometry: { type: "LineString", coordinates: sepulvedaTrunkCoords }
 };
 
+// Phase 0: Metro C Line (I-105 corridor) — existing light rail, in service today.
+const cLineStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { name: "LAX / Metro Transit Center", coords: [-118.4076, 33.9382] },
+    { name: "Aviation / Century", coords: [-118.3928, 33.9434] },
+    { name: "Hawthorne / Lennox", coords: [-118.3562, 33.9247] },
+    { name: "Crenshaw", coords: [-118.3265, 33.9252] },
+    { name: "Vermont / Athens", coords: [-118.2917, 33.9252] },
+    { name: "Harbor Freeway", coords: [-118.2775, 33.9256] },
+    { name: "Willowbrook / Rosa Parks", coords: [-118.2489, 33.9271] },
+    { name: "Long Beach Blvd", coords: [-118.2251, 33.9271] },
+    { name: "Lakewood Blvd", coords: [-118.1554, 33.9271] },
+    { name: "Norwalk", coords: [-118.1156, 33.9188] }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name, type: "phase0_station" },
+    geometry: { type: "Point", coordinates: s.coords }
+  }))
+};
+
+const cLineTrunkCoords = cLineStationsGeoJSON.features.map((f) => f.geometry.coordinates);
+const cLineTrunkGeoJSON = {
+  type: "Feature",
+  properties: { type: "rail_trunk" },
+  geometry: { type: "LineString", coordinates: cLineTrunkCoords }
+};
+
+const PHASE0_POPUP = "Existing / Approved Metro Infrastructure. This project connects to it — it does not propose or fund it.";
+
+// Phase 1: bus feeders off the Sepulveda Corridor. Each feeder carries a scheduled
+// transferMinutes value — the gap between train arrival and the connecting bus's
+// departure — held to the Train-to-Bus Transfer Synergy standard below (10-min max
+// window, with a 2-3 min synergy buffer if the train runs late).
 const busFeedersGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "Westchester", from_station: "LAX / Westchester Station" },
+    { type: "Feature", properties: { name: "Westchester", from_station: "LAX / Westchester", transferMinutes: 6 },
       geometry: { type: "LineString", coordinates: [[-118.4085, 33.9416], [-118.3965, 33.9597]] } },
-    { type: "Feature", properties: { name: "Playa Vista", from_station: "LAX / Westchester Station" },
+    { type: "Feature", properties: { name: "Playa Vista", from_station: "LAX / Westchester", transferMinutes: 9 },
       geometry: { type: "LineString", coordinates: [[-118.4085, 33.9416], [-118.4180, 33.9760]] } },
-    { type: "Feature", properties: { name: "Palms", from_station: "Culver City / Palms Station" },
+    { type: "Feature", properties: { name: "Palms", from_station: "Culver City / Palms", transferMinutes: 5 },
       geometry: { type: "LineString", coordinates: [[-118.3965, 34.0211], [-118.4140, 34.0203]] } },
-    { type: "Feature", properties: { name: "Mar Vista", from_station: "Culver City / Palms Station" },
+    { type: "Feature", properties: { name: "Mar Vista", from_station: "Culver City / Palms", transferMinutes: 9 },
       geometry: { type: "LineString", coordinates: [[-118.3965, 34.0211], [-118.4300, 34.0037]] } },
-    { type: "Feature", properties: { name: "UCLA / Westwood", from_station: "Sepulveda Pass / UCLA Station" },
+    { type: "Feature", properties: { name: "UCLA / Westwood", from_station: "Sepulveda Pass / UCLA", transferMinutes: 4 },
       geometry: { type: "LineString", coordinates: [[-118.4390, 34.0736], [-118.4452, 34.0689]] } },
-    { type: "Feature", properties: { name: "Brentwood", from_station: "Sepulveda Pass / UCLA Station" },
+    { type: "Feature", properties: { name: "Brentwood", from_station: "Sepulveda Pass / UCLA", transferMinutes: 8 },
       geometry: { type: "LineString", coordinates: [[-118.4390, 34.0736], [-118.4695, 34.0522]] } },
-    { type: "Feature", properties: { name: "Sherman Oaks", from_station: "Sherman Oaks / Van Nuys Station" },
+    { type: "Feature", properties: { name: "Sherman Oaks", from_station: "Sherman Oaks / Van Nuys", transferMinutes: 3 },
       geometry: { type: "LineString", coordinates: [[-118.4480, 34.1510], [-118.4490, 34.1511]] } },
-    { type: "Feature", properties: { name: "Van Nuys", from_station: "Sherman Oaks / Van Nuys Station" },
-      geometry: { type: "LineString", coordinates: [[-118.4480, 34.1510], [-118.4489, 34.1867]] } }
+    { type: "Feature", properties: { name: "Van Nuys", from_station: "Sherman Oaks / Van Nuys", transferMinutes: 8 },
+      geometry: { type: "LineString", coordinates: [[-118.4480, 34.1510], [-118.4489, 34.1867]] } },
+
+    // Feeders off the new Phase 2 Downtown LA Connector stations — added so the
+    // transfer-synergy standard applies at every rail-bus junction on the map, not
+    // just the original Sepulveda Corridor stops. (These never gain a bus leg in the
+    // trip simulator, since Downtown Connector destinations always cross the
+    // connector and take the direct-rail path — see getTripPath.)
+    { type: "Feature", properties: { name: "Leimert Park", from_station: "Expo / Crenshaw", transferMinutes: 7 },
+      geometry: { type: "LineString", coordinates: [[-118.3382, 34.0227], [-118.3287, 34.0084]] } },
+    { type: "Feature", properties: { name: "USC Village", from_station: "Expo Park / USC", transferMinutes: 5 },
+      geometry: { type: "LineString", coordinates: [[-118.2868, 34.0181], [-118.2853, 34.0247]] } },
+    { type: "Feature", properties: { name: "Fashion District", from_station: "7th St / Metro Center", transferMinutes: 9 },
+      geometry: { type: "LineString", coordinates: [[-118.2588, 34.0489], [-118.2569, 34.0367]] } },
+
+    // Crenshaw–Expo Connector — a single Games-era bus feeder linking the real K Line
+    // (Crenshaw/LAX Line, mostly not otherwise modeled on this map) through SoFi
+    // Stadium to the Expo/Crenshaw station on the Downtown LA Connector (which
+    // follows the real E Line alignment). Extended past Downtown Inglewood to the
+    // existing C Line "Crenshaw" station, reusing that station's exact coordinate
+    // (same no-duplicate-marker pattern used elsewhere) so the route now touches two
+    // real rail lines end to end. Rendered as one continuous dashed line via the same
+    // bus-feeder-lines layer as every other Phase 1 feeder — no new layer or legend
+    // entry needed.
+    { type: "Feature", properties: { name: "Crenshaw–Expo Connector", from_station: "Expo / Crenshaw", transferMinutes: 8 },
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [-118.3382, 34.0227], // E Line — Expo/Crenshaw (reuses the existing station's exact coordinate)
+          [-118.3392, 33.9535], // SoFi Stadium — via stop
+          [-118.3550, 33.9556], // K Line — Downtown Inglewood (not otherwise modeled on this map)
+          [-118.3265, 33.9252]  // C Line — Crenshaw (reuses the existing station's exact coordinate)
+        ]
+      } }
   ]
 };
 
@@ -332,88 +449,245 @@ const busDestinationsGeoJSON = {
     { type: "Feature", properties: { name: "UCLA / Westwood" }, geometry: { type: "Point", coordinates: [-118.4452, 34.0689] } },
     { type: "Feature", properties: { name: "Brentwood" }, geometry: { type: "Point", coordinates: [-118.4695, 34.0522] } },
     { type: "Feature", properties: { name: "Sherman Oaks" }, geometry: { type: "Point", coordinates: [-118.4490, 34.1511] } },
-    { type: "Feature", properties: { name: "Van Nuys" }, geometry: { type: "Point", coordinates: [-118.4489, 34.1867] } }
-  ]
-};
-
-const RAIL_COLOR = "#0B3C6B";
-const BUS_COLOR = "#E8720C";
-const LEGACY_COLOR = "#1F9D6B"; // deep green — Post-Games legacy extension (Phase 2), distinct from rail/bus
-
-const DEFAULT_VIEW = { center: [-118.42, 34.02], zoom: 11, pitch: 60, bearing: -20 };
-
-// Assumed real-world travel speeds + fixed transfer time, used to compute a realistic
-// door-to-door trip time (independent of the sped-up on-screen animation duration).
-const RAIL_SPEED_MPH = 40; // 35-45 mph range — standard urban/commuter rail (metro/heavy-rail), not bullet rail
-const BUS_SPEED_MPH = 17; // 15-20 mph range, accounting for stops/signals
-const TRANSFER_MINUTES = 1.5; // walk-to-platform transfer at the station
-
-// Post-Games Legacy Network — Phase 2 rail extension opening after the 2028 Olympics.
-// Own speed/fare logic, separate from the Olympics-era feeder buses.
-const LEGACY_SPEED_MPH = 40; // same standard urban rail assumption as the Games-era trunk
-const LEGACY_FARE = 4.25; // flat fare, USD — higher than feeder-bus fare, reflects longer distances
-
-const legacyStationsGeoJSON = {
-  type: "FeatureCollection",
-  features: [
-    { type: "Feature", properties: { name: "Downtown LA / Union Station", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2365, 34.0561] } },
-    { type: "Feature", properties: { name: "Downtown LA / LA Live & Convention Center", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2673, 34.0430] } },
-    { type: "Feature", properties: { name: "Compton Station", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2201, 33.8958] } },
-    { type: "Feature", properties: { name: "Inglewood / SoFi Stadium", type: "legacy_station" },
+    { type: "Feature", properties: { name: "Van Nuys" }, geometry: { type: "Point", coordinates: [-118.4489, 34.1867] } },
+    { type: "Feature", properties: { name: "Leimert Park" }, geometry: { type: "Point", coordinates: [-118.3287, 34.0084] } },
+    { type: "Feature", properties: { name: "USC Village" }, geometry: { type: "Point", coordinates: [-118.2853, 34.0247] } },
+    { type: "Feature", properties: { name: "Fashion District" }, geometry: { type: "Point", coordinates: [-118.2569, 34.0367] } },
+    { type: "Feature",
+      properties: {
+        name: "SoFi Stadium",
+        popup: "<strong>SoFi Stadium</strong> — Event-day feeder stop, connects K Line to E Line via the Crenshaw–Expo Connector."
+      },
       geometry: { type: "Point", coordinates: [-118.3392, 33.9535] } },
-    { type: "Feature", properties: { name: "Watts / 103rd Street", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.2412, 33.9425] } },
-    { type: "Feature", properties: { name: "Long Beach (North Long Beach Hub)", type: "legacy_station" },
-      geometry: { type: "Point", coordinates: [-118.1937, 33.8853] } }
+    { type: "Feature", properties: { name: "K Line / Downtown Inglewood" }, geometry: { type: "Point", coordinates: [-118.3550, 33.9556] } }
   ]
 };
 
-const CULVER_CITY_COORD = [-118.3965, 34.0211]; // matches railStationsGeoJSON.features[1]
-
-// North corridor: Culver City / Palms -> Downtown LA / LA Live -> Downtown LA / Union Station
-const legacyNorthCorridorCoords = [
-  CULVER_CITY_COORD,
-  [-118.2673, 34.0430],
-  [-118.2365, 34.0561]
+// Phase 2: the ONE new rail segment this project proposes — links the two real lines at LAX.
+const CONNECTOR_COORDS = [
+  [-118.4085, 33.9416], // LAX / Westchester — Sepulveda Corridor terminus
+  [-118.4076, 33.9382]  // LAX / Metro Transit Center — C Line terminus
 ];
+const connectorGeoJSON = {
+  type: "Feature",
+  properties: { type: "connector" },
+  geometry: { type: "LineString", coordinates: CONNECTOR_COORDS }
+};
 
-// South corridor: Culver City / Palms -> Inglewood/SoFi -> Watts -> Compton -> Long Beach
-const legacySouthCorridorCoords = [
-  CULVER_CITY_COORD,
-  [-118.3392, 33.9535],
-  [-118.2412, 33.9425],
-  [-118.2201, 33.8958],
-  [-118.1937, 33.8853]
+// Phase 2: Downtown LA Connector — a second new segment this project proposes,
+// branching off the existing Culver City / Palms station and following the
+// real E Line alignment northeast through Exposition Park / USC into Downtown LA.
+const CULVER_CITY_PALMS_COORD = sepulvedaStationsGeoJSON.features.find(
+  (f) => f.properties.name === "Culver City / Palms"
+).geometry.coordinates;
+
+const downtownConnectorCoords = [
+  CULVER_CITY_PALMS_COORD,
+  [-118.3776, 34.0217], // La Cienega / Jefferson
+  [-118.3382, 34.0227], // Expo / Crenshaw
+  [-118.2868, 34.0181], // Expo Park / USC
+  [-118.2588, 34.0489], // 7th St / Metro Center
+  [-118.2365, 34.0561]  // Downtown LA / Union Station
 ];
+const downtownConnectorGeoJSON = {
+  type: "Feature",
+  properties: { type: "connector" },
+  geometry: { type: "LineString", coordinates: downtownConnectorCoords }
+};
 
-const legacyRoutesGeoJSON = {
+const downtownConnectorStationsGeoJSON = {
   type: "FeatureCollection",
   features: [
-    { type: "Feature", properties: { name: "North Corridor" }, geometry: { type: "LineString", coordinates: legacyNorthCorridorCoords } },
-    { type: "Feature", properties: { name: "South Corridor" }, geometry: { type: "LineString", coordinates: legacySouthCorridorCoords } }
+    { name: "La Cienega / Jefferson", coords: downtownConnectorCoords[1] },
+    { name: "Expo / Crenshaw", coords: downtownConnectorCoords[2] },
+    { name: "Expo Park / USC", coords: downtownConnectorCoords[3] },
+    { name: "7th St / Metro Center", coords: downtownConnectorCoords[4] },
+    { name: "Downtown LA / Union Station", coords: downtownConnectorCoords[5] }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name, type: "phase2_station" },
+    geometry: { type: "Point", coordinates: s.coords }
+  }))
+};
+
+// Vermont Transit Corridor (Vermont BRT) — a real, Measure M-funded Metro bus rapid
+// transit project, drawn as a Phase 1 feeder line (same orange/dashed styling as the
+// other bus feeders — it's real and funded, not a conceptual/unfunded segment).
+// Runs north-south along Vermont Ave. The north terminus (Vermont / Sunset) connects
+// to Metro's real B Line (not modeled on this map). The south terminus reuses the
+// existing "Vermont / Athens" C Line station's exact coordinate rather than drawing a
+// duplicate marker on top of it — same pattern used for the Downtown Connector's
+// junction at Culver City / Palms. Index 4 (Vermont / Exposition) similarly reuses
+// the "Expo Park / USC" Downtown Connector station's coordinate, so the BRT line
+// visually crosses the Phase 2 rail line right at that station's existing green
+// transfer-synergy ring — see JUNCTION_EXTRA_ROUTES below.
+const vermontBrtCoords = [
+  [-118.2917, 34.0978], // 0 Vermont / Sunset — north terminus, connects to B Line
+  [-118.2917, 34.09], // 1 Vermont / Santa Monica
+  [-118.2917, 34.0763], // 2 Vermont / Beverly
+  [-118.2917, 34.0617], // 3 Vermont / Wilshire
+  downtownConnectorStationsGeoJSON.features.find((f) => f.properties.name === "Expo Park / USC").geometry.coordinates, // 4 Vermont / Exposition — shared transfer point
+  [-118.2917, 33.988], // 5 Vermont / Slauson
+  [-118.2917, 33.968], // 6 Vermont / Manchester
+  [-118.2917, 33.955], // 7 Vermont Knolls
+  cLineStationsGeoJSON.features.find((f) => f.properties.name === "Vermont / Athens").geometry.coordinates // 8 Vermont / Athens — south terminus, shared with the C Line
+];
+
+const vermontBrtTrunkGeoJSON = {
+  type: "Feature",
+  properties: { type: "vermont_brt_trunk" },
+  geometry: { type: "LineString", coordinates: vermontBrtCoords }
+};
+
+const vermontBrtStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { name: "Vermont / Sunset", idx: 0 },
+    { name: "Vermont / Santa Monica", idx: 1 },
+    { name: "Vermont / Beverly", idx: 2 },
+    { name: "Vermont / Wilshire", idx: 3 },
+    { name: "Vermont / Slauson", idx: 5 },
+    { name: "Vermont / Manchester", idx: 6 },
+    { name: "Vermont Knolls", idx: 7 }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name, idx: s.idx },
+    geometry: { type: "Point", coordinates: vermontBrtCoords[s.idx] }
+  }))
+};
+
+const VERMONT_BRT_POPUP =
+  "Vermont Transit Corridor — planned bus rapid transit on Vermont Ave, ~45,000 daily " +
+  "boardings projected, targeting 2028 completion under Metro's Twenty-eight by '28 " +
+  "initiative. Rail conversion funding begins after 2067.";
+
+const VERMONT_BRT_TRANSFER_MINUTES = 6;
+
+const RAIL_SPEED_MPH = 40; // 35-45 mph — standard urban/commuter rail, applies to Phase 0 rail AND the Phase 2 connector
+const BUS_SPEED_MPH = 17; // 15-20 mph, accounting for stops/signals
+const TRANSFER_MINUTES = 1.5; // walk-to-platform transfer at a station with no bus leg
+const CONNECTOR_FARE = 4.25; // flat fare, USD, on any trip that crosses the Phase 2 connector
+
+// Train-to-Bus Transfer Synergy standard — every rail-bus junction on the map is
+// held to the same promise: no more than 10 minutes between a train arrival and its
+// connecting bus's departure, with a 2-3 min hold if the train runs late.
+const SYNERGY_WINDOW_MINUTES = 10;
+const SYNERGY_BUFFER_MINUTES = 3;
+
+// Manual additions to a junction's routesSummary for crossings that aren't modeled
+// as a Phase 1 feeder spur — e.g. the Vermont BRT corridor passing directly through
+// the Expo Park / USC rail station rather than branching off it.
+const JUNCTION_EXTRA_ROUTES = {
+  "Expo Park / USC": [{ name: "Vermont BRT", transferMinutes: VERMONT_BRT_TRANSFER_MINUTES }]
+};
+
+// Every rail-to-bus junction on the map — every route leaving every junction is
+// held within the SYNERGY_WINDOW_MINUTES promise (the synergy buffer holds a late
+// bus rather than letting a connection miss it). Covers Phase 0 (Sepulveda
+// Corridor) and Phase 2 (Downtown LA Connector) junctions alike, so the standard is
+// visible everywhere a bus meets a train, not just on one showcase route.
+const allJunctionStations = sepulvedaStationsGeoJSON.features.concat(downtownConnectorStationsGeoJSON.features);
+const junctionNames = [
+  ...new Set(busFeedersGeoJSON.features.map((f) => f.properties.from_station).concat(Object.keys(JUNCTION_EXTRA_ROUTES)))
+];
+const transferSynergyGeoJSON = {
+  type: "FeatureCollection",
+  features: junctionNames.map((name) => {
+    const station = allJunctionStations.find((f) => f.properties.name === name);
+    const feeders = busFeedersGeoJSON.features.filter((f) => f.properties.from_station === name);
+    const routes = feeders.map((f) => f.properties).concat(JUNCTION_EXTRA_ROUTES[name] || []);
+    const routesSummary = routes.map((r) => `${r.name}: ${r.transferMinutes} min`).join(" &middot; ");
+    return {
+      type: "Feature",
+      properties: { name, routesSummary },
+      geometry: { type: "Point", coordinates: station.geometry.coordinates }
+    };
+  })
+};
+
+// Olympic venue sites — shown for narrative context only (not part of the rail/bus
+// network); each is placed near the real-world venue's closest network station.
+const olympicSitesGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { name: "LA Memorial Coliseum — Exposition Park", coords: [-118.2879, 34.014] },
+    { name: "UCLA — Olympic Village / Venues", coords: [-118.4452, 34.0689] },
+    { name: "Inglewood Sports Complex — SoFi Stadium / Intuit Dome / The Forum", coords: [-118.339, 33.953] },
+    { name: "Crypto.com Arena / Peacock Theater — Downtown Sports District", coords: [-118.2673, 34.043] }
+  ].map((s) => ({
+    type: "Feature",
+    properties: { name: s.name },
+    geometry: { type: "Point", coordinates: s.coords }
+  }))
+};
+
+// Phase 3: station-area density zones — a real 0.5 mi walk-buffer polygon per Phase 0 station.
+function makeCircleFeature(centerCoord, radiusMiles, name) {
+  const points = 32;
+  const [lon, lat] = centerCoord;
+  const latRad = (lat * Math.PI) / 180;
+  const milesPerDegLat = 69.0;
+  const milesPerDegLon = 69.0 * Math.cos(latRad);
+  const ring = [];
+  for (let i = 0; i <= points; i++) {
+    const angle = (i / points) * 2 * Math.PI;
+    const dx = (radiusMiles * Math.cos(angle)) / milesPerDegLon;
+    const dy = (radiusMiles * Math.sin(angle)) / milesPerDegLat;
+    ring.push([lon + dx, lat + dy]);
+  }
+  return { type: "Feature", properties: { name }, geometry: { type: "Polygon", coordinates: [ring] } };
+}
+
+const allPhase0Stations = sepulvedaStationsGeoJSON.features.concat(cLineStationsGeoJSON.features);
+const allDensityZoneStations = allPhase0Stations.concat(downtownConnectorStationsGeoJSON.features);
+const densityZonesGeoJSON = {
+  type: "FeatureCollection",
+  features: allDensityZoneStations.map((f) => makeCircleFeature(f.geometry.coordinates, 0.5, f.properties.name))
+};
+
+// Three-tier mobility, tier 3: rideshare pickup roundabouts — one at every major
+// rail station (every Phase 0 + Phase 2 station), offset slightly from the
+// station's own marker so the two don't render on top of each other. Uber and Lyft
+// only; Waymo is not modeled here (see the single concept-stage caption in
+// la_connect_prototype.html — the only place it appears across either file).
+const ROUNDABOUT_OFFSET = 0.0028;
+const roundaboutStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: allDensityZoneStations.map((f) => ({
+    type: "Feature",
+    properties: { name: f.properties.name },
+    geometry: {
+      type: "Point",
+      coordinates: [f.geometry.coordinates[0] + ROUNDABOUT_OFFSET, f.geometry.coordinates[1] + ROUNDABOUT_OFFSET]
+    }
+  }))
+};
+const RIDESHARE_POPUP =
+  "Rideshare Pickup Roundabout — Uber and Lyft pickup/drop-off. Synced with LA Connect for seamless station transfers.";
+const RIDESHARE_SPEED_MPH = 20; // 18-22 mph average, accounting for traffic
+const RIDESHARE_PICKUP_MINUTES = 4; // fixed 3-5 min pickup wait
+const RIDESHARE_BASE_FARE = 1.5;
+const RIDESHARE_PER_MILE = 1.2;
+
+// Phase 4: future / planned regional link — K Line extension to Torrance, not funded.
+const FUTURE_LINK_COORDS = [
+  [-118.3887, 33.8497], // Redondo Beach
+  [-118.3406, 33.8358]  // Torrance Transit Center
+];
+const futureLinkGeoJSON = {
+  type: "Feature",
+  properties: { type: "future_link" },
+  geometry: { type: "LineString", coordinates: FUTURE_LINK_COORDS }
+};
+const futureStationsGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    { type: "Feature", properties: { name: "Redondo Beach" }, geometry: { type: "Point", coordinates: FUTURE_LINK_COORDS[0] } },
+    { type: "Feature", properties: { name: "Torrance Transit Center" }, geometry: { type: "Point", coordinates: FUTURE_LINK_COORDS[1] } }
   ]
 };
 
-// Maps a legacy station name to which corridor it's on and how many stops in.
-const LEGACY_BRANCHES = {
-  "Downtown LA / LA Live & Convention Center": { corridor: legacyNorthCorridorCoords, stopIndex: 1 },
-  "Downtown LA / Union Station": { corridor: legacyNorthCorridorCoords, stopIndex: 2 },
-  "Inglewood / SoFi Stadium": { corridor: legacySouthCorridorCoords, stopIndex: 1 },
-  "Watts / 103rd Street": { corridor: legacySouthCorridorCoords, stopIndex: 2 },
-  "Compton Station": { corridor: legacySouthCorridorCoords, stopIndex: 3 },
-  "Long Beach (North Long Beach Hub)": { corridor: legacySouthCorridorCoords, stopIndex: 4 }
-};
-
-const LEGACY_STATION_POPUP =
-  "Post-Games Legacy Extension — opens after 2028. " +
-  "Permanent rail service beyond the Olympics window. Flat fare: $" + LEGACY_FARE.toFixed(2) + ".";
-
-const RAIL_STATION_POPUP =
-  "Underground Rail Station — 2 through tracks, one in each direction. " +
-  "Timed transfers connect to express bus feeders.";
+const DEFAULT_VIEW = { center: [-118.32, 33.99], zoom: 10.2, pitch: 60, bearing: -20 };
 
 // ---------------------------------------------------------------------------
 // Map setup
@@ -432,14 +706,19 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl(), "top-right");
 
 map.on("load", () => {
-  // Some styles can reset pitch/bearing once fully loaded — force them again here.
   map.setPitch(DEFAULT_VIEW.pitch);
   map.setBearing(DEFAULT_VIEW.bearing);
 
   addThreeDBuildings();
-  addRailLayers();
-  addBusLayers();
-  addLegacyLayers();
+  addPhase0Layers();
+  addPhase1Layers();
+  addPhase2Layer();
+  addVermontBrtLayer();
+  addTransferSynergyLayer();
+  addOlympicSitesLayer();
+  addRoundaboutLayer();
+  addPhase3Layer();
+  addPhase4Layer();
   wireInteractions();
 });
 
@@ -452,9 +731,7 @@ function addThreeDBuildings() {
   let buildingSourceId = "openmaptiles";
 
   if (!style.sources[buildingSourceId]) {
-    const vectorSourceId = Object.keys(style.sources).find(
-      (id) => style.sources[id].type === "vector"
-    );
+    const vectorSourceId = Object.keys(style.sources).find((id) => style.sources[id].type === "vector");
     if (vectorSourceId) buildingSourceId = vectorSourceId;
   }
   if (!style.sources[buildingSourceId]) return;
@@ -480,77 +757,74 @@ function addThreeDBuildings() {
 }
 
 // ---------------------------------------------------------------------------
-// Rail trunk + stations (+ persistent station labels)
+// Phase 0 — existing / approved Metro infrastructure (Sepulveda Corridor + C Line)
 // ---------------------------------------------------------------------------
 
-function addRailLayers() {
-  map.addSource("rail-trunk", { type: "geojson", data: railTrunkGeoJSON });
-  map.addSource("rail-stations", { type: "geojson", data: railStationsGeoJSON });
+function addPhase0Layers() {
+  map.addSource("sepulveda-trunk", { type: "geojson", data: sepulvedaTrunkGeoJSON });
+  map.addSource("sepulveda-stations", { type: "geojson", data: sepulvedaStationsGeoJSON });
+  map.addSource("cline-trunk", { type: "geojson", data: cLineTrunkGeoJSON });
+  map.addSource("cline-stations", { type: "geojson", data: cLineStationsGeoJSON });
 
-  map.addLayer({
-    id: "rail-trunk-line",
-    type: "line",
-    source: "rail-trunk",
-    layout: { "line-cap": "round", "line-join": "round" },
-    paint: {
-      "line-color": RAIL_COLOR,
-      "line-width": 5
-    }
+  ["sepulveda-trunk", "cline-trunk"].forEach((sourceId) => {
+    map.addLayer({
+      id: sourceId + "-line",
+      type: "line",
+      source: sourceId,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": PHASE0_COLOR, "line-width": RAIL_LINE_WIDTH }
+    });
   });
 
-  map.addLayer({
-    id: "rail-stations-circle",
-    type: "circle",
-    source: "rail-stations",
-    paint: {
-      "circle-radius": 8,
-      "circle-color": RAIL_COLOR,
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#ffffff"
-    }
-  });
+  ["sepulveda-stations", "cline-stations"].forEach((sourceId) => {
+    map.addLayer({
+      id: sourceId + "-circle",
+      type: "circle",
+      source: sourceId,
+      paint: {
+        "circle-radius": 8,
+        "circle-color": PHASE0_COLOR,
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#ffffff"
+      }
+    });
 
-  map.addLayer({
-    id: "rail-stations-label",
-    type: "symbol",
-    source: "rail-stations",
-    layout: {
-      "text-field": ["get", "name"],
-      "text-size": 11,
-      "text-font": ["Noto Sans Bold"],
-      "text-offset": [0, 1.3],
-      "text-anchor": "top",
-      "text-allow-overlap": true,
-      "text-ignore-placement": true
-    },
-    paint: {
-      "text-color": RAIL_COLOR,
-      "text-halo-color": "#ffffff",
-      "text-halo-width": 1.6
-    }
+    map.addLayer({
+      id: sourceId + "-label",
+      type: "symbol",
+      source: sourceId,
+      layout: {
+        "text-field": ["get", "name"],
+        "text-size": 11,
+        "text-font": ["Noto Sans Bold"],
+        "text-offset": [0, 1.3],
+        "text-anchor": "top",
+        "text-allow-overlap": true,
+        "text-ignore-placement": true
+      },
+      paint: {
+        "text-color": PHASE0_COLOR,
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.6
+      }
+    });
   });
 }
 
 // ---------------------------------------------------------------------------
-// Bus feeder routes + destinations + peak-hour lane overlay
-// (+ persistent destination labels)
+// Phase 1 — bus feeders + peak-hour lane overlay off the Sepulveda Corridor
 // ---------------------------------------------------------------------------
 
-function addBusLayers() {
+function addPhase1Layers() {
   map.addSource("bus-feeders", { type: "geojson", data: busFeedersGeoJSON });
   map.addSource("bus-destinations", { type: "geojson", data: busDestinationsGeoJSON });
 
-  // Peak-hour lane band drawn FIRST so the dashed route line renders crisply on top of it.
   map.addLayer({
     id: "peak-bus-lane-fill",
     type: "line",
     source: "bus-feeders",
     layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
-    paint: {
-      "line-color": BUS_COLOR,
-      "line-width": 9,
-      "line-opacity": 0.35
-    }
+    paint: { "line-color": PHASE1_COLOR, "line-width": 9, "line-opacity": 0.35 }
   });
 
   map.addLayer({
@@ -558,23 +832,14 @@ function addBusLayers() {
     type: "line",
     source: "bus-feeders",
     layout: { "line-cap": "round", "line-join": "round" },
-    paint: {
-      "line-color": BUS_COLOR,
-      "line-width": 3,
-      "line-dasharray": [2, 2]
-    }
+    paint: { "line-color": PHASE1_COLOR, "line-width": BUS_LINE_WIDTH, "line-dasharray": [2, 2] }
   });
 
   map.addLayer({
     id: "bus-destinations-circle",
     type: "circle",
     source: "bus-destinations",
-    paint: {
-      "circle-radius": 7,
-      "circle-color": BUS_COLOR,
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#ffffff"
-    }
+    paint: { "circle-radius": 7, "circle-color": PHASE1_COLOR, "circle-stroke-width": 2, "circle-stroke-color": "#ffffff" }
   });
 
   map.addLayer({
@@ -590,11 +855,7 @@ function addBusLayers() {
       "text-allow-overlap": true,
       "text-ignore-placement": true
     },
-    paint: {
-      "text-color": "#7A3B00",
-      "text-halo-color": "#ffffff",
-      "text-halo-width": 1.6
-    }
+    paint: { "text-color": "#7A3B00", "text-halo-color": "#ffffff", "text-halo-width": 1.6 }
   });
 
   map.addLayer({
@@ -608,64 +869,116 @@ function addBusLayers() {
       "text-font": ["Noto Sans Bold"],
       visibility: "none"
     },
-    paint: {
-      "text-color": "#7A3B00",
-      "text-halo-color": "#ffffff",
-      "text-halo-width": 1.4
-    }
+    paint: { "text-color": "#7A3B00", "text-halo-color": "#ffffff", "text-halo-width": 1.4 }
   });
 }
 
 // ---------------------------------------------------------------------------
-// Post-Games Legacy Network — separate toggleable layer, distinct green color
+// Phase 2 — the one new rail connector (always visible, same weight as Phase 0 rail)
 // ---------------------------------------------------------------------------
 
-function addLegacyLayers() {
-  map.addSource("legacy-routes", { type: "geojson", data: legacyRoutesGeoJSON });
-  map.addSource("legacy-stations", { type: "geojson", data: legacyStationsGeoJSON });
-
-  // Solid + thick, matching the Games-era rail trunk layer's weight — these are rail
-  // extensions, not bus feeders, so they should read as rail on the map.
+function addPhase2Layer() {
+  map.addSource("connector", { type: "geojson", data: connectorGeoJSON });
   map.addLayer({
-    id: "legacy-route-lines",
+    id: "connector-line",
     type: "line",
-    source: "legacy-routes",
-    layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
-    paint: {
-      "line-color": LEGACY_COLOR,
-      "line-width": 5
-    }
+    source: "connector",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": PHASE2_COLOR, "line-width": RAIL_LINE_WIDTH }
   });
 
+  map.addSource("connector-midpoint", {
+    type: "geojson",
+    data: {
+      type: "Feature",
+      properties: { name: "New Connector" },
+      geometry: { type: "Point", coordinates: lerpCoordStatic(CONNECTOR_COORDS[0], CONNECTOR_COORDS[1], 0.5) }
+    }
+  });
   map.addLayer({
-    id: "legacy-stations-circle",
+    id: "connector-midpoint-circle",
     type: "circle",
-    source: "legacy-stations",
-    layout: { visibility: "none" },
-    paint: {
-      "circle-radius": 8,
-      "circle-color": LEGACY_COLOR,
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#ffffff"
-    }
+    source: "connector-midpoint",
+    paint: { "circle-radius": 6, "circle-color": "#ffffff", "circle-stroke-width": 3, "circle-stroke-color": PHASE2_COLOR }
   });
 
+  // Downtown LA Connector — a second new Phase 2 segment (additive; always visible,
+  // same weight/color as the LAX connector above).
+  map.addSource("downtown-connector", { type: "geojson", data: downtownConnectorGeoJSON });
   map.addLayer({
-    id: "legacy-stations-label",
+    id: "downtown-connector-line",
+    type: "line",
+    source: "downtown-connector",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": PHASE2_COLOR, "line-width": RAIL_LINE_WIDTH }
+  });
+
+  map.addSource("downtown-connector-stations", { type: "geojson", data: downtownConnectorStationsGeoJSON });
+  map.addLayer({
+    id: "downtown-connector-stations-circle",
+    type: "circle",
+    source: "downtown-connector-stations",
+    paint: { "circle-radius": 8, "circle-color": PHASE2_COLOR, "circle-stroke-width": 2, "circle-stroke-color": "#ffffff" }
+  });
+  map.addLayer({
+    id: "downtown-connector-stations-label",
     type: "symbol",
-    source: "legacy-stations",
+    source: "downtown-connector-stations",
     layout: {
-      visibility: "none",
       "text-field": ["get", "name"],
-      "text-size": 10.5,
+      "text-size": 11,
       "text-font": ["Noto Sans Bold"],
       "text-offset": [0, 1.3],
       "text-anchor": "top",
       "text-allow-overlap": true,
       "text-ignore-placement": true
     },
+    paint: { "text-color": PHASE2_COLOR, "text-halo-color": "#ffffff", "text-halo-width": 1.6 }
+  });
+}
+
+function lerpCoordStatic(a, b, t) {
+  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+}
+
+// ---------------------------------------------------------------------------
+// Transfer Synergy badges — a green ring + check glyph at every rail-bus junction,
+// confirming every connecting route meets the 10-minute Transfer Synergy standard.
+// Always visible (like Phase 2), since it's central to the synergy narrative, not
+// an optional overlay.
+// ---------------------------------------------------------------------------
+
+const SYNERGY_OK_COLOR = "#2E7D32";
+
+function addTransferSynergyLayer() {
+  map.addSource("transfer-synergy", { type: "geojson", data: transferSynergyGeoJSON });
+
+  map.addLayer({
+    id: "transfer-synergy-ring",
+    type: "circle",
+    source: "transfer-synergy",
     paint: {
-      "text-color": LEGACY_COLOR,
+      "circle-radius": 13,
+      "circle-color": "rgba(0,0,0,0)",
+      "circle-stroke-width": 3,
+      "circle-stroke-color": SYNERGY_OK_COLOR
+    }
+  });
+
+  map.addLayer({
+    id: "transfer-synergy-icon",
+    type: "symbol",
+    source: "transfer-synergy",
+    layout: {
+      "text-field": "✓",
+      "text-size": 12,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, -1.9],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    },
+    paint: {
+      "text-color": SYNERGY_OK_COLOR,
       "text-halo-color": "#ffffff",
       "text-halo-width": 1.6
     }
@@ -673,36 +986,295 @@ function addLegacyLayers() {
 }
 
 // ---------------------------------------------------------------------------
-// Popups, hover cursor, checkbox toggle
+// Olympic venue sites — context markers only, not part of the rail/bus network.
+// ---------------------------------------------------------------------------
+
+const OLYMPIC_COLOR = "#B8860B"; // olympic gold
+
+function addOlympicSitesLayer() {
+  map.addSource("olympic-sites", { type: "geojson", data: olympicSitesGeoJSON });
+
+  map.addLayer({
+    id: "olympic-sites-circle",
+    type: "circle",
+    source: "olympic-sites",
+    paint: {
+      "circle-radius": 9,
+      "circle-color": OLYMPIC_COLOR,
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#ffffff"
+    }
+  });
+
+  map.addLayer({
+    id: "olympic-sites-label",
+    type: "symbol",
+    source: "olympic-sites",
+    layout: {
+      "text-field": ["concat", "🔥 ", ["get", "name"]],
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, 1.3],
+      "text-anchor": "top",
+      "text-allow-overlap": true,
+      "text-ignore-placement": true,
+      "text-max-width": 10
+    },
+    paint: { "text-color": OLYMPIC_COLOR, "text-halo-color": "#ffffff", "text-halo-width": 1.6 }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Vermont BRT (Vermont Transit Corridor) — a real, Measure M-funded Phase 1 feeder
+// route, styled identically to the other Phase 1 bus feeders (no new legend entry).
+// Always visible, like the other rail/bus trunk lines.
+// ---------------------------------------------------------------------------
+
+function addVermontBrtLayer() {
+  map.addSource("vermont-brt-trunk", { type: "geojson", data: vermontBrtTrunkGeoJSON });
+  map.addLayer({
+    id: "vermont-brt-trunk-line",
+    type: "line",
+    source: "vermont-brt-trunk",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": PHASE1_COLOR, "line-width": BUS_LINE_WIDTH, "line-dasharray": [2, 2] }
+  });
+  map.addLayer({
+    id: "vermont-brt-trunk-label",
+    type: "symbol",
+    source: "vermont-brt-trunk",
+    layout: {
+      "symbol-placement": "line",
+      "text-field": "Vermont BRT (Vermont Transit Corridor)",
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"]
+    },
+    paint: { "text-color": "#7A3B00", "text-halo-color": "#ffffff", "text-halo-width": 1.4 }
+  });
+
+  map.addSource("vermont-brt-stations", { type: "geojson", data: vermontBrtStationsGeoJSON });
+  map.addLayer({
+    id: "vermont-brt-stations-circle",
+    type: "circle",
+    source: "vermont-brt-stations",
+    paint: { "circle-radius": 7, "circle-color": PHASE1_COLOR, "circle-stroke-width": 2, "circle-stroke-color": "#ffffff" }
+  });
+  map.addLayer({
+    id: "vermont-brt-stations-label",
+    type: "symbol",
+    source: "vermont-brt-stations",
+    layout: {
+      "text-field": ["get", "name"],
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, 1.2],
+      "text-anchor": "top",
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    },
+    paint: { "text-color": "#7A3B00", "text-halo-color": "#ffffff", "text-halo-width": 1.6 }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Three-tier mobility, tier 3 — rideshare pickup roundabouts (Uber/Lyft only).
+// Neutral dark gray, distinct from rail (Phase 0/2 colors) and bus (orange), so it
+// reads as its own tier. Always visible, like the other rail/bus markers.
+// ---------------------------------------------------------------------------
+
+const RIDESHARE_COLOR = "#4B4E52";
+
+function addRoundaboutLayer() {
+  map.addSource("roundabouts", { type: "geojson", data: roundaboutStationsGeoJSON });
+
+  map.addLayer({
+    id: "roundabouts-circle",
+    type: "circle",
+    source: "roundabouts",
+    paint: { "circle-radius": 6.5, "circle-color": RIDESHARE_COLOR, "circle-stroke-width": 2, "circle-stroke-color": "#ffffff" }
+  });
+
+  map.addLayer({
+    id: "roundabouts-icon",
+    type: "symbol",
+    source: "roundabouts",
+    layout: {
+      "text-field": "🚗",
+      "text-size": 9,
+      "text-font": ["Noto Sans Bold"],
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Phase 3 — station-area density zones (toggleable, hidden by default)
+// ---------------------------------------------------------------------------
+
+function addPhase3Layer() {
+  map.addSource("density-zones", { type: "geojson", data: densityZonesGeoJSON });
+  map.addLayer({
+    id: "density-zones-fill",
+    type: "fill",
+    source: "density-zones",
+    layout: { visibility: "none" },
+    paint: { "fill-color": PHASE3_COLOR, "fill-opacity": 0.18 }
+  });
+  map.addLayer({
+    id: "density-zones-outline",
+    type: "line",
+    source: "density-zones",
+    layout: { visibility: "none" },
+    paint: { "line-color": PHASE3_COLOR, "line-width": 1, "line-opacity": 0.6 }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Phase 4 — future / planned regional link (toggleable, hidden by default)
+// ---------------------------------------------------------------------------
+
+function addPhase4Layer() {
+  map.addSource("future-link", { type: "geojson", data: futureLinkGeoJSON });
+  map.addSource("future-stations", { type: "geojson", data: futureStationsGeoJSON });
+
+  map.addLayer({
+    id: "future-link-line",
+    type: "line",
+    source: "future-link",
+    layout: { "line-cap": "round", "line-join": "round", visibility: "none" },
+    paint: { "line-color": PHASE4_COLOR, "line-width": FUTURE_LINE_WIDTH, "line-dasharray": [1, 2] }
+  });
+
+  map.addLayer({
+    id: "future-stations-circle",
+    type: "circle",
+    source: "future-stations",
+    layout: { visibility: "none" },
+    paint: { "circle-radius": 6, "circle-color": "#ffffff", "circle-stroke-width": 2, "circle-stroke-color": PHASE4_COLOR }
+  });
+
+  map.addLayer({
+    id: "future-stations-label",
+    type: "symbol",
+    source: "future-stations",
+    layout: {
+      visibility: "none",
+      "text-field": ["get", "name"],
+      "text-size": 10.5,
+      "text-font": ["Noto Sans Bold"],
+      "text-offset": [0, 1.2],
+      "text-anchor": "top",
+      "text-allow-overlap": true,
+      "text-ignore-placement": true
+    },
+    paint: { "text-color": PHASE4_COLOR, "text-halo-color": "#ffffff", "text-halo-width": 1.6 }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Popups, hover cursor, checkbox toggles
 // ---------------------------------------------------------------------------
 
 function wireInteractions() {
-  // Popups never move the camera — clicking a station/stop only opens a popup.
-  map.on("click", "rail-stations-circle", (e) => {
-    const f = e.features[0];
-    new maplibregl.Popup()
-      .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(`<strong>${f.properties.name}</strong><br>${RAIL_STATION_POPUP}`)
-      .addTo(map);
+  ["sepulveda-stations-circle", "cline-stations-circle"].forEach((layerId) => {
+    map.on("click", layerId, (e) => {
+      const f = e.features[0];
+      new maplibregl.Popup()
+        .setLngLat(f.geometry.coordinates.slice())
+        .setHTML(`<strong>${f.properties.name}</strong><br>${PHASE0_POPUP}`)
+        .addTo(map);
+    });
   });
 
   map.on("click", "bus-destinations-circle", (e) => {
     const f = e.features[0];
-    new maplibregl.Popup()
-      .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(`<strong>${f.properties.name}</strong><br>Bus Feeder Stop / Local Business District.`)
-      .addTo(map);
+    const html = f.properties.popup || `<strong>${f.properties.name}</strong><br>Bus Feeder Stop / Local Business District.`;
+    new maplibregl.Popup().setLngLat(f.geometry.coordinates.slice()).setHTML(html).addTo(map);
   });
 
-  map.on("click", "legacy-stations-circle", (e) => {
+  map.on("click", "connector-midpoint-circle", (e) => {
     const f = e.features[0];
     new maplibregl.Popup()
       .setLngLat(f.geometry.coordinates.slice())
-      .setHTML(`<strong>${f.properties.name}</strong><br>${LEGACY_STATION_POPUP}`)
+      .setHTML(
+        `<strong>New Connector — Post-Games Legacy Rail</strong><br>` +
+          `The one new rail segment this project proposes: a short link joining the Sepulveda ` +
+          `Transit Corridor to Metro's C Line at LAX.<br>Flat fare: $${CONNECTOR_FARE.toFixed(2)}`
+      )
       .addTo(map);
   });
 
-  ["rail-stations-circle", "bus-destinations-circle", "legacy-stations-circle"].forEach((layerId) => {
+  map.on("click", "future-stations-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>${f.properties.name}</strong><br>Future / Planned Regional Link — K Line extension, not yet funded.`)
+      .addTo(map);
+  });
+
+  map.on("click", "downtown-connector-stations-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(
+        `<strong>${f.properties.name}</strong><br>` +
+          `New Rail Connector — Downtown LA Branch. Part of the new rail connector this project ` +
+          `proposes, linking the Sepulveda Corridor into Downtown LA via Culver City / Palms.<br>` +
+          `Flat fare: $${CONNECTOR_FARE.toFixed(2)}`
+      )
+      .addTo(map);
+  });
+
+  map.on("click", "transfer-synergy-ring", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(
+        `<strong>${f.properties.name} — Transfer Synergy</strong><br>` +
+          `<span style="color:${SYNERGY_OK_COLOR}; font-weight:700;">✓ Compliant</span><br>` +
+          `Within the ${SYNERGY_WINDOW_MINUTES}-min synergy window on every route.<br>` +
+          `<span style="font-size:11px;">${f.properties.routesSummary}</span>`
+      )
+      .addTo(map);
+  });
+
+  map.on("click", "olympic-sites-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>🔥 ${f.properties.name}</strong><br>LA28 Olympic Venue — shown for context, not part of the rail/bus network.`)
+      .addTo(map);
+  });
+
+  map.on("click", "vermont-brt-stations-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>${f.properties.name}</strong><br>${VERMONT_BRT_POPUP}`)
+      .addTo(map);
+  });
+
+  map.on("click", "roundabouts-circle", (e) => {
+    const f = e.features[0];
+    new maplibregl.Popup()
+      .setLngLat(f.geometry.coordinates.slice())
+      .setHTML(`<strong>${f.properties.name} — Roundabout</strong><br>${RIDESHARE_POPUP}`)
+      .addTo(map);
+  });
+
+  [
+    "sepulveda-stations-circle",
+    "cline-stations-circle",
+    "bus-destinations-circle",
+    "connector-midpoint-circle",
+    "future-stations-circle",
+    "downtown-connector-stations-circle",
+    "transfer-synergy-ring",
+    "olympic-sites-circle",
+    "vermont-brt-stations-circle",
+    "roundabouts-circle"
+  ].forEach((layerId) => {
     map.on("mouseenter", layerId, () => (map.getCanvas().style.cursor = "pointer"));
     map.on("mouseleave", layerId, () => (map.getCanvas().style.cursor = ""));
   });
@@ -713,11 +1285,17 @@ function wireInteractions() {
     map.setLayoutProperty("peak-bus-lane-label", "visibility", visibility);
   });
 
-  document.getElementById("toggle-legacy-network").addEventListener("change", (e) => {
+  document.getElementById("toggle-density-zones").addEventListener("change", (e) => {
     const visibility = e.target.checked ? "visible" : "none";
-    map.setLayoutProperty("legacy-route-lines", "visibility", visibility);
-    map.setLayoutProperty("legacy-stations-circle", "visibility", visibility);
-    map.setLayoutProperty("legacy-stations-label", "visibility", visibility);
+    map.setLayoutProperty("density-zones-fill", "visibility", visibility);
+    map.setLayoutProperty("density-zones-outline", "visibility", visibility);
+  });
+
+  document.getElementById("toggle-future-links").addEventListener("change", (e) => {
+    const visibility = e.target.checked ? "visible" : "none";
+    map.setLayoutProperty("future-link-line", "visibility", visibility);
+    map.setLayoutProperty("future-stations-circle", "visibility", visibility);
+    map.setLayoutProperty("future-stations-label", "visibility", visibility);
   });
 }
 
@@ -736,37 +1314,72 @@ panelToggleBtn.addEventListener("click", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Trip destination dropdown (all rail stations except the assumed origin)
+// Trip destination dropdown — other Sepulveda stations, plus every C Line
+// station reached by crossing the new Phase 2 connector.
 // ---------------------------------------------------------------------------
 
-const originStation = railStationsGeoJSON.features[0]; // LAX / Westchester Station
+const originStation = sepulvedaStationsGeoJSON.features[0]; // Sherman Oaks / Van Nuys
 const tripDestinationSelect = document.getElementById("trip-destination");
 const tripRouteSelect = document.getElementById("trip-route");
 const tripRouteLabel = document.getElementById("trip-route-label");
+const tripLastMileSelect = document.getElementById("trip-lastmile");
+const tripLastMileLabel = document.getElementById("trip-lastmile-label");
 
-const gamesGroup = document.createElement("optgroup");
-gamesGroup.label = "Games-Era Network";
-railStationsGeoJSON.features.slice(1).forEach((f) => {
+const sepulvedaGroup = document.createElement("optgroup");
+sepulvedaGroup.label = "Sepulveda Corridor (Phase 0)";
+sepulvedaStationsGeoJSON.features.slice(1).forEach((f) => {
   const opt = document.createElement("option");
   opt.value = f.properties.name;
   opt.textContent = f.properties.name;
-  gamesGroup.appendChild(opt);
+  sepulvedaGroup.appendChild(opt);
 });
-tripDestinationSelect.appendChild(gamesGroup);
+tripDestinationSelect.appendChild(sepulvedaGroup);
 
-const legacyGroup = document.createElement("optgroup");
-legacyGroup.label = "Post-Games Legacy Network";
-legacyStationsGeoJSON.features.forEach((f) => {
+const cLineGroup = document.createElement("optgroup");
+cLineGroup.label = "C Line, via New Connector (Phase 0 + 2)";
+cLineStationsGeoJSON.features.forEach((f) => {
   const opt = document.createElement("option");
   opt.value = f.properties.name;
   opt.textContent = f.properties.name;
-  legacyGroup.appendChild(opt);
+  cLineGroup.appendChild(opt);
 });
-tripDestinationSelect.appendChild(legacyGroup);
+tripDestinationSelect.appendChild(cLineGroup);
+
+const downtownGroup = document.createElement("optgroup");
+downtownGroup.label = "Downtown LA Connector, via New Connector (Phase 2)";
+downtownConnectorStationsGeoJSON.features.forEach((f) => {
+  const opt = document.createElement("option");
+  opt.value = f.properties.name;
+  opt.textContent = f.properties.name;
+  downtownGroup.appendChild(opt);
+});
+tripDestinationSelect.appendChild(downtownGroup);
+
+const vermontGroup = document.createElement("optgroup");
+vermontGroup.label = "Vermont BRT, via New Connector (Phase 0 + 1 + 2)";
+vermontBrtStationsGeoJSON.features.forEach((f) => {
+  const opt = document.createElement("option");
+  opt.value = f.properties.name;
+  opt.textContent = f.properties.name;
+  vermontGroup.appendChild(opt);
+});
+tripDestinationSelect.appendChild(vermontGroup);
+
+// SoFi Stadium is reachable via rail to Expo/Crenshaw, then the Crenshaw–Expo
+// Connector bus (see getTripPath and the special case in simulateTrip). The K Line /
+// Downtown Inglewood end isn't offered here — that line isn't modeled on this map.
+const crenshawExpoGroup = document.createElement("optgroup");
+crenshawExpoGroup.label = "Crenshaw–Expo Connector, via New Connector (Phase 0 + 1 + 2)";
+const sofiOpt = document.createElement("option");
+sofiOpt.value = "SoFi Stadium";
+sofiOpt.textContent = "SoFi Stadium";
+crenshawExpoGroup.appendChild(sofiOpt);
+tripDestinationSelect.appendChild(crenshawExpoGroup);
 
 // Bus route options are pulled live from busFeedersGeoJSON for whichever station is selected.
 function populateRouteOptions(stationName) {
   const routes = busFeedersGeoJSON.features.filter((f) => f.properties.from_station === stationName);
+  const isSepulvedaStation = sepulvedaStationsGeoJSON.features.some((f) => f.properties.name === stationName);
 
   tripRouteSelect.innerHTML = "";
   routes.forEach((f) => {
@@ -776,10 +1389,17 @@ function populateRouteOptions(stationName) {
     tripRouteSelect.appendChild(opt);
   });
 
-  // A single route is auto-selected and the picker is hidden for that step.
-  const showPicker = routes.length > 1;
-  tripRouteSelect.style.display = showPicker ? "" : "none";
-  tripRouteLabel.style.display = showPicker ? "" : "none";
+  const showRoutePicker = isSepulvedaStation && routes.length > 1;
+  tripRouteSelect.style.display = showRoutePicker ? "" : "none";
+  tripRouteLabel.style.display = showRoutePicker ? "" : "none";
+
+  // Rail + Rideshare is only offered as an alternative wherever Rail + Bus already
+  // is (every Sepulveda Corridor station) — rideshare is the fallback/convenience
+  // tier, not a substitute for stations that have no last-mile option at all.
+  const showLastMilePicker = isSepulvedaStation && routes.length > 0;
+  tripLastMileSelect.style.display = showLastMilePicker ? "" : "none";
+  tripLastMileLabel.style.display = showLastMilePicker ? "" : "none";
+  if (showLastMilePicker) tripLastMileSelect.value = "bus";
 }
 
 tripDestinationSelect.addEventListener("change", () => populateRouteOptions(tripDestinationSelect.value));
@@ -834,9 +1454,6 @@ function haversineMiles(a, b) {
   return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
 }
 
-// Sums haversine distance across every leg of a multi-point path (more accurate
-// than a single origin-to-destination haversine once a route bends, as the legacy
-// corridors do).
 function pathMiles(coords) {
   let total = 0;
   for (let i = 1; i < coords.length; i++) total += haversineMiles(coords[i - 1], coords[i]);
@@ -844,18 +1461,43 @@ function pathMiles(coords) {
 }
 
 // Builds the train-leg path for a chosen destination: a straight slice of the
-// Games-era trunk, or — for a legacy station — the trunk out to Culver City / Palms
-// followed by the relevant legacy corridor segment.
+// Sepulveda Corridor trunk, or — for a C Line destination — the full Sepulveda
+// trunk, across the new Phase 2 connector, then a slice of the C Line trunk.
 function getTripPath(destName) {
-  const gamesIdx = railStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
-  if (gamesIdx !== -1) {
-    return { coords: railTrunkGeoJSON.geometry.coordinates.slice(0, gamesIdx + 1), isLegacy: false };
+  const sepulvedaIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
+  if (sepulvedaIdx !== -1) {
+    return { coords: sepulvedaTrunkCoords.slice(0, sepulvedaIdx + 1), crossesConnector: false };
   }
 
-  const branch = LEGACY_BRANCHES[destName];
-  const trunkToCulverCity = railTrunkGeoJSON.geometry.coordinates.slice(0, 2); // LAX/Westchester -> Culver City
-  const branchSegment = branch.corridor.slice(1, branch.stopIndex + 1); // excludes Culver City (already included)
-  return { coords: trunkToCulverCity.concat(branchSegment), isLegacy: true };
+  if (destName === "SoFi Stadium") {
+    // Rail leg only goes as far as Expo/Crenshaw; the Crenshaw–Expo Connector bus
+    // leg from there to SoFi Stadium is added separately in simulateTrip.
+    return getTripPath("Expo / Crenshaw");
+  }
+
+  const downtownIdx = downtownConnectorStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
+  if (downtownIdx !== -1) {
+    const culverCityIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === "Culver City / Palms");
+    const sepulvedaSlice = sepulvedaTrunkCoords.slice(0, culverCityIdx + 1); // Sherman Oaks -> Sepulveda Pass -> Culver City
+    const downtownSlice = downtownConnectorCoords.slice(1, downtownIdx + 2); // drop index 0 — Culver City already provided that point
+    return { coords: sepulvedaSlice.concat(downtownSlice), crossesConnector: true };
+  }
+
+  const vermontFeature = vermontBrtStationsGeoJSON.features.find((f) => f.properties.name === destName);
+  if (vermontFeature) {
+    // Sepulveda trunk -> LAX connector -> C Line trunk as far as Vermont / Athens,
+    // then north up the Vermont BRT corridor to the chosen stop.
+    const athensIdx = cLineStationsGeoJSON.features.findIndex((f) => f.properties.name === "Vermont / Athens");
+    const cLineSliceToAthens = cLineTrunkCoords.slice(1, athensIdx + 1);
+    const railPath = sepulvedaTrunkCoords.concat([CONNECTOR_COORDS[1]]).concat(cLineSliceToAthens);
+    const vermontSlice = vermontBrtCoords.slice(vermontFeature.properties.idx, 8).reverse();
+    return { coords: railPath.concat(vermontSlice), crossesConnector: true };
+  }
+
+  const cLineIdx = cLineStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
+  const cLineSlice = cLineTrunkCoords.slice(1, cLineIdx + 1); // drop index 0 — the connector already provides that point
+  const coords = sepulvedaTrunkCoords.concat([CONNECTOR_COORDS[1]]).concat(cLineSlice);
+  return { coords, crossesConnector: true };
 }
 
 function animateValue(duration, onFrame) {
@@ -906,12 +1548,11 @@ function resetTimer() {
 }
 
 // ---------------------------------------------------------------------------
-// Bus convoy leg — 5 buses + flashing police escort, camera follows along
+// Bus convoy leg — 5 buses traveling together, camera follows along
 // ---------------------------------------------------------------------------
 
 async function animateBusConvoy(startCoord, endCoord, duration, onProgress) {
   const busOffsets = [0, -0.035, -0.07, -0.105, -0.14];
-  const policeOffset = 0.035;
 
   const busMarkers = busOffsets.map(() => {
     const el = document.createElement("div");
@@ -919,34 +1560,40 @@ async function animateBusConvoy(startCoord, endCoord, duration, onProgress) {
     return new maplibregl.Marker({ element: el }).setLngLat(startCoord).addTo(map);
   });
 
-  const policeEl = document.createElement("div");
-  policeEl.className = "police-marker";
-  const policeMarker = new maplibregl.Marker({ element: policeEl }).setLngLat(startCoord).addTo(map);
-
-  let flashOn = true;
-  const flashInterval = setInterval(() => {
-    flashOn = !flashOn;
-    policeEl.style.background = flashOn ? "#d32f2f" : "#1565c0";
-  }, 250);
-
   await animateValue(duration, (t) => {
     busOffsets.forEach((off, i) => {
       const bt = Math.min(Math.max(t + off, 0), 1);
       busMarkers[i].setLngLat(lerpCoord(startCoord, endCoord, bt));
     });
-    const pt = Math.min(Math.max(t + policeOffset, 0), 1);
-    policeMarker.setLngLat(lerpCoord(startCoord, endCoord, pt));
     map.jumpTo({ center: lerpCoord(startCoord, endCoord, t) });
     if (onProgress) onProgress(t);
   });
 
-  clearInterval(flashInterval);
   busMarkers.forEach((m) => m.remove());
-  policeMarker.remove();
 }
 
 // ---------------------------------------------------------------------------
-// Full trip simulation: train leg (origin -> chosen station), then bus leg
+// Rideshare leg — a single Uber/Lyft car, camera follows along (Concept / Demo Data)
+// ---------------------------------------------------------------------------
+
+async function animateRideshare(startCoord, endCoord, duration, onProgress) {
+  const el = document.createElement("div");
+  el.className = "rideshare-marker";
+  const marker = new maplibregl.Marker({ element: el }).setLngLat(startCoord).addTo(map);
+
+  await animateValue(duration, (t) => {
+    const pos = lerpCoord(startCoord, endCoord, t);
+    marker.setLngLat(pos);
+    map.jumpTo({ center: pos });
+    if (onProgress) onProgress(t);
+  });
+
+  marker.remove();
+}
+
+// ---------------------------------------------------------------------------
+// Full trip simulation: train leg (origin -> chosen station, crossing the new
+// connector if the destination is on the C Line), then bus leg if one exists.
 // ---------------------------------------------------------------------------
 
 let tripRunning = false;
@@ -961,57 +1608,73 @@ async function simulateTrip() {
   tripRouteSelect.disabled = true;
 
   const destName = tripDestinationSelect.value;
-  const pathInfo = getTripPath(destName); // { coords, isLegacy } — trunk slice, or trunk + legacy corridor
+  const pathInfo = getTripPath(destName); // { coords, crossesConnector }
   const destStation =
-    railStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
-    legacyStationsGeoJSON.features.find((f) => f.properties.name === destName);
+    destName === "SoFi Stadium"
+      ? { properties: { name: "Expo / Crenshaw" } } // the rail leg's real destination; SoFi Stadium is a bus tail from there
+      : sepulvedaStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+        downtownConnectorStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+        vermontBrtStationsGeoJSON.features.find((f) => f.properties.name === destName) ||
+        cLineStationsGeoJSON.features.find((f) => f.properties.name === destName);
 
-  // Realistic door-to-door trip time — haversine distance summed along the actual path,
-  // divided by the assumed real-world speed per leg. Independent of the sped-up animation.
   const railMiles = pathMiles(pathInfo.coords);
-  const railSpeed = pathInfo.isLegacy ? LEGACY_SPEED_MPH : RAIL_SPEED_MPH;
-  const railMinutes = (railMiles / railSpeed) * 60;
+  const railMinutes = (railMiles / RAIL_SPEED_MPH) * 60;
   const railSimSeconds = railMinutes * 60;
 
   let routeName, busStart, busEnd, busMiles, busMinutes, busSimSeconds;
-  const transferMinutes = TRANSFER_MINUTES;
-  const transferSimSeconds = transferMinutes * 60;
+  let transferMinutes = TRANSFER_MINUTES; // fallback walk-only transfer when there's no last-mile leg
+  let transferSimSeconds = transferMinutes * 60;
+  let hasBusLeg = false;
+  let useRideshare = false;
+  let rideshareFare = 0;
 
-  if (!pathInfo.isLegacy) {
+  if (!pathInfo.crossesConnector) {
     routeName = tripRouteSelect.value;
     const feeder = busFeedersGeoJSON.features.find(
       (f) => f.properties.from_station === destStation.properties.name && f.properties.name === routeName
     );
-    busStart = feeder.geometry.coordinates[0];
-    busEnd = feeder.geometry.coordinates[1];
-    busMiles = haversineMiles(busStart, busEnd);
-    busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
-    busSimSeconds = busMinutes * 60;
+    if (feeder) {
+      hasBusLeg = true;
+      busStart = feeder.geometry.coordinates[0];
+      busEnd = feeder.geometry.coordinates[1];
+      busMiles = haversineMiles(busStart, busEnd);
+
+      // Rail + Rideshare is a selectable alternative to Rail + Bus for the same
+      // last-mile leg — rideshare is the fallback/convenience tier, so it's only
+      // offered where a bus feeder already reaches, never the default selection.
+      useRideshare = tripLastMileSelect.style.display !== "none" && tripLastMileSelect.value === "rideshare";
+      if (useRideshare) {
+        transferMinutes = RIDESHARE_PICKUP_MINUTES;
+        busMinutes = (busMiles / RIDESHARE_SPEED_MPH) * 60;
+        rideshareFare = RIDESHARE_BASE_FARE + RIDESHARE_PER_MILE * busMiles;
+      } else {
+        transferMinutes = feeder.properties.transferMinutes; // scheduled bus wait after train arrival — always within the synergy window
+        busMinutes = (busMiles / BUS_SPEED_MPH) * 60;
+      }
+      transferSimSeconds = transferMinutes * 60;
+      busSimSeconds = busMinutes * 60;
+    }
   }
 
-  const totalMinutes = pathInfo.isLegacy ? railMinutes : railMinutes + transferMinutes + busMinutes;
+  const totalMinutes = hasBusLeg ? railMinutes + transferMinutes + busMinutes : railMinutes;
 
   updateTimer(0);
 
-  // 1. Camera to the origin station, closer + lower-angle 3D view. (Not part of trip time.)
   await flyToPromise({
     center: originStation.geometry.coordinates,
-    zoom: 14.5,
+    zoom: 13.5,
     pitch: 55,
     bearing: DEFAULT_VIEW.bearing,
     duration: 1800
   });
 
-  // 2. Train leg — follows the trunk (and, for legacy destinations, the branch corridor
-  // out of Culver City / Palms). Animation runs in ~5s on screen; the timer counts up
-  // through the realistic rail minutes.
   const trainEl = document.createElement("div");
   trainEl.className = "train-marker";
   const trainMarker = new maplibregl.Marker({ element: trainEl })
     .setLngLat(originStation.geometry.coordinates)
     .addTo(map);
 
-  await animateValue(5000, (t) => {
+  await animateValue(6000, (t) => {
     const pos = pointAlongPath(pathInfo.coords, t);
     trainMarker.setLngLat(pos);
     map.jumpTo({ center: pos });
@@ -1020,35 +1683,90 @@ async function simulateTrip() {
   trainMarker.remove();
   updateTimer(railSimSeconds);
 
-  if (pathInfo.isLegacy) {
-    // Legacy stations are a direct rail extension — no bus feeder leg, flat fare instead.
+  if (pathInfo.crossesConnector && destName === "SoFi Stadium") {
     showCard(
-      `Arrived at ${destStation.properties.name}. Post-Games Legacy Extension — flat fare $${LEGACY_FARE.toFixed(2)}.`
+      `Arrived at Expo / Crenshaw via the New Connector — transferring to the Crenshaw–Expo Connector bus.`
+    );
+    await wait(1800);
+
+    const sofiFeeder = busFeedersGeoJSON.features.find((f) => f.properties.name === "Crenshaw–Expo Connector");
+    const sofiBusStart = sofiFeeder.geometry.coordinates[0];
+    const sofiBusEnd = sofiFeeder.geometry.coordinates[1]; // SoFi Stadium — the connector's mid-point
+    const sofiBusMiles = haversineMiles(sofiBusStart, sofiBusEnd);
+    const sofiBusMinutes = (sofiBusMiles / BUS_SPEED_MPH) * 60;
+    const sofiBusSimSeconds = sofiBusMinutes * 60;
+    const sofiTotalMinutes = railMinutes + sofiBusMinutes;
+
+    showCard(`Crenshaw–Expo Connector to SoFi Stadium: event-day feeder bus.`);
+    await animateBusConvoy(sofiBusStart, sofiBusEnd, 6000, (t) => {
+      updateTimer(railSimSeconds + t * sofiBusSimSeconds);
+    });
+    updateTimer(sofiTotalMinutes * 60);
+
+    showCard(
+      `Trip complete: ~${(railMiles + sofiBusMiles).toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(sofiTotalMinutes)} min ` +
+        `(rail: ${Math.round(railMinutes)} min, connector fare: $${CONNECTOR_FARE.toFixed(2)}, bus: ${Math.round(sofiBusMinutes)} min).`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
+  } else if (pathInfo.crossesConnector) {
+    showCard(
+      `Arrived at ${destStation.properties.name} via the New Connector — flat connector fare $${CONNECTOR_FARE.toFixed(2)}.`
     );
     await wait(2200);
 
     showCard(
       `Trip complete: ~${railMiles.toFixed(1)} mi &mdash; ` +
-        `Total trip time: ${Math.round(totalMinutes)} min. Legacy fare: $${LEGACY_FARE.toFixed(2)}.`
+        `Total trip time: ${Math.round(totalMinutes)} min. Connector fare: $${CONNECTOR_FARE.toFixed(2)}.`
     );
     await wait(3500);
     hideCard();
     resetTimer();
-  } else {
-    // 3. Transfer pause — brief on screen, but the timer counts through the realistic transfer window.
-    showCard(`Arrived at ${destStation.properties.name}. Transferring to express bus.`);
+  } else if (hasBusLeg && useRideshare) {
     await animateValue(1200, (t) => {
+      const remaining = Math.max(0, transferMinutes - t * transferMinutes) * 60;
       updateTimer(railSimSeconds + t * transferSimSeconds);
+      showCard(
+        `Arrived at ${destStation.properties.name}. Uber/Lyft pickup at the station roundabout.<br>` +
+          `<span style="color:#8BE0A6; font-weight:700;">Pickup ETA: ${formatClock(remaining)}</span><br>` +
+          `<span style="font-size:11px; opacity:0.85;">Rail + Rideshare — estimated fare $${rideshareFare.toFixed(2)} (Uber/Lyft).</span>`
+      );
     });
 
-    // 4. Bus leg — the selected feeder route, ~9s on screen, timer counts through realistic bus minutes.
-    showCard(`Peak convoy to ${routeName}: 5 buses, ~500 riders, police-escorted through signal priority.`);
+    showCard(`Rail + Rideshare to ${routeName}: Uber/Lyft picked up at the roundabout, direct to destination.`);
+    await animateRideshare(busStart, busEnd, 6000, (t) => {
+      updateTimer(railSimSeconds + transferSimSeconds + t * busSimSeconds);
+    });
+    updateTimer(totalMinutes * 60);
+
+    showCard(
+      `Trip complete: ~${(railMiles + busMiles).toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(totalMinutes)} min ` +
+        `(rail: ${Math.round(railMinutes)} min, pickup wait: ${Math.round(transferMinutes)} min, rideshare: ${Math.round(busMinutes)} min). ` +
+        `Estimated fare: $${rideshareFare.toFixed(2)} (Uber/Lyft) — Concept / Demo Data.`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
+  } else if (hasBusLeg) {
+    await animateValue(1200, (t) => {
+      const remainingWindowSec = (SYNERGY_WINDOW_MINUTES - t * transferMinutes) * 60;
+      updateTimer(railSimSeconds + t * transferSimSeconds);
+      showCard(
+        `Arrived at ${destStation.properties.name}. Transferring to ${routeName} bus.<br>` +
+          `<span style="color:#8BE0A6; font-weight:700;">Transfer countdown: ${formatClock(remainingWindowSec)} left in the 10-min transfer window</span><br>` +
+          `<span style="font-size:11px; opacity:0.85;">Synergy buffer: this bus holds up to ${SYNERGY_BUFFER_MINUTES} extra min if the train runs late.</span>`
+      );
+    });
+
+    showCard(`Peak convoy to ${routeName}: 5 buses, ~500 riders, moving together with transit signal priority.`);
     await animateBusConvoy(busStart, busEnd, 9000, (t) => {
       updateTimer(railSimSeconds + transferSimSeconds + t * busSimSeconds);
     });
     updateTimer(totalMinutes * 60);
 
-    // 5. Final info card with the realistic total.
     showCard(
       `Trip complete: ~${(railMiles + busMiles).toFixed(1)} mi &mdash; ` +
         `Total trip time: ${Math.round(totalMinutes)} min ` +
@@ -1057,9 +1775,16 @@ async function simulateTrip() {
     await wait(3500);
     hideCard();
     resetTimer();
+  } else {
+    showCard(
+      `Trip complete: ~${railMiles.toFixed(1)} mi &mdash; ` +
+        `Total trip time: ${Math.round(totalMinutes)} min (rail only, no feeder bus at this stop).`
+    );
+    await wait(3500);
+    hideCard();
+    resetTimer();
   }
 
-  // 6. Reset camera to the default overview.
   await flyToPromise({
     center: DEFAULT_VIEW.center,
     zoom: DEFAULT_VIEW.zoom,

@@ -26,11 +26,11 @@ lane reads "BUS LANE 6-9AM / 4-7PM".
 
 On that dedicated orange bus lane, a tight convoy of five articulated express
 buses travels nose-to-tail in tight formation, clearly moving together as a
-pack with a sense of coordinated motion. At the head of the convoy, a police
-escort vehicle (motorcycle or cruiser) with illuminated flashing light bars
-leads the buses through an intersection that is clearly held open for them —
-a green signal or visibly cleared cross-traffic ahead, conveying right-of-way
-and priority movement.
+pack with a sense of coordinated motion, passing through an intersection that
+is clearly held open for them — a green signal or visibly cleared cross-traffic
+ahead, conveying right-of-way and priority movement via transit signal
+priority (a roadside sensor that detects the approaching convoy and extends
+or triggers the green light), not a security or VIP escort.
 
 Lighting: golden hour / early morning, warm low-angle sunlight, soft shadows,
 light atmospheric haze typical of LA. Background city context is softly
