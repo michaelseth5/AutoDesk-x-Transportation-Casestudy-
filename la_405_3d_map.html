@@ -88,6 +88,13 @@
     margin-bottom: 5px;
   }
 
+  .trip-origin-note {
+    font-size: 10.5px;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
   #trip-destination, #trip-route, #trip-lastmile {
     width: 100%;
     font-size: 13px;
@@ -273,6 +280,7 @@
     </label>
 
     <div class="trip-controls">
+      <div class="trip-origin-note">Start at LAX — where the Sepulveda Corridor meets the C Line.</div>
       <label for="trip-destination">Simulate trip to:</label>
       <select id="trip-destination"></select>
 
@@ -687,7 +695,10 @@ const futureStationsGeoJSON = {
   ]
 };
 
-const DEFAULT_VIEW = { center: [-118.32, 33.99], zoom: 10.2, pitch: 60, bearing: -20 };
+// Default camera centers on the LAX interchange — where the Sepulveda Corridor
+// (LAX / Westchester) meets the C Line (LAX / Metro Transit Center) — since LAX is
+// the network's default starting point, not the old corridor-wide overview.
+const DEFAULT_VIEW = { center: [-118.408, 33.9399], zoom: 12.8, pitch: 60, bearing: -20 };
 
 // ---------------------------------------------------------------------------
 // Map setup
@@ -1318,7 +1329,13 @@ panelToggleBtn.addEventListener("click", () => {
 // station reached by crossing the new Phase 2 connector.
 // ---------------------------------------------------------------------------
 
-const originStation = sepulvedaStationsGeoJSON.features[0]; // Sherman Oaks / Van Nuys
+// LAX is the network's default starting point — the interchange between the
+// Sepulveda Corridor (405) and the C Line (105), and the natural entry point for
+// Olympic visitors. LAX / Westchester is the Sepulveda-side station at that
+// interchange (it sits at the same coordinate as the Phase 2 connector's Sepulveda
+// end, CONNECTOR_COORDS[0]).
+const originIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === "LAX / Westchester");
+const originStation = sepulvedaStationsGeoJSON.features[originIdx];
 const tripDestinationSelect = document.getElementById("trip-destination");
 const tripRouteSelect = document.getElementById("trip-route");
 const tripRouteLabel = document.getElementById("trip-route-label");
@@ -1327,12 +1344,14 @@ const tripLastMileLabel = document.getElementById("trip-lastmile-label");
 
 const sepulvedaGroup = document.createElement("optgroup");
 sepulvedaGroup.label = "Sepulveda Corridor (Phase 0)";
-sepulvedaStationsGeoJSON.features.slice(1).forEach((f) => {
-  const opt = document.createElement("option");
-  opt.value = f.properties.name;
-  opt.textContent = f.properties.name;
-  sepulvedaGroup.appendChild(opt);
-});
+sepulvedaStationsGeoJSON.features
+  .filter((f) => f.properties.name !== originStation.properties.name)
+  .forEach((f) => {
+    const opt = document.createElement("option");
+    opt.value = f.properties.name;
+    opt.textContent = f.properties.name;
+    sepulvedaGroup.appendChild(opt);
+  });
 tripDestinationSelect.appendChild(sepulvedaGroup);
 
 const cLineGroup = document.createElement("optgroup");
@@ -1460,13 +1479,17 @@ function pathMiles(coords) {
   return total;
 }
 
-// Builds the train-leg path for a chosen destination: a straight slice of the
-// Sepulveda Corridor trunk, or — for a C Line destination — the full Sepulveda
-// trunk, across the new Phase 2 connector, then a slice of the C Line trunk.
+// Builds the train-leg path for a chosen destination, always starting from the
+// default origin (LAX / Westchester): a reversed slice of the Sepulveda Corridor
+// trunk back toward the destination, or — for a C Line/Downtown/Vermont BRT
+// destination — starting at LAX (which sits at the connector's Sepulveda-side
+// coordinate), across the new Phase 2 connector, then the relevant onward trunk.
 function getTripPath(destName) {
   const sepulvedaIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
   if (sepulvedaIdx !== -1) {
-    return { coords: sepulvedaTrunkCoords.slice(0, sepulvedaIdx + 1), crossesConnector: false };
+    // LAX is the last point in the trunk array; walk backward from there to the
+    // chosen destination so every Sepulveda-corridor trip starts at LAX.
+    return { coords: sepulvedaTrunkCoords.slice(sepulvedaIdx, originIdx + 1).reverse(), crossesConnector: false };
   }
 
   if (destName === "SoFi Stadium") {
@@ -1478,25 +1501,25 @@ function getTripPath(destName) {
   const downtownIdx = downtownConnectorStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
   if (downtownIdx !== -1) {
     const culverCityIdx = sepulvedaStationsGeoJSON.features.findIndex((f) => f.properties.name === "Culver City / Palms");
-    const sepulvedaSlice = sepulvedaTrunkCoords.slice(0, culverCityIdx + 1); // Sherman Oaks -> Sepulveda Pass -> Culver City
+    const sepulvedaSlice = sepulvedaTrunkCoords.slice(culverCityIdx, originIdx + 1).reverse(); // LAX -> Culver City
     const downtownSlice = downtownConnectorCoords.slice(1, downtownIdx + 2); // drop index 0 — Culver City already provided that point
     return { coords: sepulvedaSlice.concat(downtownSlice), crossesConnector: true };
   }
 
   const vermontFeature = vermontBrtStationsGeoJSON.features.find((f) => f.properties.name === destName);
   if (vermontFeature) {
-    // Sepulveda trunk -> LAX connector -> C Line trunk as far as Vermont / Athens,
+    // LAX (origin) -> LAX connector -> C Line trunk as far as Vermont / Athens,
     // then north up the Vermont BRT corridor to the chosen stop.
     const athensIdx = cLineStationsGeoJSON.features.findIndex((f) => f.properties.name === "Vermont / Athens");
     const cLineSliceToAthens = cLineTrunkCoords.slice(1, athensIdx + 1);
-    const railPath = sepulvedaTrunkCoords.concat([CONNECTOR_COORDS[1]]).concat(cLineSliceToAthens);
+    const railPath = [originStation.geometry.coordinates, CONNECTOR_COORDS[1]].concat(cLineSliceToAthens);
     const vermontSlice = vermontBrtCoords.slice(vermontFeature.properties.idx, 8).reverse();
     return { coords: railPath.concat(vermontSlice), crossesConnector: true };
   }
 
   const cLineIdx = cLineStationsGeoJSON.features.findIndex((f) => f.properties.name === destName);
   const cLineSlice = cLineTrunkCoords.slice(1, cLineIdx + 1); // drop index 0 — the connector already provides that point
-  const coords = sepulvedaTrunkCoords.concat([CONNECTOR_COORDS[1]]).concat(cLineSlice);
+  const coords = [originStation.geometry.coordinates, CONNECTOR_COORDS[1]].concat(cLineSlice);
   return { coords, crossesConnector: true };
 }
 
