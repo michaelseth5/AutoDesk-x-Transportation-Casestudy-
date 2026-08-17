@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LA Connect — Overview Board</title>
+<style>
+  :root {
+    --navy: #0B2A4A;
+    --orange: #E8720C;
+    --gold: #F2B705;
+    --green: #1F9D6B;
+    --ink: #14181C;
+    --muted: #6B7280;
+    --muted-2: #9AA3AF;
+    --page-bg: #EEF2F7;
+    --card-bg: #FFFFFF;
+    --card-soft: linear-gradient(150deg, #FBFCFE 0%, #EDF1F7 100%);
+    --card-soft-2: linear-gradient(150deg, #F3F6FA 0%, #E4E9F0 100%);
+    --badge-bg: #EDF1F7;
+    --border-hair: rgba(11, 42, 74, 0.06);
+    --radius-lg: 24px;
+    --radius-md: 20px;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 2px 10px rgba(16, 24, 40, 0.05);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--page-bg);
+    font-family: -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+    color: var(--ink);
+  }
+
+  .board {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Header */
+  /* ---------------------------------------------------------------- */
+
+  .header {
+    background: linear-gradient(120deg, #F7F9FC 0%, #E7ECF3 60%, #DCE4EC 100%);
+    border-radius: var(--radius-lg);
+    padding: 34px 38px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+  }
+  .header .eyebrow {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .header h1 .accent { color: var(--orange); }
+  .header p {
+    margin: 12px 0 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.5;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Generic section title */
+  /* ---------------------------------------------------------------- */
+
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 6px 2px 2px;
+  }
+  .section-title h2 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin: 0;
+  }
+  .section-title .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border-hair);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* System map */
+  /* ---------------------------------------------------------------- */
+
+  .map-card {
+    background: var(--card-soft);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+  }
+  .map-card .map-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .map-card .map-head h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .map-card .map-head p {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    max-width: 520px;
+  }
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .map-legend i { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+  .map-svg-wrap { width: 100%; overflow-x: auto; }
+  svg text { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+
+  /* ---------------------------------------------------------------- */
+  /* Key stats row */
+  /* ---------------------------------------------------------------- */
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+    padding: 20px 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 128px;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .stat-value {
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-value small {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-left: 3px;
+  }
+  .stat-sub {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .stat-card.wide { grid-column: span 2; }
+
+  .range-track {
+    position: relative;
+    height: 4px;
+    border-radius: 2px;
+    background: #E5E9EF;
+    margin-top: 4px;
+  }
+  .range-fill {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    border-radius: 2px;
+    background: var(--navy);
+    opacity: 0.35;
+  }
+  .range-dot {
+    position: absolute;
+    top: 50%;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--orange);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 3px #fff;
+  }
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--muted-2);
+    margin-top: 6px;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Business case grid */
+  /* ---------------------------------------------------------------- */
+
+  .business-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .biz-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+    padding: 22px 20px;
+  }
+  .biz-badge {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--badge-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+  .biz-card h4 {
+    margin: 0 0 6px;
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+  .biz-card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Operating model strip */
+  /* ---------------------------------------------------------------- */
+
+  .operating-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    align-items: stretch;
+    position: relative;
+  }
+  .op-stage {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    position: relative;
+  }
+  .op-badge {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--badge-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .op-stage h5 {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .op-arrow {
+    display: none;
+  }
+  @media (min-width: 720px) {
+    .op-arrow {
+      display: block;
+      position: absolute;
+      top: 35px;
+      right: -9px;
+      width: 16px;
+      height: 1px;
+      background: var(--muted-2);
+      z-index: 2;
+    }
+    .op-arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px; top: -3px;
+      width: 6px; height: 6px;
+      border-top: 1px solid var(--muted-2);
+      border-right: 1px solid var(--muted-2);
+      transform: rotate(45deg);
+    }
+  }
+  .op-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .op-pill {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--badge-bg);
+    border-radius: 999px;
+    padding: 3px 8px;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Five-phase timeline */
+  /* ---------------------------------------------------------------- */
+
+  .timeline-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+    padding: 26px 30px 22px;
+  }
+  .timeline-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 10px;
+  }
+  .timeline-row::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    right: 22px;
+    height: 1px;
+    background: var(--border-hair);
+    z-index: 0;
+  }
+  .phase {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 19%;
+    gap: 10px;
+  }
+  .phase-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--card-soft-2);
+    border: 1px solid var(--border-hair);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .phase h6 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .phase p {
+    margin: 0;
+    font-size: 10.8px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Phone mockup preview */
+  /* ---------------------------------------------------------------- */
+
+  .phone-section {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 26px;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-hair);
+    padding: 26px 30px;
+  }
+  .phone-frame {
+    width: 160px;
+    height: 320px;
+    margin: 0 auto;
+    border-radius: 28px;
+    background: var(--navy);
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(11, 42, 74, 0.18);
+  }
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(160deg, #FFFFFF 0%, #EEF2F7 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 14px 12px;
+    gap: 8px;
+  }
+  .phone-screen .app-title { font-size: 10px; font-weight: 800; color: var(--navy); }
+  .phone-screen .app-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 1px 4px rgba(16,24,40,0.08);
+    font-size: 7.5px;
+    color: var(--muted);
+  }
+  .phone-screen .app-card b { color: var(--ink); font-size: 8.5px; display: block; margin-bottom: 2px; }
+  .phone-screen .app-pill-row { display: flex; gap: 4px; margin-top: auto; }
+  .phone-screen .app-pill { flex: 1; height: 20px; border-radius: 8px; background: var(--badge-bg); }
+
+  .phone-copy h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; }
+  .phone-copy p { margin: 0 0 14px; font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 480px; }
+  .phone-copy a.cta {
+    display: inline-block;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 999px;
+  }
+  .phone-copy .note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted-2);
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .business-grid { grid-template-columns: repeat(2, 1fr); }
+    .operating-strip { grid-template-columns: repeat(2, 1fr); }
+    .op-arrow { display: none !important; }
+    .timeline-row { flex-wrap: wrap; gap: 16px; }
+    .timeline-row::before { display: none; }
+    .phase { width: 30%; }
+    .phone-section { grid-template-columns: 1fr; }
+    .phone-frame { margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="board">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">LA28 Olympic-Ready Mobility Concept</div>
+    <h1>LA CONNECT <span class="accent">— Sepulveda + C Line</span></h1>
+    <p>Built on LA's real rail network — connecting what exists (the C Line, the K Line, Metro's
+       selected Sepulveda Transit Corridor alternative) to what this project proposes next.</p>
+  </div>
+
+  <!-- System map -->
+  <div class="section-title"><h2>System Map</h2><div class="rule"></div></div>
+  <div class="map-card">
+    <div class="map-head">
+      <div>
+        <h3>Real rail today, real rail selected, and the LA Connect concept</h3>
+        <p>Schematic, not to scale. Real Metro infrastructure in gray; this project's concept
+           connectors and extension in green/blue.</p>
+      </div>
+      <div class="map-legend">
+        <span><i style="background:#8A8D91"></i>Real Metro (Phase 0)</span>
+        <span><i style="background:#1F9D6B"></i>New Connector (concept)</span>
+        <span><i style="background:#5B9BD9;border-top:2px dotted #5B9BD9;height:0"></i>Extension Concept</span>
+      </div>
+    </div>
+    <div class="map-svg-wrap">
+      <svg viewBox="0 0 1080 300" width="100%" height="300" role="img" aria-label="LA Connect schematic system map">
+        <!-- C Line (real) -->
+        <line x1="120" y1="90" x2="960" y2="90" stroke="#8A8D91" stroke-width="5" stroke-linecap="round"/>
+        <text x="120" y="66" font-size="11" font-weight="700" fill="#4B4E52">C Line — real, 12 stations, LAX/Metro Transit Center ↔ Norwalk</text>
+        <circle cx="120" cy="90" r="6" fill="#8A8D91"/>
+        <circle cx="960" cy="90" r="6" fill="#8A8D91"/>
+        <text x="120" y="112" font-size="9.5" fill="#6B7280" text-anchor="middle">LAX / Metro Transit Ctr</text>
+        <text x="960" y="112" font-size="9.5" fill="#6B7280" text-anchor="middle">Norwalk</text>
+
+        <!-- K Line (real), vertical through LAX up to Expo/Crenshaw -->
+        <line x1="120" y1="90" x2="120" y2="230" stroke="#8A8D91" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="120" cy="230" r="6" fill="#8A8D91"/>
+        <text x="128" y="150" font-size="11" font-weight="700" fill="#4B4E52">K Line — real, 13 stations</text>
+        <text x="128" y="164" font-size="9.5" fill="#6B7280">Expo/Crenshaw ↔ Redondo Beach, continuous since June 2025</text>
+        <text x="120" y="248" font-size="9.5" fill="#6B7280" text-anchor="middle">Redondo Beach</text>
+
+        <!-- Sepulveda LPA (real, selected, separate mini line up top) -->
+        <line x1="560" y1="30" x2="740" y2="30" stroke="#8A8D91" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="560" cy="30" r="6" fill="#8A8D91"/>
+        <circle cx="740" cy="30" r="6" fill="#8A8D91"/>
+        <text x="650" y="18" font-size="9.5" fill="#6B7280" text-anchor="middle">Van Nuys ↔ Expo/Sepulveda</text>
+        <text x="775" y="34" font-size="10.5" font-weight="700" fill="#4B4E52">Sepulveda LPA</text>
+        <text x="775" y="47" font-size="9" fill="#9AA3AF">selected Jan 2026, pending funding</text>
+
+        <!-- Extension concept (unofficial), dotted blue, floating separate from real network -->
+        <line x1="260" y1="230" x2="260" y2="130" stroke="#5B9BD9" stroke-width="2.5" stroke-dasharray="1,5" stroke-linecap="round"/>
+        <circle cx="260" cy="230" r="5" fill="#fff" stroke="#5B9BD9" stroke-width="2"/>
+        <circle cx="260" cy="130" r="5" fill="#fff" stroke="#5B9BD9" stroke-width="2"/>
+        <text x="270" y="180" font-size="9.5" fill="#5B9BD9" font-style="italic">Sepulveda Extension</text>
+        <text x="270" y="192" font-size="9.5" fill="#5B9BD9" font-style="italic">Concept (not Metro's LPA)</text>
+
+        <!-- New connector (concept), green, joins extension concept to C Line at LAX -->
+        <line x1="260" y1="130" x2="120" y2="90" stroke="#1F9D6B" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="260" cy="130" r="5" fill="#1F9D6B"/>
+        <text x="180" y="102" font-size="9" fill="#1F9D6B" font-weight="700">New Connector (concept)</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Key stats row -->
+  <div class="section-title"><h2>Key Stats</h2><div class="rule"></div></div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">C Line Stations</div>
+      <div class="stat-value">12</div>
+      <div class="stat-sub">17.8 mi, LAX/Metro Transit Center ↔ Norwalk. Opened Aug 12, 1995.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">K Line Stations</div>
+      <div class="stat-value">13</div>
+      <div class="stat-sub">Expo/Crenshaw ↔ Redondo Beach. Continuous through-service since June 2025.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Connector Fare (concept)</div>
+      <div class="stat-value">$4.25</div>
+      <div class="stat-sub">Flat fare on any LA Connect new-rail-connector leg.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Sepulveda LPA Peak Headway</div>
+      <div class="stat-value">2.5<small>min (concept)</small></div>
+      <div class="stat-sub">Selected Jan 2026; funding &amp; schedule still pending.</div>
+    </div>
+    <div class="stat-card wide">
+      <div class="stat-label">C Line Headway Range</div>
+      <div class="stat-value">10<small>–20 min</small></div>
+      <div class="range-track">
+        <div class="range-fill" style="width:35%"></div>
+        <div class="range-dot" style="left:8%"></div>
+        <div class="range-dot" style="left:35%; background:#4B4E52;"></div>
+      </div>
+      <div class="range-labels"><span>~10 min midday</span><span>~20 min early / late</span></div>
+    </div>
+    <div class="stat-card wide">
+      <div class="stat-label">Station-Area Density Zones</div>
+      <div class="stat-value">0.5<small>mi walkshed</small></div>
+      <div class="stat-sub">Applied at every real C Line, K Line, and Sepulveda LPA station, plus every LA Connect concept stop.</div>
+    </div>
+  </div>
+
+  <!-- Business case grid -->
+  <div class="section-title"><h2>Creating a Higher-Performing Mobility Ecosystem</h2><div class="rule"></div></div>
+  <div class="business-grid">
+    <div class="biz-card">
+      <div class="biz-badge">🚆</div>
+      <h4>Real-Rail-First</h4>
+      <p>Builds on the C Line, K Line, and Metro's selected Sepulveda alternative — not a new
+         corridor from scratch.</p>
+    </div>
+    <div class="biz-card">
+      <div class="biz-badge">🔄</div>
+      <h4>Transfer Synergy</h4>
+      <p>Every rail-to-bus junction is held to a 10-minute max transfer window, with a buffer if
+         the train runs late.</p>
+    </div>
+    <div class="biz-card">
+      <div class="biz-badge">📍</div>
+      <h4>Station-Area Density</h4>
+      <p>A 0.5 mi walkshed mapped around every stop informs where infill and local business
+         investment pays off first.</p>
+    </div>
+    <div class="biz-card">
+      <div class="biz-badge">🚗</div>
+      <h4>Three-Tier Last-Mile</h4>
+      <p>Rail, scheduled bus feeders, and synced rideshare pickup give every rider a real option
+         for the final mile.</p>
+    </div>
+    <div class="biz-card">
+      <div class="biz-badge">🚦</div>
+      <h4>Peak-Hour Priority</h4>
+      <p>Dedicated bus lanes and transit signal priority keep feeder convoys moving during the
+         6–9am / 4–7pm peaks.</p>
+    </div>
+    <div class="biz-card">
+      <div class="biz-badge">🔥</div>
+      <h4>Olympic-Ready</h4>
+      <p>LA28 venues are mapped against the real network today, so venue-day demand has a plan
+         before 2028.</p>
+    </div>
+  </div>
+
+  <!-- Operating model strip -->
+  <div class="section-title"><h2>Operating Model</h2><div class="rule"></div></div>
+  <div class="operating-strip">
+    <div class="op-stage">
+      <div class="op-badge">📡</div>
+      <h5>Real-Time Demand Signals</h5>
+      <div class="op-pills">
+        <span class="op-pill">GTFS-RT</span>
+        <span class="op-pill">Event Calendars</span>
+        <span class="op-pill">Ridership</span>
+      </div>
+      <div class="op-arrow"></div>
+    </div>
+    <div class="op-stage">
+      <div class="op-badge">🧭</div>
+      <h5>Dynamic Feeder Routing</h5>
+      <div class="op-arrow"></div>
+    </div>
+    <div class="op-stage">
+      <div class="op-badge">🤝</div>
+      <h5>Synced Last-Mile Dispatch</h5>
+      <div class="op-arrow"></div>
+    </div>
+    <div class="op-stage">
+      <div class="op-badge">📱</div>
+      <h5>Rider Experience Layer</h5>
+      <div class="op-arrow"></div>
+    </div>
+    <div class="op-stage">
+      <div class="op-badge">📈</div>
+      <h5>Economic Value Creation</h5>
+    </div>
+  </div>
+
+  <!-- Five-phase timeline -->
+  <div class="section-title"><h2>Five-Phase Timeline</h2><div class="rule"></div></div>
+  <div class="timeline-card">
+    <div class="timeline-row">
+      <div class="phase">
+        <div class="phase-dot">0</div>
+        <h6>Existing / Selected Real Metro</h6>
+        <p>C Line, K Line, Sepulveda LPA — not proposed or funded by this project.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-dot">1</div>
+        <h6>Bus Feeders</h6>
+        <p>Scheduled express feeders off the extension concept, held to the transfer-synergy standard.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-dot">2</div>
+        <h6>New Connectors</h6>
+        <p>Concept rail links joining the extension concept to the real C Line and Downtown LA.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-dot">3</div>
+        <h6>Density Zones</h6>
+        <p>0.5 mi walkshed mapped at every real and concept station.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-dot">4</div>
+        <h6>Future / Extension Concept</h6>
+        <p>K Line Extension to Torrance, K Line Northern Extension, and the Sepulveda Extension Concept.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone / app mockup preview -->
+  <div class="section-title"><h2>Rider App</h2><div class="rule"></div></div>
+  <div class="phone-section">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="app-title">LA Connect</div>
+        <div class="app-card"><b>Next departure</b>C Line · LAX/Metro Transit Ctr · 4 min</div>
+        <div class="app-card"><b>Live transfer</b>New Connector → C Line · within window</div>
+        <div class="app-card"><b>Fare</b>$4.25 flat · connector leg</div>
+        <div class="app-pill-row">
+          <div class="app-pill"></div><div class="app-pill"></div><div class="app-pill"></div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-copy">
+      <h3>Full app available separately</h3>
+      <p>The rider-facing LA Connect app — trip planning, live arrivals, and fare/wallet — lives in
+         its own standalone prototype so it can be deployed and shared as its own live link,
+         independent of this overview board.</p>
+      <a class="cta" href="la_connect_prototype.html" target="_blank" rel="noopener">Open the app prototype →</a>
+      <div class="note">Static preview shown here for illustration only; interactions live in the standalone file.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
